@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-slate-950: #05193E;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: radial-gradient(circle at 50% 0%, #e8f2ff 0%, #ffffff 75%);
+  color: #0f172a;
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+
+body .text-slate-900,
+body .text-slate-950 {
+  color: #002139;
+}
+
+.site-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.site-section::before {
+  content: "";
+  position: absolute;
+  right: 2%;
+  bottom: -6%;
+  width: min(26rem, 48vw);
+  height: min(26rem, 48vw);
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(140, 177, 255, 0.22) 0%, rgba(140, 177, 255, 0.10) 28%, rgba(255, 255, 255, 0) 72%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.site-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+section.site-section + section.site-section,
+section.site-section + .site-section,
+.site-section + .site-section {
+  margin-top: 0;
+  border-top: none;
+}
+
+.site-container {
+  width: min(100%, 88rem);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 2.6vw, 2rem);
+}
+
+.section-title {
+  font-size: 1.875rem;
+  line-height: 1.1;
+}
+
+@media (min-width: 640px) {
+  .section-title {
+    font-size: 2.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-title {
+    font-size: 3rem;
+  }
+}
+
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+* Hero button {
+  
+}
