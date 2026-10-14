@@ -8,7 +8,7 @@ import {
 } from 'react-icons/fa6'
 import BlueFoxLogo from '../assets/bluefoxlogo.svg'
 import ESewaLogo from '../assets/esewalogo.png'
-import IMELogo from '../assets/ime.png'
+import IMELogo from '../assets/Ime.png'
 import FONEPAY from '../assets/fonepay.png'
 import visaLogo from '../assets/visa.png'
 import Khalti from '../assets/khaltilogo.png'
