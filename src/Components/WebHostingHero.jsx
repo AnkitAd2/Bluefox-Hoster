@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { Send, Check, ArrowRight, ShieldCheck, Zap, Server } from 'lucide-react'
+import { Send, Check, ShieldCheck, Zap, Server } from 'lucide-react'
 import Flag from '../assets/Flag_of_Nepal.svg.webp'
 import HeroRobot from '../assets/robot_5_transparent.svg'
 
-// Web Hosting Pricing Plans
 const hostingPlans = [
   {
     name: 'Starter Web',
@@ -55,11 +54,26 @@ const hostingPlans = [
   },
 ]
 
-export const WebHostingHero = () => {
+export const WebHostingHero = ({ onBack }) => {
   const [billingCycle, setBillingCycle] = useState('monthly')
 
   return (
     <>
+      {/* Back Navigation Bar */}
+      {onBack && (
+        <div className="bg-white border-b border-slate-200 py-3">
+          <div className="site-container">
+            <button
+              type="button"
+              onClick={onBack}
+              className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors cursor-pointer bg-transparent border-none"
+            >
+              &larr; Back to Home
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* ================= WEB HOSTING HERO SECTION ================= */}
       <section className="hero-section site-section w-full overflow-hidden bg-slate-50/50 pt-12 pb-10 font-sans sm:pt-16 sm:pb-14 lg:flex lg:min-h-[calc(100svh-6.5625rem)] lg:flex-col lg:pt-14 lg:pb-16">
         <style>{`
@@ -76,16 +90,13 @@ export const WebHostingHero = () => {
 
         <div className="site-container grid grid-cols-1 items-center gap-10 lg:flex-1 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:gap-8 xl:gap-12">
           
-          {/* LEFT COLUMN: TEXT & CTAS */}
           <div className="w-full max-w-2xl">
-            {/* Top Sovereign Badge */}
             <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1 text-xs sm:text-sm font-semibold text-slate-700 mb-4 shadow-sm">
               <img src={Flag} alt="Nepal flag" className="w-4 h-4 object-contain" />
               <span>Sovereign Web Hosting in Nepal</span>
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             </div>
 
-            {/* Main Title */}
             <h1 className="section-title max-w-[18ch] font-extrabold text-slate-950 text-3xl sm:text-5xl leading-tight mb-4">
               Ultra-Fast Web Hosting Designed for{' '}
               <span className="bg-gradient-to-b from-[#1b75e7] to-[#125ec5] bg-clip-text text-transparent">
@@ -93,12 +104,10 @@ export const WebHostingHero = () => {
               </span>
             </h1>
 
-            {/* Subtitle */}
             <p className="max-w-xl text-sm sm:text-base lg:text-lg leading-relaxed text-slate-600 mb-6">
               Power your website with Kathmandu local servers, NVMe SSD speed, 99.98% SLA uptime, and instant digital wallet payments via eSewa &amp; Khalti.
             </p>
 
-            {/* Action Buttons */}
             <div className="flex flex-wrap items-center gap-3 mb-8">
               <a 
                 href="#hosting-pricing"
@@ -114,7 +123,6 @@ export const WebHostingHero = () => {
               </a>
             </div>
 
-            {/* Feature Badges Grid */}
             <div className="grid grid-cols-3 gap-2.5 pt-2 border-t border-slate-200/80 text-xs font-semibold text-slate-700">
               <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm">
                 <Zap className="h-4 w-4 text-blue-600 shrink-0" />
@@ -131,32 +139,26 @@ export const WebHostingHero = () => {
             </div>
           </div>
 
-          {/* RIGHT COLUMN: HERO VISUAL & TICKER */}
           <div className="relative isolate min-h-[340px] overflow-hidden rounded-3xl bg-gradient-to-br from-[#f7fbff] via-[#e8f2ff] to-[#d4e6ff] ring-1 ring-blue-100 shadow-[0_24px_60px_rgba(37,99,235,0.14)] sm:min-h-[400px] lg:min-h-[460px]">
             
-            {/* Background Stages */}
             <div aria-hidden="true" className="absolute inset-y-6 left-4 w-[76%] bg-gradient-to-br from-[#1b75e7] via-[#155fc0] to-[#0c438e] [clip-path:polygon(0_0,100%_0,78%_100%,0_100%)] sm:left-6" />
             <div aria-hidden="true" className="absolute right-0 top-0 h-full w-[42%] bg-gradient-to-b from-white/70 to-[#bcd7ff]/80 [clip-path:polygon(54%_0,100%_0,100%_100%,0_100%)]" />
 
-            {/* Robot Mascot */}
             <img
               src={HeroRobot}
               alt="Blue Fox Web Hosting Robot"
               className="absolute bottom-0 left-[12%] z-[1] h-[70%] w-[42%] object-contain object-bottom drop-shadow-[0_18px_24px_rgba(5,25,62,0.2)] sm:h-[82%] sm:w-[48%]"
             />
 
-            {/* Floating Top SLA Badge */}
             <div className="absolute top-4 right-4 z-10 flex items-center gap-2 rounded-full border border-white/80 bg-white/95 px-3.5 py-1.5 shadow-lg backdrop-blur-md">
               <span className="h-2 w-2 rounded-full bg-blue-600 animate-pulse"></span>
               <span className="text-xs font-bold text-slate-800">99.98% Uptime SLA</span>
             </div>
 
-            {/* Floating Paper Airplane Icon */}
             <div className="absolute left-5 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/80 bg-white/90 text-blue-600 shadow-md">
               <Send className="h-5 w-5 -rotate-12" />
             </div>
 
-            {/* Auto Scrolling Features Ticker */}
             <div className="absolute right-3 top-[42%] h-[180px] w-1/2 -translate-y-1/2 overflow-hidden sm:right-6 sm:top-1/2 sm:h-[220px] sm:w-[min(13rem,88%)]">
               <div className="animate-vertical-ticker flex flex-col gap-3">
                 {[0, 1].map((group) => (
@@ -165,8 +167,8 @@ export const WebHostingHero = () => {
                       { icon: '🚀', title: 'NVMe Storage' },
                       { icon: '🔒', title: 'Free SSL Certificate' },
                       { icon: '🌐', title: 'Free .COM Domain' },
-                      { icon: '⚡', title: 'cPanel & cLI Support' },
-                      { icon: '🔄', title: 'Daily Backups' },
+                      { icon: '⚙️', title: 'cPanel & CLI Support' },
+                      { icon: '📦', title: 'Daily Backups' },
                     ].map((item) => (
                       <div key={`${group}-${item.title}`} className="flex items-center gap-3 rounded-xl border border-white/70 bg-white/90 px-3.5 py-2.5 text-left shadow-md backdrop-blur-md">
                         <span className="text-base">{item.icon}</span>
@@ -178,7 +180,6 @@ export const WebHostingHero = () => {
               </div>
             </div>
 
-            {/* Floating Price Tag */}
             <div className="absolute bottom-4 right-4 z-10 rounded-2xl border border-white/80 bg-white/95 px-4 py-2.5 shadow-xl backdrop-blur-md">
               <div className="flex items-center gap-2">
                 <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">Starting at</span>
@@ -199,7 +200,6 @@ export const WebHostingHero = () => {
       <section id="hosting-pricing" className="bg-white py-16 font-sans sm:py-20">
         <div className="site-container">
           
-          {/* Section Header */}
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-3.5 py-1 rounded-full border border-blue-100">
               Web Hosting Plans
@@ -211,7 +211,6 @@ export const WebHostingHero = () => {
               No hidden fees. Instant activation with local payment options like eSewa, Khalti, IME Pay, and Bank Transfer.
             </p>
 
-            {/* Billing Toggle (Monthly / Yearly) */}
             <div className="mt-6 inline-flex items-center rounded-xl bg-slate-100 p-1 border border-slate-200">
               <button
                 type="button"
@@ -234,7 +233,6 @@ export const WebHostingHero = () => {
             </div>
           </div>
 
-          {/* 3 Grid Pricing Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
             {hostingPlans.map((plan) => (
               <div 

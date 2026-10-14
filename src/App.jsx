@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import NetworkBackground from './Components/NetworkBackground'
 import Navbar from './Components/Navbar'
 import Hero from './Components/Hero'
-import HostingComparisonSection from './Components/HostingComparisonSection'
 import HowItWorks from './Components/HowItWorks'
 import PricingSection from './Components/PricingSection'
 import Footer from './Components/Footer'
@@ -11,34 +10,63 @@ import WhyEastHost from './Components/WhyEastHost'
 import TargetAudienceSection from './Components/TargetAudienceSection'
 import { CloudLandingSections, DomainLandingSections, ServerHostingHero } from './Components/ServiceLandingSections'
 import NpLetterGenerator from './Components/NpLetterGenerator'
+import ServicePage from './Components/ServicePage'
+import WebHostingHero from './Components/WebHostingHero'
+import CloudHostingHero from './Components/CloudHostingHero'
+import WordPressHostHero from './Components/WordPressHostHero'
 
 const App = () => {
-  const [currentView, setCurrentView] = useState('home')
+  const [currentView, setCurrentView] = useState('home') // 'home', 'generator', 'web-hosting', 'cloud-hosting', 'wordpress-hosting', or 'service'
+  const [selectedService, setSelectedService] = useState(null)
+
+  const handleNavigate = (view, data = null) => {
+    setCurrentView(view)
+    if (data) setSelectedService(data)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   return (
-    <div id="top">
+    <div id="top" className="relative min-h-screen w-full bg-slate-50/30 font-sans antialiased">
       <NetworkBackground />
       
-      {/* Pass both navigation handler and active view to Navbar */}
-      <Navbar onNavigate={setCurrentView} currentView={currentView} />
+      <Navbar onNavigate={handleNavigate} currentView={currentView} />
 
-      {/* Conditionally render main homepage or .NP Generator */}
-      {currentView === 'home' ? (
-        <>
-          <Hero />
-          <DomainLandingSections />
-          <ServerHostingHero />
-          <PricingSection />
-          <CloudLandingSections />
-          <HowItWorks />
-          <WhyEastHost />
-          <TargetAudienceSection />
-          <CompanySection />
-          <Footer />
-        </>
-      ) : (
-        <NpLetterGenerator onBack={() => setCurrentView('home')} />
-      )}
+      <main className="relative z-10">
+        {currentView === 'home' && (
+          <>
+            <Hero />
+            <DomainLandingSections />
+            <ServerHostingHero />
+            <PricingSection />
+            <CloudLandingSections />
+            <HowItWorks />
+            <WhyEastHost />
+            <TargetAudienceSection />
+            <CompanySection />
+            <Footer />
+          </>
+        )}
+
+        {currentView === 'generator' && (
+          <NpLetterGenerator onBack={() => handleNavigate('home')} />
+        )}
+
+        {currentView === 'web-hosting' && (
+          <WebHostingHero onBack={() => handleNavigate('home')} />
+        )}
+
+        {currentView === 'cloud-hosting' && (
+          <CloudHostingHero onBack={() => handleNavigate('home')} />
+        )}
+
+        {currentView === 'wordpress-hosting' && (
+          <WordPressHostHero onBack={() => handleNavigate('home')} />
+        )}
+
+        {currentView === 'service' && (
+          <ServicePage service={selectedService} onBack={() => handleNavigate('home')} />
+        )}
+      </main>
     </div>
   )
 }

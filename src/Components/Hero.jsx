@@ -93,7 +93,7 @@ const Hero = () => {
   ]
 
   return (
-    <section className="hero-section site-section relative w-full overflow-hidden bg-gradient-to-b from-slate-50 via-white to-blue-50/30 pt-12 pb-6 font-sans sm:pt-14 sm:pb-8 lg:flex lg:min-h-[calc(100svh-6.5625rem)] lg:flex-col lg:pt-14 lg:pb-12">
+    <section className="hero-section site-section relative w-full overflow-hidden bg-transparent pt-12 pb-6 font-sans sm:pt-14 sm:pb-8 lg:flex lg:min-h-[calc(100svh-6.5625rem)] lg:flex-col lg:pt-14 lg:pb-12">
       
       {/* Enhanced Animations */}
       <style>{`
@@ -177,7 +177,7 @@ const Hero = () => {
           </div>
 
           {/* Main Heading */}
-          <h1 className="section-title max-w-[18ch] font-extrabold text-slate-950 mb-3 tracking-tight">
+          <h1 className="section-title max-w-[18ch] font-extrabold text-slate-950 text-3xl sm:text-5xl leading-tight mb-3 tracking-tight">
             Web Hosting &amp; Cloud Built for{' '}
             <span className="bg-gradient-to-r from-[#1b75e7] via-[#1565c0] to-[#0c438e] bg-clip-text text-transparent transition-all duration-300">
               Nepal’s Fast-Growing Brands

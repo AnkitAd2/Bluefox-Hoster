@@ -64,10 +64,10 @@ const hostingGroups = [
     number: '01',
     accent: 'bg-blue-50 text-blue-700 border-blue-100',
     items: [
-      { icon: Globe, image: WebHostingLogo, title: 'Web Hosting', description: 'Fast, secure, always supported' },
-      { icon: Cloud, image: CloudHostingLogo, title: 'Cloud Hosting', description: 'Resilient hosting built to scale' },
-      { icon: PanelsTopLeft, image: WordPressLogo, title: 'WordPress Hosting', description: 'Optimized for WordPress sites' },
-      { icon: ShoppingBag, image: EcommerceLogo, title: 'eCommerce Hosting', description: 'Secure online storefronts' },
+      { icon: Globe, image: WebHostingLogo, title: 'Web Hosting', description: 'Fast, secure, always supported', path: 'web-hosting' },
+      { icon: Cloud, image: CloudHostingLogo, title: 'Cloud Hosting', description: 'Resilient hosting built to scale', path: 'cloud-hosting' },
+      { icon: PanelsTopLeft, image: WordPressLogo, title: 'WordPress Hosting', description: 'Optimized for WordPress sites', path: 'wordpress-hosting' },
+      { icon: ShoppingBag, image: EcommerceLogo, title: 'eCommerce Hosting', description: 'Secure online storefronts', path: 'ecommerce-hosting' },
     ],
   },
   {
@@ -75,10 +75,10 @@ const hostingGroups = [
     number: '02',
     accent: 'bg-violet-50 text-violet-700 border-violet-100',
     items: [
-      { icon: Coffee, title: 'Bluefox Hosting', description: 'Reliable Java environments' },
-      { icon: Layers3, image: DjangoLogo, title: 'Django Hosting', description: 'A smooth path to production' },
-      { icon: CodeXml, image: PythonLogo, title: 'Python Hosting', description: 'Deploy Python applications' },
-      { icon: Hexagon, image: NodejsLogo, title: 'Node.js Hosting', description: 'Modern JavaScript runtimes' },
+      { icon: Coffee, title: 'Bluefox Hosting', description: 'Reliable Java environments', path: 'bluefox-hosting' },
+      { icon: Layers3, image: DjangoLogo, title: 'Django Hosting', description: 'A smooth path to production', path: 'django-hosting' },
+      { icon: CodeXml, image: PythonLogo, title: 'Python Hosting', description: 'Deploy Python applications', path: 'python-hosting' },
+      { icon: Hexagon, image: NodejsLogo, title: 'Node.js Hosting', description: 'Modern JavaScript runtimes', path: 'nodejs-hosting' },
     ],
   },
   {
@@ -86,9 +86,9 @@ const hostingGroups = [
     number: '03',
     accent: 'bg-emerald-50 text-emerald-700 border-emerald-100',
     items: [
-      { icon: MapPin, image: UsaLogo, title: 'USA Based VPS', description: 'Global reach, dependable speed' },
-      { icon: MapPin, image: EuropeLogo, title: 'Europe Based VPS', description: 'Reliable European infrastructure' },
-      { icon: NepalFlagIcon, title: 'Nepal Based VPS', description: 'Low latency for local users' },
+      { icon: MapPin, image: UsaLogo, title: 'USA Based VPS', description: 'Global reach, dependable speed', path: 'usa-vps' },
+      { icon: MapPin, image: EuropeLogo, title: 'Europe Based VPS', description: 'Reliable European infrastructure', path: 'europe-vps' },
+      { icon: NepalFlagIcon, title: 'Nepal Based VPS', description: 'Low latency for local users', path: 'nepal-vps' },
     ],
   },
   {
@@ -96,8 +96,8 @@ const hostingGroups = [
     number: '04',
     accent: 'bg-amber-50 text-amber-800 border-amber-100',
     items: [
-      { icon: BriefcaseBusiness, title: 'Reseller Hosting', description: 'Launch your own hosting brand' },
-      { icon: ArrowUpRight, title: '360° Business Toolkit', description: 'Tools to grow your audience' },
+      { icon: BriefcaseBusiness, title: 'Reseller Hosting', description: 'Launch your own hosting brand', path: 'reseller-hosting' },
+      { icon: ArrowUpRight, title: '360° Business Toolkit', description: 'Tools to grow your audience', path: 'business-toolkit' },
     ],
   },
 ]
@@ -106,36 +106,36 @@ const emailCloudGroups = [
   {
     title: 'Google',
     items: [
-      { icon: SiGoogle, title: 'Google Workspace', description: 'Streamlined solutions for efficient collaboration' },
-      { icon: SiGooglecloud, title: 'Google Cloud Console', description: 'Easily manage and scale your applications' },
-      { icon: SiNordvpn, title: 'NordVPN', description: 'Encrypt and protect your online presence everywhere', subheading: 'VPN' },
+      { icon: SiGoogle, title: 'Google Workspace', description: 'Streamlined solutions for efficient collaboration', path: 'google-workspace' },
+      { icon: SiGooglecloud, title: 'Google Cloud Console', description: 'Easily manage and scale your applications', path: 'google-cloud' },
+      { icon: SiNordvpn, title: 'NordVPN', description: 'Encrypt and protect your online presence everywhere', subheading: 'VPN', path: 'nordvpn' },
     ],
   },
   {
     title: 'Microsoft',
     items: [
-      { icon: FaMicrosoft, image: Microsoft365, title: 'Microsoft Office 365', description: 'Boost productivity with cloud-based tools' },
-      { icon: FaMicrosoft, image: LTSC, title: 'Office LTSC 2024', description: 'A stable, long-term solution for business efficiency' },
-      { icon: FaMicrosoft, image: Copilot, title: 'Microsoft Copilot', description: 'AI assistance for faster, smarter work' },
-      { icon: FaMicrosoft, image: PowerBI, title: 'Microsoft Power BI', description: 'Unlock powerful data insights with Power BI' },
-      { icon: FaMicrosoft, image: Azure, title: 'Microsoft Azure', description: 'Run smarter, faster, and more scalable workloads' },
+      { icon: FaMicrosoft, image: Microsoft365, title: 'Microsoft Office 365', description: 'Boost productivity with cloud-based tools', path: 'office-365' },
+      { icon: FaMicrosoft, image: LTSC, title: 'Office LTSC 2024', description: 'A stable, long-term solution for business efficiency', path: 'office-ltsc' },
+      { icon: FaMicrosoft, image: Copilot, title: 'Microsoft Copilot', description: 'AI assistance for faster, smarter work', path: 'copilot' },
+      { icon: FaMicrosoft, image: PowerBI, title: 'Microsoft Power BI', description: 'Unlock powerful data insights with Power BI', path: 'power-bi' },
+      { icon: FaMicrosoft, image: Azure, title: 'Microsoft Azure', description: 'Run smarter, faster, and more scalable workloads', path: 'azure' },
     ],
   },
   {
     title: 'Zoho',
     items: [
-      { icon: SiZoho, title: 'Zoho CRM', description: 'Streamline sales and customer engagement' },
-      { icon: SiZoho, title: 'Bigin by Zoho CRM', description: 'Automate sales and boost customer engagement' },
-      { icon: SiZoho, title: 'Zoho Mail', description: 'Secure and efficient email hosting for businesses' },
-      { icon: SiZoho, title: 'Zoho Workplace', description: 'Integrated tools for seamless team collaboration' },
+      { icon: SiZoho, title: 'Zoho CRM', description: 'Streamline sales and customer engagement', path: 'zoho-crm' },
+      { icon: SiZoho, title: 'Bigin by Zoho CRM', description: 'Automate sales and boost customer engagement', path: 'bigin-zoho' },
+      { icon: SiZoho, title: 'Zoho Mail', description: 'Secure and efficient email hosting for businesses', path: 'zoho-mail' },
+      { icon: SiZoho, title: 'Zoho Workplace', description: 'Integrated tools for seamless team collaboration', path: 'zoho-workplace' },
     ],
   },
   {
     title: 'Others',
     items: [
-      { icon: FaAws, title: 'Amazon Web Services', description: 'Harness cloud technology for any scale' },
-      { icon: SiZoom, title: 'Zoom', description: 'Seamless video conferencing and collaboration' },
-      { icon: FaMicrosoft, title: 'Microsoft Defender', description: 'Get 360 protection for your business' },
+      { icon: FaAws, title: 'Amazon Web Services', description: 'Harness cloud technology for any scale', path: 'aws' },
+      { icon: SiZoom, title: 'Zoom', description: 'Seamless video conferencing and collaboration', path: 'zoom' },
+      { icon: FaMicrosoft, title: 'Microsoft Defender', description: 'Get 360 protection for your business', path: 'microsoft-defender' },
     ],
   },
 ]
@@ -182,13 +182,9 @@ const Navbar = ({ onNavigate, currentView }) => {
 
   const handleLogoClick = () => {
     dismissDropdowns()
-    
-    // Switch view to home if on another page
     if (onNavigate && currentView !== 'home') {
       onNavigate('home')
     }
-
-    // Smoothly scroll to top/hero section
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -232,7 +228,6 @@ const Navbar = ({ onNavigate, currentView }) => {
 
   return (
     <>
-      {/* Background Blur Overlay */}
       <div 
         aria-hidden="true"
         className={`fixed inset-0 z-[90] bg-slate-900/30 backdrop-blur-sm transition-all duration-300 pointer-events-none ${
@@ -264,7 +259,6 @@ const Navbar = ({ onNavigate, currentView }) => {
           }
         `}</style>
       
-        {/* 1. TOP ANNOUNCEMENT & CONTACT BAR */}
         <div className="border-b border-gray-100 py-0.5 text-xs sm:py-1 sm:text-sm text-slate-600">
           <div className="site-container flex flex-col md:flex-row items-center justify-between gap-1">
             <div className="flex items-center gap-4">
@@ -281,7 +275,6 @@ const Navbar = ({ onNavigate, currentView }) => {
 
               <span className="text-gray-300">|</span>
 
-              {/* SUPPORT DROPDOWN */}
               <div
                 className="nav-dropdown support-dropdown relative"
                 data-open={activeDropdown === 'support'}
@@ -345,10 +338,8 @@ const Navbar = ({ onNavigate, currentView }) => {
           </div>
         </div>
 
-        {/* 2. MAIN NAVIGATION BAR */}
         <div className="site-container relative py-2 flex items-center justify-between gap-4">
         
-          {/* BRAND LOGO - SCROLLS TO TOP/HERO SECTION ONLY */}
           <button 
             onClick={handleLogoClick} 
             className="flex shrink-0 items-center bg-transparent border-none cursor-pointer p-0" 
@@ -361,11 +352,9 @@ const Navbar = ({ onNavigate, currentView }) => {
             />
           </button>
 
-          {/* NAVIGATION LINKS */}
           <nav className="hidden md:block">
             <ul className="flex items-center gap-4 2xl:gap-6 text-sm 2xl:text-base font-medium text-slate-600 whitespace-nowrap">
             
-              {/* DOMAINS DROPDOWN */}
               <li
                 className="nav-dropdown relative"
                 data-open={activeDropdown === 'domains'}
@@ -438,7 +427,6 @@ const Navbar = ({ onNavigate, currentView }) => {
                 </div>
               </li>
 
-              {/* SERVER & HOSTING DROPDOWN */}
               <li
                 className="nav-dropdown relative"
                 data-open={activeDropdown === 'hosting'}
@@ -478,9 +466,15 @@ const Navbar = ({ onNavigate, currentView }) => {
                             <div className="space-y-1">
                               {group.items.map((item) => (
                                 <a
-                                  className="flex items-center gap-2.5 rounded-lg border border-transparent px-2 py-2 transition-colors hover:border-blue-100 hover:bg-blue-50/60"
-                                  href="#server-hosting"
-                                  onClick={handleSectionClick('#server-hosting')}
+                                  className="flex items-center gap-2.5 rounded-lg border border-transparent px-2 py-2 transition-colors hover:border-blue-100 hover:bg-blue-50/60 cursor-pointer"
+                                  href={`#${item.path}`}
+                                  onClick={(e) => {
+                                    e.preventDefault()
+                                    dismissDropdowns()
+                                    if (onNavigate) {
+                                      onNavigate(item.path, item)
+                                    }
+                                  }}
                                   key={item.title}
                                 >
                                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-700">
@@ -504,7 +498,6 @@ const Navbar = ({ onNavigate, currentView }) => {
                 </div>
               </li>
 
-              {/* EMAILS & CLOUDS DROPDOWN */}
               <li
                 className="nav-dropdown relative"
                 data-open={activeDropdown === 'cloud'}
@@ -545,9 +538,15 @@ const Navbar = ({ onNavigate, currentView }) => {
                             <React.Fragment key={item.title}>
                               {item.subheading && <h4 className="px-2 pt-1 text-sm font-medium text-slate-500">{item.subheading}</h4>}
                               <a
-                                href="#cloud-pricing"
-                                onClick={handleSectionClick('#cloud-pricing')}
-                                className="flex items-start gap-3 rounded-xl border border-transparent p-2 transition-colors hover:border-blue-100 hover:bg-blue-50/60"
+                                href={`#${item.path}`}
+                                onClick={(e) => {
+                                  e.preventDefault()
+                                  dismissDropdowns()
+                                  if (onNavigate) {
+                                    onNavigate(item.path, item)
+                                  }
+                                }}
+                                className="flex items-start gap-3 rounded-xl border border-transparent p-2 transition-colors hover:border-blue-100 hover:bg-blue-50/60 cursor-pointer"
                               >
                                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-blue-50">
                                   {item.image ? (
@@ -572,7 +571,6 @@ const Navbar = ({ onNavigate, currentView }) => {
                 </div>
               </li>
 
-              {/* GENERATOR BUTTON */}
               <li>
                 <button 
                   type="button" 
@@ -587,7 +585,6 @@ const Navbar = ({ onNavigate, currentView }) => {
             </ul>
           </nav>
 
-          {/* ACTION BUTTON */}
           <div className="flex items-center gap-3 whitespace-nowrap">
             <button
               type="button"
