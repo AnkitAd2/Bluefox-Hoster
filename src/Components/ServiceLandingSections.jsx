@@ -17,6 +17,7 @@ import PythonLogo from '../assets/python logo.webp'
 import NodejsLogo from '../assets/nodejs-logo.svg'
 import UsaLogo from '../assets/Usa.avif'
 import EuropeLogo from '../assets/europe.avif'
+import NepalLogo from '../assets/Flag_of_Nepal.svg.webp'
 
 const domainOffers = [
   { extension: '.com', image: Dotcom, description: 'Go global', price: 'Rs 1,950 / year' },
@@ -153,7 +154,7 @@ const hostingCards = [
   { label: 'Node.js', image: NodejsLogo, from: 'Rs 250/mo', path: 'nodejs-hosting' },
   { label: 'USA VPS', image: UsaLogo, from: 'Rs 1,500/mo', path: 'usa-vps' },
   { label: 'Europe VPS', image: EuropeLogo, from: 'Rs 1,500/mo', path: 'europe-vps' },
-  { label: 'Nepal VPS', emoji: '🇳🇵', from: 'Rs 1,200/mo', path: 'nepal-vps' },
+  { label: 'Nepal VPS', image: NepalLogo, from: 'Rs 1,200/mo', path: 'nepal-vps' },
 ]
 
 

@@ -179,7 +179,7 @@ const Hero = () => {
           {/* Main Heading */}
           <h1 className="section-title max-w-[18ch] font-extrabold text-slate-950 text-3xl sm:text-5xl leading-tight mb-3 tracking-tight">
             Web Hosting &amp; Cloud Built for{' '}
-            <span className="bg-gradient-to-r from-[#1b75e7] via-[#1565c0] to-[#0c438e] bg-clip-text text-transparent transition-all duration-300">
+            <span className="bg-gradient-to-r bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] bg-clip-text text-transparent transition-all duration-300">
               Nepal’s Fast-Growing Brands
             </span>
           </h1>
@@ -294,7 +294,7 @@ const Hero = () => {
                 <Server className="h-4 w-4" />
               </div>
               <div>
-                <h3 className="text-xs font-bold text-white tracking-wide">Kathmandu Tier-3 Node</h3>
+                <h3 className="text-xs font-bold text-white tracking-wide">Nepal Tier-3 Node</h3>
                 <p className="text-[10px] text-blue-200/70 flex items-center gap-1 mt-0.5">
                   <Activity className="h-3 w-3 text-emerald-400" /> Latency: &lt;1ms
                 </p>
@@ -382,7 +382,7 @@ const Hero = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-between rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 p-3 shadow-xl">
+            <div className="flex items-center justify-between rounded-2xl bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] p-3 shadow-xl">
               <div>
                 <span className="text-[9px] font-extrabold uppercase tracking-widest text-blue-200 block">Starting Offer</span>
                 <div className="flex items-baseline gap-1 mt-0.5">

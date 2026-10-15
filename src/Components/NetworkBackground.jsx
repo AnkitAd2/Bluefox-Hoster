@@ -43,7 +43,6 @@ const NetworkBackground = () => {
       this.brightness = 0
     }
 
-    // Updated node color to match your Hero's brand blue (#1b75e7)
     Node.prototype.drawNode = function () {
       const color = "rgba(27, 117, 231, " + (this.brightness * 1.2) + ")"
       ctx.beginPath()
@@ -52,7 +51,6 @@ const NetworkBackground = () => {
       ctx.fill()
     }
 
-    // Updated connection lines to match the soft blue theme
     Node.prototype.drawConnections = function () {
       for (let i = 0; i < this.siblings.length; i++) {
         const color = "rgba(59, 130, 246, " + (this.brightness * 0.7) + ")"
@@ -184,8 +182,8 @@ const NetworkBackground = () => {
   return (
     <canvas
       ref={canvasRef}
-      // Changed background from bg-black to bg-[#f7fbff] to match your Hero section's soft tone
-      className="fixed inset-0 z-[-1] h-full w-full bg-[#f7fbff] pointer-events-none overflow-hidden"
+      // Changed from bg-[#f7fbff] to bg-transparent so the network mesh shows through all sections
+      className="fixed inset-0 z-[-1] h-full w-full bg-transparent pointer-events-none overflow-hidden"
     />
   )
 }

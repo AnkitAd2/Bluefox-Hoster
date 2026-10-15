@@ -61,6 +61,20 @@ const App = () => {
   return (
     <div id="top" className="relative min-h-screen w-full bg-slate-50/30 font-sans antialiased">
       <NetworkBackground />
+
+      {/* Let the network mesh (behind everything) show through sections that have a plain light
+          background. Cards/boxes inside sections keep their own backgrounds, and sections with
+          gradients or dark colours are left alone. */}
+      <style>{`
+        main section[class*="bg-white"],
+        main section[class*="bg-slate-50"],
+        main section[class*="bg-slate-100"],
+        main section[class*="bg-gray-50"],
+        main section[class*="bg-gray-100"],
+        main section[class*="bg-[#f"] {
+          background-color: transparent !important;
+        }
+      `}</style>
       
       <Navbar onNavigate={handleNavigate} currentView={currentView} />
 
