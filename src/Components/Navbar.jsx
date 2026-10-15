@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Activity,
   ArrowUpRight,
@@ -15,6 +15,8 @@ import {
   MessageSquare,
   PanelsTopLeft,
   ShoppingBag,
+  Menu,
+  X,
 } from 'lucide-react'
 import { FaAws, FaMicrosoft } from 'react-icons/fa6'
 import { RiArrowDropDownLine } from "react-icons/ri"
@@ -168,6 +170,8 @@ const supportOptions = [
 const Navbar = ({ onNavigate, currentView }) => {
   const [pinnedDropdown, setPinnedDropdown] = React.useState(null)
   const [hoveredDropdown, setHoveredDropdown] = React.useState(null)
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+  const [mobileSubMenu, setMobileSubMenu] = React.useState(null) // 'domains', 'hosting', 'cloud', 'support'
   const headerRef = React.useRef(null)
   const activeDropdown = pinnedDropdown || hoveredDropdown
 
@@ -182,6 +186,7 @@ const Navbar = ({ onNavigate, currentView }) => {
 
   const handleLogoClick = () => {
     dismissDropdowns()
+    setMobileMenuOpen(false)
     if (onNavigate && currentView !== 'home') {
       onNavigate('home')
     }
@@ -193,6 +198,7 @@ const Navbar = ({ onNavigate, currentView }) => {
 
   const handleSectionClick = (targetHash) => (e) => {
     dismissDropdowns()
+    setMobileMenuOpen(false)
     if (onNavigate && currentView !== 'home') {
       onNavigate('home')
       setTimeout(() => {
@@ -215,6 +221,7 @@ const Navbar = ({ onNavigate, currentView }) => {
     const closeOnEscape = (event) => {
       if (event.key === 'Escape') {
         dismissDropdowns()
+        setMobileMenuOpen(false)
       }
     }
 
@@ -231,9 +238,9 @@ const Navbar = ({ onNavigate, currentView }) => {
       <div 
         aria-hidden="true"
         className={`fixed inset-0 z-[90] bg-slate-900/30 backdrop-blur-sm transition-all duration-300 pointer-events-none ${
-          activeDropdown ? 'opacity-100 pointer-events-auto' : 'opacity-0'
+          activeDropdown || mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0'
         }`}
-        onClick={dismissDropdowns}
+        onClick={() => { dismissDropdowns(); setMobileMenuOpen(false); }}
       />
 
       <header ref={headerRef} className="sticky top-0 z-[100] w-full font-sans bg-white border-b border-gray-100">
@@ -276,7 +283,7 @@ const Navbar = ({ onNavigate, currentView }) => {
               <span className="text-gray-300">|</span>
 
               <div
-                className="nav-dropdown support-dropdown relative"
+                className="nav-dropdown support-dropdown relative hidden md:block"
                 data-open={activeDropdown === 'support'}
                 onMouseEnter={() => !pinnedDropdown && setHoveredDropdown('support')}
                 onMouseLeave={() => !pinnedDropdown && setHoveredDropdown(null)}
@@ -338,7 +345,7 @@ const Navbar = ({ onNavigate, currentView }) => {
           </div>
         </div>
 
-        <div className="site-container relative py-2 flex items-center justify-between gap-4">
+        <div className="site-container relative py-2.5 flex items-center justify-between gap-4">
         
           <button 
             onClick={handleLogoClick} 
@@ -348,10 +355,11 @@ const Navbar = ({ onNavigate, currentView }) => {
             <img
               src={BlueFoxLogo}
               alt="Blue Fox Hoster"
-              className="h-11 w-auto max-w-[10rem] object-contain"
+              className="h-10 sm:h-11 w-auto max-w-[10rem] object-contain"
             />
           </button>
 
+          {/* Desktop Navigation */}
           <nav className="hidden md:block">
             <ul className="flex items-center gap-4 2xl:gap-6 text-sm 2xl:text-base font-medium text-slate-600 whitespace-nowrap">
             
@@ -589,13 +597,140 @@ const Navbar = ({ onNavigate, currentView }) => {
             <button
               type="button"
               onClick={() => { dismissDropdowns(); if (onNavigate) onNavigate('home'); }}
-              className="bg-gradient-to-b from-[#1b75e7] to-[#125ec5] hover:from-[#2e93fc] hover:to-[#1777ed] text-white font-semibold text-sm 2xl:text-base px-3.5 py-2 rounded-xl transition-all cursor-pointer border-none shadow-sm"
+              className="hidden sm:inline-block bg-gradient-to-b from-[#1b75e7] to-[#125ec5] hover:from-[#2e93fc] hover:to-[#1777ed] text-white font-semibold text-sm 2xl:text-base px-3.5 py-2 rounded-xl transition-all cursor-pointer border-none shadow-sm"
             >
               Get Started
+            </button>
+
+            {/* Mobile Hamburger Toggle Button */}
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen((prev) => !prev)}
+              aria-label="Toggle mobile menu"
+              className="md:hidden flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 focus:outline-none cursor-pointer"
+            >
+              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
 
         </div>
+
+        {/* Mobile Navigation Drawer */}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute left-0 top-full w-full max-h-[85vh] overflow-y-auto bg-white border-b border-slate-200 shadow-2xl transition-all p-4 space-y-4">
+            
+            {/* Quick Links */}
+            <div className="space-y-1">
+              <button
+                type="button"
+                onClick={() => { setMobileMenuOpen(false); if (onNavigate) onNavigate('home'); }}
+                className="w-full text-left rounded-lg px-3 py-2.5 text-sm font-semibold text-slate-800 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+              >
+                Home
+              </button>
+              <button
+                type="button"
+                onClick={() => { setMobileMenuOpen(false); if (onNavigate) onNavigate('generator'); }}
+                className="w-full text-left rounded-lg px-3 py-2.5 text-sm font-semibold text-slate-800 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+              >
+                .NP letter Generator
+              </button>
+            </div>
+
+            {/* Domains Section */}
+            <div className="border-t border-slate-100 pt-3">
+              <button
+                type="button"
+                onClick={() => setMobileSubMenu(mobileSubMenu === 'domains' ? null : 'domains')}
+                className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-bold text-slate-900 bg-slate-50 hover:bg-slate-100"
+              >
+                <span>Domains &amp; Pricing</span>
+                <RiArrowDropDownLine className={`h-6 w-6 transition-transform ${mobileSubMenu === 'domains' ? 'rotate-180' : ''}`} />
+              </button>
+              {mobileSubMenu === 'domains' && (
+                <div className="mt-2 grid grid-cols-1 gap-2 pl-2">
+                  {domainOptions.map((domain) => (
+                    <a
+                      key={domain.extension}
+                      href="#domain-pricing"
+                      onClick={handleSectionClick('#domain-pricing')}
+                      className="flex items-center justify-between rounded-lg border border-slate-100 px-3 py-2 text-xs font-medium text-slate-700 hover:bg-blue-50"
+                    >
+                      <span className="font-bold text-slate-900">{domain.extension} - {domain.description}</span>
+                      <span className="text-blue-600 font-bold">{domain.price}</span>
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Server & Hosting Section */}
+            <div className="border-t border-slate-100 pt-3">
+              <button
+                type="button"
+                onClick={() => setMobileSubMenu(mobileSubMenu === 'hosting' ? null : 'hosting')}
+                className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-bold text-slate-900 bg-slate-50 hover:bg-slate-100"
+              >
+                <span>Server &amp; Hosting</span>
+                <RiArrowDropDownLine className={`h-6 w-6 transition-transform ${mobileSubMenu === 'hosting' ? 'rotate-180' : ''}`} />
+              </button>
+              {mobileSubMenu === 'hosting' && (
+                <div className="mt-2 space-y-3 pl-2">
+                  {hostingGroups.map((group) => (
+                    <div key={group.title} className="space-y-1">
+                      <span className="text-[11px] font-bold uppercase text-blue-600 px-2">{group.title}</span>
+                      {group.items.map((item) => (
+                        <a
+                          key={item.title}
+                          href={`#${item.path}`}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            setMobileMenuOpen(false)
+                            if (onNavigate) onNavigate(item.path, item)
+                          }}
+                          className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600"
+                        >
+                          <span className="h-2 w-2 rounded-full bg-blue-500"></span>
+                          <span>{item.title}</span>
+                        </a>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Support Section */}
+            <div className="border-t border-slate-100 pt-3 pb-2">
+              <span className="text-[11px] font-bold uppercase text-slate-400 px-3">Support &amp; Contact</span>
+              <div className="mt-2 grid grid-cols-1 gap-2 pl-2">
+                {supportOptions.map((opt) => (
+                  <a
+                    key={opt.title}
+                    href="#support"
+                    onClick={handleSectionClick('#support')}
+                    className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50"
+                  >
+                    <opt.icon className="h-4 w-4 text-blue-600" />
+                    <span>{opt.title}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* CTA Button */}
+            <div className="pt-2">
+              <button
+                type="button"
+                onClick={() => { setMobileMenuOpen(false); if (onNavigate) onNavigate('home'); }}
+                className="w-full rounded-xl bg-gradient-to-r from-[#1b75e7] to-[#125ec5] py-3 text-center text-sm font-semibold text-white shadow-md"
+              >
+                Get Started
+              </button>
+            </div>
+
+          </div>
+        )}
 
       </header>
     </>

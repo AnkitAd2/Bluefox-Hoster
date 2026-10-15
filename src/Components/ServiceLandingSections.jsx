@@ -1,5 +1,5 @@
-import React from 'react'
-import { Activity, ArrowRight, Cloud, Globe, Mail, Server, ShieldCheck } from 'lucide-react'
+import React, { useContext } from 'react'
+import { Activity, ArrowRight, Cloud, Globe, Mail, Server, ShieldCheck, MapPin, CodeXml, BriefcaseBusiness, Zap, Lock, Users, Star } from 'lucide-react'
 import { FaMicrosoft } from 'react-icons/fa6'
 import { SiGoogle, SiZoho, SiZoom } from 'react-icons/si'
 import Dotbiz from '../assets/Dotbiz.avif'
@@ -8,6 +8,15 @@ import Dotinfo from '../assets/Dotinfo.avif'
 import Dotnet from '../assets/Dotnet.avif'
 import Dotnp from '../assets/Dotnp.avif'
 import Microsoft365 from '../assets/365.svg'
+import WebHostingLogo from '../assets/webhosting.svg'
+import CloudHostingLogo from '../assets/Cloudhosting.avif'
+import WordPressLogo from '../assets/wordpress.svg'
+import EcommerceLogo from '../assets/ecom.svg'
+import DjangoLogo from '../assets/django.svg'
+import PythonLogo from '../assets/python logo.webp'
+import NodejsLogo from '../assets/nodejs-logo.svg'
+import UsaLogo from '../assets/Usa.avif'
+import EuropeLogo from '../assets/europe.avif'
 
 const domainOffers = [
   { extension: '.com', image: Dotcom, description: 'Go global', price: 'Rs 1,950 / year' },
@@ -31,7 +40,7 @@ export const DomainLandingSections = () => (
           <p className="mt-4 max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
             Find a memorable address for your business, community, or next big project, with local .np options and familiar global extensions.
           </p>
-          <a href="#domains" className="mt-6 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#1b75e7] to-[#125ec5] px-5 py-3 text-sm font-semibold text-white shadow-md transition hover:shadow-lg">
+          <a href="#domains" className="mt-6 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] px-5 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:to-[#1565c0] hover:shadow-[0_12px_28px_rgba(30,136,229,0.45)] hover:-translate-y-0.5 active:scale-95">
             Search a domain <ArrowRight aria-hidden="true" className="h-4 w-4" />
           </a>
         </div>
@@ -131,68 +140,131 @@ export const DomainLandingSections = () => (
   </>
 )
 
-export const ServerHostingHero = () => (
-  <section id="server-hosting" className="site-section scroll-mt-28 overflow-hidden bg-[#061b3f] py-16 font-sans text-white sm:py-20">
-    <div className="site-container grid items-center gap-10 lg:grid-cols-[1fr_0.9fr]">
-      <div className="max-w-2xl">
-        <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-bold uppercase text-blue-100">
-          <Server aria-hidden="true" className="h-3.5 w-3.5" /> Server &amp; hosting
-        </span>
-        <h2 className="section-title mt-5 font-extrabold text-white">A faster, steadier home for your next website.</h2>
-        <p className="mt-4 max-w-xl text-sm leading-relaxed text-blue-100 sm:text-base">
-          Choose managed web hosting or scale into cloud and developer-ready environments, backed by local support and reliable infrastructure.
-        </p>
-        <a href="#server-plans" className="mt-6 inline-flex items-center gap-2 rounded-lg bg-white px-5 py-3 text-sm font-semibold text-[#061b3f] transition hover:bg-blue-50">
-          Explore hosting plans <ArrowRight aria-hidden="true" className="h-4 w-4" />
-        </a>
-      </div>
-      <div className="grid gap-3 sm:grid-cols-2" aria-label="Hosting infrastructure highlights">
-        <article className="rounded-xl border border-white/15 bg-white/[0.07] p-5 sm:col-span-2">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-blue-400/15 text-blue-200">
-                <Server aria-hidden="true" className="h-6 w-6" />
-              </span>
-              <span>
-                <span className="block text-sm font-semibold text-white">Managed hosting plans</span>
-                <span className="mt-0.5 block text-xs text-blue-100">Shared, VPS, and developer-ready</span>
-              </span>
-            </div>
-            <span className="shrink-0 text-sm font-bold text-white">From Rs 83/mo</span>
+// ─────────────────────────────────────────────────────
+// SERVER & HOSTING HERO — Enhanced with service cards
+// ─────────────────────────────────────────────────────
+const hostingCards = [
+  { label: 'Web Hosting', image: WebHostingLogo, from: 'Rs 120/mo', badge: 'Popular', path: 'web-hosting' },
+  { label: 'Cloud Hosting', image: CloudHostingLogo, from: 'Rs 450/mo', path: 'cloud-hosting' },
+  { label: 'WordPress', image: WordPressLogo, from: 'Rs 199/mo', path: 'wordpress-hosting' },
+  { label: 'eCommerce', image: EcommerceLogo, from: 'Rs 349/mo', path: 'ecommerce-hosting' },
+  { label: 'Django', image: DjangoLogo, from: 'Rs 290/mo', path: 'django-hosting' },
+  { label: 'Python', image: PythonLogo, from: 'Rs 290/mo', path: 'python-hosting' },
+  { label: 'Node.js', image: NodejsLogo, from: 'Rs 250/mo', path: 'nodejs-hosting' },
+  { label: 'USA VPS', image: UsaLogo, from: 'Rs 1,500/mo', path: 'usa-vps' },
+  { label: 'Europe VPS', image: EuropeLogo, from: 'Rs 1,500/mo', path: 'europe-vps' },
+  { label: 'Nepal VPS', emoji: '🇳🇵', from: 'Rs 1,200/mo', path: 'nepal-vps' },
+]
+
+export const ServerHostingHero = ({ onNavigate }) => (
+  <section id="server-hosting" className="site-section scroll-mt-28 overflow-hidden bg-[#061b3f] py-16 font-sans text-white sm:py-20 relative">
+    {/* Subtle grid overlay */}
+    <div className="absolute inset-0 opacity-[0.04]" style={{backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '40px 40px'}} />
+    {/* Glow blob */}
+    <div className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-10 blur-3xl" style={{background: 'radial-gradient(circle, #1b75e7, transparent)'}} />
+
+    <div className="site-container relative z-10">
+      {/* Top row: heading + CTA */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
+        <div className="max-w-xl">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-bold uppercase text-blue-100 mb-4">
+            <Server aria-hidden="true" className="h-3.5 w-3.5" /> Server &amp; hosting
+          </span>
+          <h2 className="section-title font-extrabold text-white">A faster, steadier home for your next website.</h2>
+          <p className="mt-3 text-sm leading-relaxed text-blue-100 sm:text-base max-w-lg">
+            Choose managed web hosting or scale into cloud and developer-ready environments, backed by local support and reliable infrastructure.
+          </p>
+        </div>
+        <div className="flex flex-col gap-3 text-right shrink-0">
+          <div className="flex items-center gap-2 text-xs text-blue-200">
+            <ShieldCheck className="h-4 w-4 text-emerald-400" /> SSL &amp; DDoS included
           </div>
-        </article>
-        <article className="flex items-center gap-3 rounded-xl border border-white/15 bg-white/[0.07] p-4">
-          <ShieldCheck aria-hidden="true" className="h-5 w-5 shrink-0 text-emerald-300" />
-          <span>
-            <span className="block text-xs font-semibold text-white">Security included</span>
-            <span className="mt-0.5 block text-[11px] text-blue-100">SSL and daily backups</span>
-          </span>
-        </article>
-        <article className="flex items-center gap-3 rounded-xl border border-white/15 bg-white/[0.07] p-4">
-          <Activity aria-hidden="true" className="h-5 w-5 shrink-0 text-cyan-300" />
-          <span>
-            <span className="block text-xs font-semibold text-white">Built for uptime</span>
-            <span className="mt-0.5 block text-[11px] text-blue-100">99.99% plan guarantee</span>
-          </span>
-        </article>
+          <div className="flex items-center gap-2 text-xs text-blue-200">
+            <Activity className="h-4 w-4 text-cyan-300" /> 99.99% uptime guarantee
+          </div>
+          <div className="flex items-center gap-2 text-xs text-blue-200">
+            <Zap className="h-4 w-4 text-yellow-300" /> NVMe SSD on all plans
+          </div>
+        </div>
+      </div>
+
+      {/* Service Cards Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+        {hostingCards.map((card) => (
+          <button
+            key={card.path}
+            type="button"
+            onClick={() => onNavigate && onNavigate(card.path)}
+            className="group relative flex flex-col items-center gap-2.5 rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-4 text-center transition-all hover:bg-white/[0.12] hover:border-blue-400/40 hover:-translate-y-0.5 cursor-pointer"
+          >
+            {card.badge && (
+              <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] px-2.5 py-0.5 text-[10px] font-extrabold text-white shadow-sm whitespace-nowrap">
+                {card.badge}
+              </span>
+            )}
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10">
+              {card.image ? (
+                <img src={card.image} alt={card.label} className="h-7 w-7 object-contain rounded-sm" />
+              ) : (
+                <span className="text-2xl">{card.emoji}</span>
+              )}
+            </span>
+            <span className="block text-xs font-bold text-white leading-tight">{card.label}</span>
+            <span className="block text-[10px] text-blue-300 font-semibold">From {card.from}</span>
+            <span className="flex items-center gap-1 text-[10px] text-blue-400 group-hover:text-blue-200 transition-colors">
+              View plans <ArrowRight className="h-3 w-3" />
+            </span>
+          </button>
+        ))}
+      </div>
+
+      {/* Bottom trust strip */}
+      <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6">
+        <p className="text-xs text-blue-300">
+          💳 Pay via <span className="text-white font-semibold">eSewa, Khalti, IME Pay</span> or Bank Transfer
+        </p>
+        <a
+          href="#server-plans"
+          className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:to-[#1565c0] hover:shadow-[0_12px_28px_rgba(30,136,229,0.45)] hover:-translate-y-0.5 active:scale-95"
+        >
+          Compare all plans <ArrowRight className="h-4 w-4" />
+        </a>
       </div>
     </div>
   </section>
 )
 
-const defaultCloudPlans = [
-  { name: 'Google Workspace', price: 'Rs 780', unit: 'per user / mo' },
-  { name: 'Microsoft 365 Business', price: 'Rs 850', unit: 'per user / mo' },
-  { name: 'Zoho Workplace', price: 'Rs 350', unit: 'per user / mo' },
-  { name: 'Zoom One Pro', price: 'Rs 1,850', unit: 'per host / mo' },
+// ─────────────────────────────────────────────────────
+// EMAIL & CLOUD LANDING — Enhanced with clickable service tiles
+// ─────────────────────────────────────────────────────
+const cloudServices = [
+  { icon: SiGoogle, label: 'Google Workspace', price: 'Rs 780', unit: '/user/mo', color: 'text-[#4285f4]', path: 'google-workspace' },
+  { icon: FaMicrosoft, image: Microsoft365, label: 'Microsoft 365', price: 'Rs 650', unit: '/user/mo', color: 'text-[#2675d8]', path: 'office-365' },
+  { icon: SiZoho, label: 'Zoho Workplace', price: 'Rs 700', unit: '/user/mo', color: 'text-[#e44b36]', path: 'zoho-workplace' },
+  { icon: SiZoom, label: 'Zoom Business', price: 'Rs 1,850', unit: '/host/mo', color: 'text-[#2d8cff]', path: 'zoom' },
 ]
 
-export const CloudLandingSections = () => {
+const moreCloudLinks = [
+  { label: 'Google Cloud', path: 'google-cloud', emoji: '☁️' },
+  { label: 'NordVPN', path: 'nordvpn', emoji: '🔒' },
+  { label: 'Office LTSC', path: 'office-ltsc', emoji: '📦' },
+  { label: 'MS Copilot', path: 'copilot', emoji: '🤖' },
+  { label: 'Power BI', path: 'power-bi', emoji: '📊' },
+  { label: 'Azure', path: 'azure', emoji: '🌐' },
+  { label: 'Zoho CRM', path: 'zoho-crm', emoji: '🧩' },
+  { label: 'Bigin CRM', path: 'bigin-zoho', emoji: '📋' },
+  { label: 'Zoho Mail', path: 'zoho-mail', emoji: '📧' },
+  { label: 'AWS', path: 'aws', emoji: '🟠' },
+  { label: 'MS Defender', path: 'microsoft-defender', emoji: '🛡️' },
+]
+
+export const CloudLandingSections = ({ onNavigate }) => {
   return (
     <div className="font-sans">
       {/* SECTION 1: CLOUD SERVICES HERO */}
-      <section className="bg-[#f7fbff] py-16 px-4 sm:px-8">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 items-center gap-10">
+      <section className="bg-gradient-to-br from-[#f0f7ff] to-[#e8f0fe] py-16 px-4 sm:px-8 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-blue-100 opacity-50 blur-3xl pointer-events-none" />
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 items-center gap-10 relative z-10">
           <div className="max-w-xl">
             <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white px-3 py-1 text-xs font-bold uppercase text-[#0c73d5] shadow-sm">
               <Cloud className="h-3.5 w-3.5" /> Email &amp; Cloud
@@ -203,32 +275,50 @@ export const CloudLandingSections = () => {
             <p className="mt-4 text-slate-600 text-sm sm:text-base leading-relaxed">
               Bring email, collaboration, video meetings, and cloud services together with a setup that can grow with your team.
             </p>
-            <a 
-              href="#cloud-pricing" 
-              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] px-5 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:from-[#1e88e5] hover:to-[#1565c0] hover:shadow-[0_10px_28px_rgba(30,136,229,0.55)] hover:-translate-y-0.5 active:scale-95"
+
+            {/* Quick-nav pill links */}
+            <div className="mt-5 flex flex-wrap gap-2">
+              {moreCloudLinks.map((s) => (
+                <button
+                  key={s.path}
+                  type="button"
+                  onClick={() => onNavigate && onNavigate(s.path)}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-700 shadow-sm transition-all hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 cursor-pointer"
+                >
+                  <span>{s.emoji}</span> {s.label}
+                </button>
+              ))}
+            </div>
+
+            <a
+              href="#cloud-pricing"
+              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] px-5 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:to-[#1565c0] hover:shadow-[0_12px_28px_rgba(30,136,229,0.45)] hover:-translate-y-0.5 active:scale-95"
             >
               Compare cloud options <ArrowRight className="h-4 w-4" />
             </a>
           </div>
 
-          {/* Right Side: Grid of Supported Apps */}
+          {/* Right Side: Clickable App Grid */}
           <div className="grid grid-cols-2 gap-3 sm:gap-4">
-            <div className="flex min-h-[5.5rem] items-center gap-3 rounded-xl border border-white bg-white/90 px-4 py-4 shadow-sm hover:border-blue-200 transition-all">
-              <SiGoogle className="h-8 w-8 shrink-0 text-[#4285f4]" />
-              <span className="text-sm font-semibold text-slate-800">Google</span>
-            </div>
-            <div className="flex min-h-[5.5rem] items-center gap-3 rounded-xl border border-white bg-white/90 px-4 py-4 shadow-sm hover:border-blue-200 transition-all">
-              <FaMicrosoft className="h-8 w-8 shrink-0 text-[#2675d8]" />
-              <span className="text-sm font-semibold text-slate-800">Microsoft</span>
-            </div>
-            <div className="flex min-h-[5.5rem] items-center gap-3 rounded-xl border border-white bg-white/90 px-4 py-4 shadow-sm hover:border-blue-200 transition-all">
-              <SiZoho className="h-8 w-8 shrink-0 text-[#e44b36]" />
-              <span className="text-sm font-semibold text-slate-800">Zoho</span>
-            </div>
-            <div className="flex min-h-[5.5rem] items-center gap-3 rounded-xl border border-white bg-white/90 px-4 py-4 shadow-sm hover:border-blue-200 transition-all">
-              <SiZoom className="h-8 w-8 shrink-0 text-[#2d8cff]" />
-              <span className="text-sm font-semibold text-slate-800">Zoom</span>
-            </div>
+            {cloudServices.map((svc) => (
+              <button
+                key={svc.path}
+                type="button"
+                onClick={() => onNavigate && onNavigate(svc.path)}
+                className="group flex min-h-[5.5rem] items-center gap-3 rounded-xl border border-slate-200 bg-white/90 px-4 py-4 shadow-sm hover:border-blue-300 hover:shadow-md transition-all cursor-pointer text-left"
+              >
+                {svc.image ? (
+                  <img src={svc.image} alt={svc.label} className="h-8 w-8 object-contain shrink-0" />
+                ) : (
+                  <svc.icon className={`h-8 w-8 shrink-0 ${svc.color}`} />
+                )}
+                <div className="min-w-0">
+                  <span className="block text-sm font-semibold text-slate-800 leading-tight">{svc.label}</span>
+                  <span className="block text-xs text-slate-500 mt-0.5">{svc.price}<span className="text-slate-400">{svc.unit}</span></span>
+                  <span className="block text-[10px] text-blue-600 font-semibold mt-1 group-hover:underline">View plans →</span>
+                </div>
+              </button>
+            ))}
             <div className="col-span-2 flex items-center gap-3 rounded-xl bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] px-5 py-4 text-white shadow-md">
               <ShieldCheck className="h-6 w-6 shrink-0" />
               <span className="text-sm font-semibold">Productivity, security, and cloud in one place</span>
@@ -248,21 +338,30 @@ export const CloudLandingSections = () => {
             <Mail className="hidden h-8 w-8 text-[#0c73d5] sm:block" />
           </div>
 
-          <div className="divide-y divide-slate-200 border-y border-slate-200">
-            {defaultCloudPlans.map((plan) => (
-              <article key={plan.name} className="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:gap-5 hover:bg-blue-50/30 transition-colors px-2 rounded-lg">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-[#0c73d5]">
-                  <Cloud className="h-6 w-6" />
+          <div className="divide-y divide-slate-100 border border-slate-200 rounded-2xl overflow-hidden">
+            {cloudServices.map((svc) => (
+              <button
+                key={svc.path}
+                type="button"
+                onClick={() => onNavigate && onNavigate(svc.path)}
+                className="w-full flex flex-col gap-3 py-4 px-5 sm:flex-row sm:items-center sm:gap-5 hover:bg-blue-50/30 transition-colors text-left cursor-pointer group"
+              >
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-blue-50">
+                  {svc.image ? (
+                    <img src={svc.image} alt="" className="h-7 w-7 object-contain" />
+                  ) : (
+                    <svc.icon className={`h-6 w-6 ${svc.color}`} />
+                  )}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <span className="block text-sm font-bold text-slate-900">{plan.name}</span>
+                  <span className="block text-sm font-bold text-slate-900">{svc.label}</span>
                   <span className="mt-0.5 block text-xs text-slate-500">Flexible setup and migration support</span>
                 </div>
-                <div className="sm:text-right">
-                  <span className="block text-sm font-bold text-slate-800">{plan.price}</span>
-                  <span className="block text-xs text-slate-500">{plan.unit}</span>
+                <div className="sm:text-right flex sm:flex-col items-center sm:items-end gap-3">
+                  <span className="block text-sm font-bold text-slate-800">{svc.price}<span className="text-xs text-slate-500">{svc.unit}</span></span>
+                  <span className="text-xs font-semibold text-blue-600 group-hover:text-blue-700">View plans →</span>
                 </div>
-              </article>
+              </button>
             ))}
           </div>
 

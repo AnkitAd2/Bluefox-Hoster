@@ -11,10 +11,40 @@ import TargetAudienceSection from './Components/TargetAudienceSection'
 import { CloudLandingSections, DomainLandingSections, ServerHostingHero } from './Components/ServiceLandingSections'
 import NpLetterGenerator from './Components/NpLetterGenerator'
 import ServicePage from './Components/ServicePage'
+
+// Server & Hosting pages
 import WebHostingHero from './Components/WebHostingHero'
 import CloudHostingHero from './Components/CloudHostingHero'
 import WordPressHostHero from './Components/WordPressHostHero'
-import EcomHostHero from './Components/EcomHostHero' // Import eCommerce hosting hero
+import EcomHostHero from './Components/EcomHostHero'
+import DjangoHostHero from './Components/DjangoHostHero'
+import PythonHostHero from './Components/PythonHostHero'
+import NodeJsHostHero from './Components/NodeJsHostHero'
+import UsaVpsHero from './Components/UsaVpsHero'
+import EuropeVpsHero from './Components/EuropeVpsHero'
+import NepalVpsHero from './Components/NepalVpsHero'
+import { HostingOptionsHero } from './Components/HostingOptionsHero'
+import { CodeBasedHero } from './Components/CodeBasedHero'
+import { BusinessHostingHero } from './Components/BusinessHostingHero'
+
+// Email & Cloud pages
+import {
+  GoogleWorkspaceHero,
+  GoogleCloudHero,
+  NordVpnHero,
+  Office365Hero,
+  OfficeLtscHero,
+  CopilotHero,
+  PowerBiHero,
+  AzureHero,
+  ZohoCrmHero,
+  BiginZohoHero,
+  ZohoMailHero,
+  ZohoWorkplaceHero,
+  AwsHero,
+  ZoomHero,
+  MicrosoftDefenderHero,
+} from './Components/EmailCloudPages'
 
 const App = () => {
   const [currentView, setCurrentView] = useState('home')
@@ -26,6 +56,8 @@ const App = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  const backHome = () => handleNavigate('home')
+
   return (
     <div id="top" className="relative min-h-screen w-full bg-slate-50/30 font-sans antialiased">
       <NetworkBackground />
@@ -33,6 +65,7 @@ const App = () => {
       <Navbar onNavigate={handleNavigate} currentView={currentView} />
 
       <main className="relative z-10">
+        {/* ── HOME ── */}
         {currentView === 'home' && (
           <>
             <Hero />
@@ -48,28 +81,46 @@ const App = () => {
           </>
         )}
 
-        {currentView === 'generator' && (
-          <NpLetterGenerator onBack={() => handleNavigate('home')} />
-        )}
+        {/* ── TOOLS ── */}
+        {currentView === 'generator' && <NpLetterGenerator onBack={backHome} />}
 
-        {currentView === 'web-hosting' && (
-          <WebHostingHero onBack={() => handleNavigate('home')} />
-        )}
+        {/* ── SERVER & HOSTING ── */}
+        {currentView === 'web-hosting'        && <WebHostingHero       onBack={backHome} />}
+        {currentView === 'cloud-hosting'      && <CloudHostingHero     onBack={backHome} />}
+        {currentView === 'wordpress-hosting'  && <WordPressHostHero    onBack={backHome} />}
+        {currentView === 'ecommerce-hosting'  && <EcomHostHero         onBack={backHome} />}
+        {currentView === 'django-hosting'     && <DjangoHostHero       onBack={backHome} />}
+        {currentView === 'python-hosting'     && <PythonHostHero       onBack={backHome} />}
+        {currentView === 'nodejs-hosting'     && <NodeJsHostHero       onBack={backHome} />}
+        {currentView === 'usa-vps'            && <UsaVpsHero           onBack={backHome} />}
+        {currentView === 'europe-vps'         && <EuropeVpsHero        onBack={backHome} />}
+        {currentView === 'nepal-vps'          && <NepalVpsHero         onBack={backHome} />}
+        {currentView === 'hosting-options'    && <HostingOptionsHero   onBack={backHome} />}
+        {currentView === 'code-based'         && <CodeBasedHero        onBack={backHome} />}
+        {currentView === 'reseller-hosting'   && <BusinessHostingHero  onBack={backHome} />}
+        {currentView === 'business-toolkit'   && <BusinessHostingHero  onBack={backHome} />}
+        {currentView === 'bluefox-hosting'    && <CodeBasedHero        onBack={backHome} />}
 
-        {currentView === 'cloud-hosting' && (
-          <CloudHostingHero onBack={() => handleNavigate('home')} />
-        )}
+        {/* ── EMAIL & CLOUD ── */}
+        {currentView === 'google-workspace'   && <GoogleWorkspaceHero  onBack={backHome} />}
+        {currentView === 'google-cloud'       && <GoogleCloudHero      onBack={backHome} />}
+        {currentView === 'nordvpn'            && <NordVpnHero          onBack={backHome} />}
+        {currentView === 'office-365'         && <Office365Hero        onBack={backHome} />}
+        {currentView === 'office-ltsc'        && <OfficeLtscHero       onBack={backHome} />}
+        {currentView === 'copilot'            && <CopilotHero          onBack={backHome} />}
+        {currentView === 'power-bi'           && <PowerBiHero          onBack={backHome} />}
+        {currentView === 'azure'              && <AzureHero            onBack={backHome} />}
+        {currentView === 'zoho-crm'           && <ZohoCrmHero          onBack={backHome} />}
+        {currentView === 'bigin-zoho'         && <BiginZohoHero        onBack={backHome} />}
+        {currentView === 'zoho-mail'          && <ZohoMailHero         onBack={backHome} />}
+        {currentView === 'zoho-workplace'     && <ZohoWorkplaceHero    onBack={backHome} />}
+        {currentView === 'aws'                && <AwsHero              onBack={backHome} />}
+        {currentView === 'zoom'               && <ZoomHero             onBack={backHome} />}
+        {currentView === 'microsoft-defender' && <MicrosoftDefenderHero onBack={backHome} />}
 
-        {currentView === 'wordpress-hosting' && (
-          <WordPressHostHero onBack={() => handleNavigate('home')} />
-        )}
-
-        {currentView === 'ecommerce-hosting' && (
-          <EcomHostHero onBack={() => handleNavigate('home')} />
-        )}
-
+        {/* ── GENERIC SERVICE FALLBACK ── */}
         {currentView === 'service' && (
-          <ServicePage service={selectedService} onBack={() => handleNavigate('home')} />
+          <ServicePage service={selectedService} onBack={backHome} />
         )}
       </main>
     </div>
