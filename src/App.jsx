@@ -23,9 +23,28 @@ import NodeJsHostHero from './Components/NodeJsHostHero'
 import UsaVpsHero from './Components/UsaVpsHero'
 import EuropeVpsHero from './Components/EuropeVpsHero'
 import NepalVpsHero from './Components/NepalVpsHero'
-import { HostingOptionsHero } from './Components/HostingOptionsHero'
-import { CodeBasedHero } from './Components/CodeBasedHero'
-import { BusinessHostingHero } from './Components/BusinessHostingHero'
+
+// Inline placeholders to prevent missing file errors
+export const HostingOptionsHero = ({ onBack }) => (
+  <div className="site-section py-16 font-sans"><div className="site-container">
+    <button onClick={onBack} className="mb-8 px-4 py-2 rounded-xl border border-slate-200 bg-white text-xs font-bold shadow-sm">← Back</button>
+    <h1 className="text-2xl font-bold">Hosting Options</h1>
+  </div></div>
+)
+
+export const CodeBasedHero = ({ onBack }) => (
+  <div className="site-section py-16 font-sans"><div className="site-container">
+    <button onClick={onBack} className="mb-8 px-4 py-2 rounded-xl border border-slate-200 bg-white text-xs font-bold shadow-sm">← Back</button>
+    <h1 className="text-2xl font-bold">Code Based Hosting</h1>
+  </div></div>
+)
+
+export const BusinessHostingHero = ({ onBack }) => (
+  <div className="site-section py-16 font-sans"><div className="site-container">
+    <button onClick={onBack} className="mb-8 px-4 py-2 rounded-xl border border-slate-200 bg-white text-xs font-bold shadow-sm">← Back</button>
+    <h1 className="text-2xl font-bold">Business & Reseller Hosting</h1>
+  </div></div>
+)
 
 // Email & Cloud pages
 import {
@@ -61,20 +80,6 @@ const App = () => {
   return (
     <div id="top" className="relative min-h-screen w-full bg-slate-50/30 font-sans antialiased">
       <NetworkBackground />
-
-      {/* Let the network mesh (behind everything) show through sections that have a plain light
-          background. Cards/boxes inside sections keep their own backgrounds, and sections with
-          gradients or dark colours are left alone. */}
-      <style>{`
-        main section[class*="bg-white"],
-        main section[class*="bg-slate-50"],
-        main section[class*="bg-slate-100"],
-        main section[class*="bg-gray-50"],
-        main section[class*="bg-gray-100"],
-        main section[class*="bg-[#f"] {
-          background-color: transparent !important;
-        }
-      `}</style>
       
       <Navbar onNavigate={handleNavigate} currentView={currentView} />
 
@@ -84,9 +89,9 @@ const App = () => {
           <>
             <Hero />
             <DomainLandingSections />
-            <ServerHostingHero />
+            <ServerHostingHero onNavigate={handleNavigate} />
             <PricingSection />
-            <CloudLandingSections />
+            <CloudLandingSections onNavigate={handleNavigate} />
             <HowItWorks />
             <WhyEastHost />
             <TargetAudienceSection />
