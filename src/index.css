@@ -91,3 +91,7 @@ section.site-section + .site-section,
 * Hero button {
   
 }
+
+.site-section {
+  padding-top: 5rem; /* or margin-top */
+}

@@ -99,7 +99,7 @@ const Footer = () => {
                 <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-600/20 text-blue-400 border border-blue-500/30 group-hover:bg-blue-600 group-hover:text-white transition-all">
                   📞
                 </span>
-                +977-9815-1111-99
+                +977-9802-7556-05
               </a>
             </div>
 

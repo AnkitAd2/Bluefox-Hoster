@@ -156,14 +156,22 @@ const hostingCards = [
   { label: 'Nepal VPS', emoji: '🇳🇵', from: 'Rs 1,200/mo', path: 'nepal-vps' },
 ]
 
-export const ServerHostingHero = ({ onNavigate }) => (
-  <section id="server-hosting" className="site-section scroll-mt-28 overflow-hidden bg-[#061b3f] py-16 font-sans text-white sm:py-20 relative">
-    {/* Subtle grid overlay */}
-    <div className="absolute inset-0 opacity-[0.04]" style={{backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '40px 40px'}} />
-    {/* Glow blob */}
-    <div className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-10 blur-3xl" style={{background: 'radial-gradient(circle, #1b75e7, transparent)'}} />
 
+
+export const ServerHostingHero = ({ onNavigate }) => (
+  <section 
+    id="server-hosting" 
+    className="relative w-full overflow-hidden bg-[#061b3f] py-12 font-sans text-white sm:py-16"
+  >
+    {/* Glow blob */}
+    <div 
+      className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-10 blur-3xl pointer-events-none" 
+      style={{ background: 'radial-gradient(circle, #1b75e7, transparent)' }} 
+    />
+
+    {/* Content Container */}
     <div className="site-container relative z-10">
+      
       {/* Top row: heading + CTA */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
         <div className="max-w-xl">
@@ -175,7 +183,8 @@ export const ServerHostingHero = ({ onNavigate }) => (
             Choose managed web hosting or scale into cloud and developer-ready environments, backed by local support and reliable infrastructure.
           </p>
         </div>
-        <div className="flex flex-col gap-3 text-right shrink-0">
+        
+        <div className="flex flex-col gap-3 sm:text-right shrink-0">
           <div className="flex items-center gap-2 text-xs text-blue-200">
             <ShieldCheck className="h-4 w-4 text-emerald-400" /> SSL &amp; DDoS included
           </div>
@@ -189,29 +198,31 @@ export const ServerHostingHero = ({ onNavigate }) => (
       </div>
 
       {/* Service Cards Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4">
         {hostingCards.map((card) => (
           <button
             key={card.path}
             type="button"
             onClick={() => onNavigate && onNavigate(card.path)}
-            className="group relative flex flex-col items-center gap-2.5 rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-4 text-center transition-all hover:bg-white/[0.12] hover:border-blue-400/40 hover:-translate-y-0.5 cursor-pointer"
+            className="group relative flex flex-col items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.06] p-4 text-center transition-all hover:bg-white/[0.12] hover:border-blue-400/40 hover:-translate-y-0.5 cursor-pointer"
           >
             {card.badge && (
               <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] px-2.5 py-0.5 text-[10px] font-extrabold text-white shadow-sm whitespace-nowrap">
                 {card.badge}
               </span>
             )}
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10">
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 shrink-0 mt-1">
               {card.image ? (
                 <img src={card.image} alt={card.label} className="h-7 w-7 object-contain rounded-sm" />
               ) : (
                 <span className="text-2xl">{card.emoji}</span>
               )}
             </span>
-            <span className="block text-xs font-bold text-white leading-tight">{card.label}</span>
-            <span className="block text-[10px] text-blue-300 font-semibold">From {card.from}</span>
-            <span className="flex items-center gap-1 text-[10px] text-blue-400 group-hover:text-blue-200 transition-colors">
+            <div className="space-y-0.5 mt-1">
+              <span className="block text-xs font-bold text-white leading-tight">{card.label}</span>
+              <span className="block text-[10px] text-blue-300 font-semibold">From {card.from}</span>
+            </div>
+            <span className="mt-2 flex items-center gap-1 text-[10px] text-blue-400 group-hover:text-blue-200 transition-colors">
               View plans <ArrowRight className="h-3 w-3" />
             </span>
           </button>
@@ -230,6 +241,7 @@ export const ServerHostingHero = ({ onNavigate }) => (
           Compare all plans <ArrowRight className="h-4 w-4" />
         </a>
       </div>
+
     </div>
   </section>
 )
