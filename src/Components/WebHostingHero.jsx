@@ -1,5 +1,18 @@
 import React, { useState } from 'react'
-import { Send, Check, ShieldCheck, Zap, Server } from 'lucide-react'
+import {
+  Send,
+  Check,
+  ShieldCheck,
+  Zap,
+  Server,
+  Headphones,
+  Lock,
+  ArrowRightLeft,
+  Terminal,
+  TrendingUp,
+  ShieldAlert,
+  LayoutGrid,
+} from 'lucide-react'
 import Flag from '../assets/Flag_of_Nepal.svg.webp'
 import HeroRobot from '../assets/robot_5_transparent.svg'
 
@@ -51,6 +64,81 @@ const hostingPlans = [
     ],
     popular: false,
     cta: 'Scale to Cloud',
+  },
+]
+
+const featuresList = [
+  {
+    number: '01',
+    title: 'Lightning Fast',
+    description:
+      'Your websites are assured of exceptional performance with WebHostNepal Web Hosting Plans, thanks to our carefully designed Intel powered hardware that deliver fantastic power, reliability and efficiency',
+    badge: 'Intel Hardware',
+    icon: Zap,
+    color: 'bg-amber-50 text-amber-500',
+  },
+  {
+    number: '02',
+    title: 'cPanel Included',
+    description:
+      "World's Leading Hosting Control Panel to Manage Web Pages, View Website Statistics, Create Email Accounts etc. With its ease-of-use and quality features, managing your website is now made effortless.",
+    badge: 'Easy Dashboard',
+    icon: LayoutGrid,
+    color: 'bg-orange-50 text-orange-500',
+  },
+  {
+    number: '03',
+    title: 'Reliable Support',
+    description:
+      'Your websites are our priority, we are here to serve you. Our dedicated team of Linux Web Hosting experts work round-the-clock to ensure your business does not face any disruptions.',
+    badge: '24/7/365 Team',
+    icon: Headphones,
+    color: 'bg-blue-50 text-blue-500',
+  },
+  {
+    number: '04',
+    title: 'Free SSL Certificate',
+    description:
+      "Make your website safe, gain your customers' trust with free SSL certificate you get with every Web Hosting plan. SSL Certificate also helps to improves your website ranking.",
+    badge: 'HTTPS Security',
+    icon: Lock,
+    color: 'bg-emerald-50 text-emerald-500',
+  },
+  {
+    number: '05',
+    title: 'Free Migrations',
+    description:
+      'Move your hosting to us, with help from our experts. We will help you migrate your current website on cPanel hosting with any other provider to your Web Host Nepal Hosting - completely free!',
+    badge: 'Zero Downtime',
+    icon: ArrowRightLeft,
+    color: 'bg-purple-50 text-purple-500',
+  },
+  {
+    number: '06',
+    title: 'Secure Shell Access',
+    description:
+      'On Demand SSH/Terminal access on your cPanel account. Manage files, execute commands and operate your Web Hosting with secure remote access via SSH and Terminal.',
+    badge: 'Root & CLI',
+    icon: Terminal,
+    color: 'bg-slate-100 text-slate-700',
+  },
+  {
+    number: '07',
+    title: 'Easy Upgrade',
+    description:
+      'Increase resources as per your need. Easy to upgrade to other hosting packages as well as other web hosting products such as Reseller Hosting or VPS, we can assist you with our Free cPanel Migrations.',
+    badge: 'Seamless Scalability',
+    icon: TrendingUp,
+    color: 'bg-sky-50 text-sky-500',
+  },
+  {
+    number: '08',
+    title: 'Enhanced Security',
+    description:
+      "CloudFlare Protection for your business from threats and also Cloudflare accelerate website performance, improve mobile delivery with Cloudflare's global content delivery network (CDN).",
+    badge: 'DDoS Protection',
+    icon: ShieldAlert,
+    color: 'bg-rose-50 text-rose-500',
   },
 ]
 
@@ -282,6 +370,87 @@ export const WebHostingHero = ({ onBack }) => {
                 </div>
               </div>
             ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* ================= FEATURES GRID SECTION ================= */}
+      <section id="features" className="bg-[#f8fafc] py-16 font-sans sm:py-24 border-t border-slate-200/60">
+        <div className="site-container">
+          
+          {/* Section Header */}
+          <div className="text-center max-w-xl mx-auto mb-16">
+            <span className="text-[11px] font-bold uppercase tracking-widest text-blue-600 bg-blue-50/80 px-3.5 py-1 rounded-full border border-blue-100/80">
+              • WHAT YOU GET •
+            </span>
+            <h2 className="mt-3 text-3xl sm:text-5xl font-extrabold text-slate-950 tracking-tight">
+              Features
+            </h2>
+            <div className="flex items-center justify-center gap-1 mt-3">
+              <span className="h-1 w-2 rounded-full bg-blue-400"></span>
+              <span className="h-1 w-6 rounded-full bg-blue-600"></span>
+              <span className="h-1 w-2 rounded-full bg-blue-400"></span>
+            </div>
+          </div>
+
+          {/* 8 Feature Cards Grid */}
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {featuresList.map((feat) => {
+              const IconComponent = feat.icon
+              return (
+                <div
+                  key={feat.number}
+                  className="group relative flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all duration-300 hover:border-blue-300 hover:shadow-xl hover:-translate-y-1"
+                >
+                  <div>
+                    {/* Top Row: Icon & Feature Number */}
+                    <div className="flex items-center justify-between mb-5">
+                      <span className={`flex h-11 w-11 items-center justify-center rounded-xl ${feat.color}`}>
+                        <IconComponent className="h-5 w-5" />
+                      </span>
+                      <span className="text-xs font-bold text-slate-300 group-hover:text-blue-500 transition-colors">
+                        {feat.number}
+                      </span>
+                    </div>
+
+                    {/* Feature Title */}
+                    <h3 className="text-lg font-bold text-slate-900 mb-2.5">
+                      {feat.title}
+                    </h3>
+
+                    {/* Feature Description */}
+                    <p className="text-xs leading-relaxed text-slate-500 mb-6">
+                      {feat.description}
+                    </p>
+                  </div>
+
+                  {/* Bottom Footer Badge */}
+                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-400">
+                    <span>{feat.badge}</span>
+                    <span className="h-2 w-2 rounded-full bg-emerald-500"></span>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Bottom Callout Pill */}
+          <div className="mt-14 flex justify-center">
+            <div className="inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-5 rounded-full border border-slate-200/80 bg-white p-2 sm:pr-6 shadow-lg shadow-slate-200/50">
+              <a
+                href="#hosting-pricing"
+                className="rounded-full bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3 text-sm font-bold text-white shadow-md transition-all hover:from-blue-700 hover:to-blue-800"
+              >
+                Get Started with Hosting &rarr;
+              </a>
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-600 pb-2 sm:pb-0">
+                <span className="flex h-4 w-4 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                  <Check className="h-2.5 w-2.5" />
+                </span>
+                <span>30-Day Money Back Guarantee • 99.9% Uptime SLA</span>
+              </div>
+            </div>
           </div>
 
         </div>

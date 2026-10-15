@@ -14,9 +14,10 @@ import ServicePage from './Components/ServicePage'
 import WebHostingHero from './Components/WebHostingHero'
 import CloudHostingHero from './Components/CloudHostingHero'
 import WordPressHostHero from './Components/WordPressHostHero'
+import EcomHostHero from './Components/EcomHostHero' // Import eCommerce hosting hero
 
 const App = () => {
-  const [currentView, setCurrentView] = useState('home') // 'home', 'generator', 'web-hosting', 'cloud-hosting', 'wordpress-hosting', or 'service'
+  const [currentView, setCurrentView] = useState('home')
   const [selectedService, setSelectedService] = useState(null)
 
   const handleNavigate = (view, data = null) => {
@@ -61,6 +62,10 @@ const App = () => {
 
         {currentView === 'wordpress-hosting' && (
           <WordPressHostHero onBack={() => handleNavigate('home')} />
+        )}
+
+        {currentView === 'ecommerce-hosting' && (
+          <EcomHostHero onBack={() => handleNavigate('home')} />
         )}
 
         {currentView === 'service' && (
