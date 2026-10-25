@@ -1,3 +1,38 @@
+﻿/**
+ * CloudHostingHero.jsx
+ * -----------------------------------------------------------------
+ * Component: CloudHostingHero  (also exported as a named export)
+ * Purpose  : Full landing page for the "Cloud Hosting" product.
+ *            Shown when the user navigates to currentView === 'cloud-hosting'.
+ *
+ * Props:
+ *   onBack {function} - Navigates the user back to the home page.
+ *
+ * Sections rendered (top to bottom):
+ *   1. Back Navigation Bar   - Thin bar with a back link
+ *   2. Hero Section          - Headline, feature pills, decorative card
+ *   3. Pricing Cards Section - 3 cloud plan cards with billing toggle
+ *
+ * Key React Concepts:
+ *
+ *   useState  - `billingCycle` controls which billing tab is active.
+ *               When the user clicks "Monthly" or "Annual", we call
+ *               setBillingCycle('monthly') or setBillingCycle('yearly').
+ *               React then re-renders the component automatically.
+ *
+ *   Named export - This file uses BOTH a named export:
+ *               export const CloudHostingHero = ...
+ *               AND a default export: export default CloudHostingHero
+ *               The named export lets it be imported with { } braces.
+ *
+ *   .map() for plan cards - `cloudPlans.map((plan) => ...)` loops
+ *               over the 3 plans and renders a card for each one.
+ *               The `key={plan.name}` helps React identify each card.
+ *
+ *   Template literal in className - Dynamically applies different
+ *               Tailwind classes depending on whether a plan is
+ *               popular: true or popular: false.
+ */
 import React, { useState } from 'react'
 import { Check, Cloud, Zap, ShieldCheck, Server } from 'lucide-react'
 

@@ -1,3 +1,41 @@
+/**
+ * WebHostingHero.jsx
+ * ─────────────────────────────────────────────────────────────────
+ * Component: WebHostingHero
+ * Purpose  : Full landing page for the "Web Hosting" product.
+ *            Shown when the user navigates to currentView === 'web-hosting'.
+ *
+ * Props:
+ *   onBack {function} — Called when the user clicks "← Back to Home".
+ *                       Provided by App.jsx as the `backHome` function.
+ *
+ * Sections rendered (top to bottom):
+ *   1. Back Navigation Bar   — Thin bar with a back link
+ *   2. Hero Section          — Big headline, key features, animated robot image
+ *   3. Pricing Cards Section — 3 plan cards with a billing toggle
+ *   4. Features Grid Section — 8 feature cards
+ *
+ * Key React Concepts:
+ *
+ *   useState  — `billingCycle` stores whether the user selected
+ *               'monthly' or 'yearly' billing.  Clicking the toggle
+ *               buttons calls setBillingCycle() which re-renders
+ *               the component with the updated value.
+ *               Syntax: const [value, setValue] = useState(defaultValue)
+ *
+ *   .map()    — Used to loop over arrays (hostingPlans, featuresList)
+ *               and render a JSX element for each item.
+ *               The `key` prop is required by React to track list items.
+ *
+ *   Conditional rendering with && — The back bar is only shown if
+ *               the `onBack` prop was actually passed:
+ *               {onBack && <div>...</div>}
+ *
+ *   Template literals in className — We use JavaScript template
+ *               literals (`${...}`) inside className strings to
+ *               conditionally add Tailwind classes based on state.
+ * ─────────────────────────────────────────────────────────────────
+ */
 import React, { useState } from 'react'
 import {
   Send,
