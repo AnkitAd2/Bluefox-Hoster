@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Activity,
   ArrowUpRight,
@@ -171,7 +171,7 @@ const Navbar = ({ onNavigate, currentView }) => {
   const [pinnedDropdown, setPinnedDropdown] = React.useState(null)
   const [hoveredDropdown, setHoveredDropdown] = React.useState(null)
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
-  const [mobileSubMenu, setMobileSubMenu] = React.useState(null) // 'domains', 'hosting', 'cloud', 'support'
+  const [mobileSubMenu, setMobileSubMenu] = React.useState(null)
   const headerRef = React.useRef(null)
   const activeDropdown = pinnedDropdown || hoveredDropdown
 
@@ -196,7 +196,7 @@ const Navbar = ({ onNavigate, currentView }) => {
     })
   }
 
-  const handleSectionClick = (targetHash) => (e) => {
+  const handleSectionClick = (targetHash) => () => {
     dismissDropdowns()
     setMobileMenuOpen(false)
     if (onNavigate && currentView !== 'home') {
@@ -211,7 +211,7 @@ const Navbar = ({ onNavigate, currentView }) => {
   }
 
   React.useEffect(() => {
-    if (!pinnedDropdown) return
+    if (!pinnedDropdown && !mobileMenuOpen) return
 
     const closeOnOutsideClick = (event) => {
       if (!headerRef.current?.contains(event.target)) {
@@ -231,7 +231,7 @@ const Navbar = ({ onNavigate, currentView }) => {
       document.removeEventListener('pointerdown', closeOnOutsideClick)
       document.removeEventListener('keydown', closeOnEscape)
     }
-  }, [pinnedDropdown])
+  }, [pinnedDropdown, mobileMenuOpen])
 
   return (
     <>
@@ -283,7 +283,7 @@ const Navbar = ({ onNavigate, currentView }) => {
               <span className="text-gray-300">|</span>
 
               <div
-                className="nav-dropdown support-dropdown relative hidden md:block"
+                className="nav-dropdown support-dropdown relative hidden lg:block"
                 data-open={activeDropdown === 'support'}
                 onMouseEnter={() => !pinnedDropdown && setHoveredDropdown('support')}
                 onMouseLeave={() => !pinnedDropdown && setHoveredDropdown(null)}
@@ -360,7 +360,7 @@ const Navbar = ({ onNavigate, currentView }) => {
           </button>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:block">
+          <nav className="hidden lg:block">
             <ul className="flex items-center gap-4 2xl:gap-6 text-sm 2xl:text-base font-medium text-slate-600 whitespace-nowrap">
             
               <li
@@ -597,7 +597,7 @@ const Navbar = ({ onNavigate, currentView }) => {
             <button
               type="button"
               onClick={() => { dismissDropdowns(); if (onNavigate) onNavigate('home'); }}
-              className="hidden sm:inline-block bg-gradient-to-b from-[#1b75e7] to-[#125ec5] hover:from-[#2e93fc] hover:to-[#1777ed] text-white font-semibold text-sm 2xl:text-base px-3.5 py-2 rounded-xl transition-all cursor-pointer border-none shadow-sm"
+              className="hidden lg:inline-block bg-gradient-to-b from-[#1b75e7] to-[#125ec5] hover:from-[#2e93fc] hover:to-[#1777ed] text-white font-semibold text-sm 2xl:text-base px-3.5 py-2 rounded-xl transition-all cursor-pointer border-none shadow-sm"
             >
               Get Started
             </button>
@@ -607,7 +607,9 @@ const Navbar = ({ onNavigate, currentView }) => {
               type="button"
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               aria-label="Toggle mobile menu"
-              className="md:hidden flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 focus:outline-none cursor-pointer"
+              className="lg:hidden flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 focus:outline-none cursor-pointer"
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-navigation"
             >
               {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
@@ -617,7 +619,7 @@ const Navbar = ({ onNavigate, currentView }) => {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden absolute left-0 top-full w-full max-h-[85vh] overflow-y-auto bg-white border-b border-slate-200 shadow-2xl transition-all p-4 space-y-4">
+          <div id="mobile-navigation" className="lg:hidden absolute left-0 top-full w-full max-h-[85vh] overflow-y-auto bg-white border-b border-slate-200 shadow-2xl transition-all p-4 space-y-4">
             
             {/* Quick Links */}
             <div className="space-y-1">
@@ -642,13 +644,15 @@ const Navbar = ({ onNavigate, currentView }) => {
               <button
                 type="button"
                 onClick={() => setMobileSubMenu(mobileSubMenu === 'domains' ? null : 'domains')}
+                aria-expanded={mobileSubMenu === 'domains'}
+                aria-controls="mobile-domains"
                 className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-bold text-slate-900 bg-slate-50 hover:bg-slate-100"
               >
                 <span>Domains &amp; Pricing</span>
                 <RiArrowDropDownLine className={`h-6 w-6 transition-transform ${mobileSubMenu === 'domains' ? 'rotate-180' : ''}`} />
               </button>
               {mobileSubMenu === 'domains' && (
-                <div className="mt-2 grid grid-cols-1 gap-2 pl-2">
+                <div id="mobile-domains" className="mt-2 grid grid-cols-1 gap-2 pl-2">
                   {domainOptions.map((domain) => (
                     <a
                       key={domain.extension}
@@ -669,13 +673,15 @@ const Navbar = ({ onNavigate, currentView }) => {
               <button
                 type="button"
                 onClick={() => setMobileSubMenu(mobileSubMenu === 'hosting' ? null : 'hosting')}
+                aria-expanded={mobileSubMenu === 'hosting'}
+                aria-controls="mobile-hosting"
                 className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-bold text-slate-900 bg-slate-50 hover:bg-slate-100"
               >
                 <span>Server &amp; Hosting</span>
                 <RiArrowDropDownLine className={`h-6 w-6 transition-transform ${mobileSubMenu === 'hosting' ? 'rotate-180' : ''}`} />
               </button>
               {mobileSubMenu === 'hosting' && (
-                <div className="mt-2 space-y-3 pl-2">
+                <div id="mobile-hosting" className="mt-2 space-y-3 pl-2">
                   {hostingGroups.map((group) => (
                     <div key={group.title} className="space-y-1">
                       <span className="text-[11px] font-bold uppercase text-blue-600 px-2">{group.title}</span>
@@ -691,6 +697,50 @@ const Navbar = ({ onNavigate, currentView }) => {
                           className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600"
                         >
                           <span className="h-2 w-2 rounded-full bg-blue-500"></span>
+                          <span>{item.title}</span>
+                        </a>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Emails & Clouds Section */}
+            <div className="border-t border-slate-100 pt-3">
+              <button
+                type="button"
+                onClick={() => setMobileSubMenu(mobileSubMenu === 'cloud' ? null : 'cloud')}
+                aria-expanded={mobileSubMenu === 'cloud'}
+                aria-controls="mobile-cloud"
+                className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-bold text-slate-900 bg-slate-50 hover:bg-slate-100"
+              >
+                <span>Emails &amp; Clouds</span>
+                <RiArrowDropDownLine className={`h-6 w-6 transition-transform ${mobileSubMenu === 'cloud' ? 'rotate-180' : ''}`} />
+              </button>
+              {mobileSubMenu === 'cloud' && (
+                <div id="mobile-cloud" className="mt-2 space-y-3 pl-2">
+                  {emailCloudGroups.map((group) => (
+                    <div key={group.title} className="space-y-1">
+                      <span className="px-2 text-[11px] font-bold uppercase text-blue-600">{group.title}</span>
+                      {group.items.map((item) => (
+                        <a
+                          key={item.title}
+                          href={`#${item.path}`}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            setMobileMenuOpen(false)
+                            if (onNavigate) onNavigate(item.path, item)
+                          }}
+                          className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600"
+                        >
+                          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
+                            {item.image ? (
+                              <img src={item.image} alt="" className="h-5 w-5 object-contain" />
+                            ) : (
+                              <item.icon aria-hidden="true" className="h-4 w-4" />
+                            )}
+                          </span>
                           <span>{item.title}</span>
                         </a>
                       ))}

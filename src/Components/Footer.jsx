@@ -19,15 +19,15 @@ const linkGroups = [
     links: [
       { label: 'Web & WordPress Hosting', href: '#plans' },
       { label: 'Python & Node.js Hosting', href: '#plans' },
-      { label: 'Nepal & Global VPS Locations', href: '#vps-servers' },
-      { label: 'Cloud Servers & Pricing', href: '#pricing' },
+      { label: 'Nepal & Global VPS Locations', href: '#server-hosting' },
+      { label: 'Cloud Servers & Pricing', href: '#server-plans' },
     ],
   },
   {
     title: 'Support & Help',
     links: [
       { label: 'Common Questions (FAQ)', href: '#support' },
-      { label: 'Payment Options & Billing', href: '#get-started' },
+      { label: 'Payment Options & Billing', href: '#server-plans' },
       { label: 'Contact Support Hub', href: 'tel:+9779815111199' },
       { label: '.NP Letter Generator', href: '#generator' },
     ],
@@ -38,7 +38,7 @@ const linkGroups = [
       { label: 'About Infrastructure', href: '#company' },
       { label: 'Data Center Locations', href: '#company' },
       { label: 'Server Uptime Status', href: '#support' },
-      { label: 'Get Started Today', href: '#get-started' },
+      { label: 'Get Started Today', href: '#server-plans' },
     ],
   },
 ]
@@ -60,10 +60,32 @@ const socialLinks = [
   { icon: FaWhatsapp, href: 'https://wa.me/9779815111199', label: 'WhatsApp' },
 ]
 
-const Footer = () => {
+const Footer = ({ onNavigate, currentView }) => {
   const handleScrollToTop = (e) => {
     e.preventDefault()
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const handleSectionLink = (e, href) => {
+    if (!href.startsWith('#')) return
+    e.preventDefault()
+
+    if (href === '#generator') {
+      onNavigate?.('generator')
+      return
+    }
+
+    const scrollToTarget = () => {
+      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+
+    if (currentView !== 'home') {
+      onNavigate?.('home')
+      window.setTimeout(scrollToTarget, 80)
+      return
+    }
+
+    scrollToTarget()
   }
 
   return (
@@ -137,6 +159,7 @@ const Footer = () => {
                     <a 
                       className="text-slate-400 hover:text-blue-400 transition-colors" 
                       href={link.href}
+                      onClick={(e) => handleSectionLink(e, link.href)}
                     >
                       {link.label}
                     </a>

@@ -13,19 +13,23 @@ const NetworkBackground = () => {
     let NODES_QTY = 0
     const SENSITIVITY = 100
     const SIBLINGS_LIMIT = 10
-    const DENSITY = 55
+    const FRAME_INTERVAL = 1000 / 30
     const ANCHOR_LENGTH = 20
     const MOUSE_RADIUS = 220
+    const mobileQuery = window.matchMedia('(max-width: 639px)')
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    let staticBackground = mobileQuery.matches || reducedMotionQuery.matches
     const circ = 2 * Math.PI
     let nodes = []
+    let lastFrameTime = 0
     let mouse = {
       x: canvas.width / 2,
       y: canvas.height / 2,
     }
 
     const resizeWindow = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
+      if (canvas.width !== window.innerWidth) canvas.width = window.innerWidth
+      if (canvas.height !== window.innerHeight) canvas.height = window.innerHeight
     }
 
     resizeWindow()
@@ -90,8 +94,9 @@ const NetworkBackground = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       nodes = []
       NODES_QTY = 0
-      for (let i = DENSITY; i < canvas.width; i += DENSITY) {
-        for (let j = DENSITY; j < canvas.height; j += DENSITY) {
+      const density = window.innerWidth < 640 ? 90 : 70
+      for (let i = density; i < canvas.width; i += density) {
+        for (let j = density; j < canvas.height; j += density) {
           nodes.push(new Node(i, j))
           NODES_QTY++
         }
@@ -135,7 +140,7 @@ const NetworkBackground = () => {
       }
     }
 
-    function redrawScene() {
+    function drawScene() {
       resizeWindow()
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       findSiblings()
@@ -157,24 +162,52 @@ const NetworkBackground = () => {
         }
         node.moveNode()
       }
-      animationFrameId = requestAnimationFrame(redrawScene)
     }
 
-    const handleResize = () => resizeWindow()
+    function redrawScene(timestamp) {
+      if (timestamp - lastFrameTime >= FRAME_INTERVAL) {
+        drawScene()
+        lastFrameTime = timestamp
+      }
+      if (!staticBackground) {
+        animationFrameId = requestAnimationFrame(redrawScene)
+      }
+    }
+
+    const handleResize = () => {
+      const wasStatic = staticBackground
+      staticBackground = mobileQuery.matches || reducedMotionQuery.matches
+      resizeWindow()
+      initNodes()
+      drawScene()
+      if (wasStatic && !staticBackground) {
+        animationFrameId = requestAnimationFrame(redrawScene)
+      } else if (!wasStatic && staticBackground) {
+        cancelAnimationFrame(animationFrameId)
+      }
+    }
     const handleMouseMove = (e) => {
+      if (staticBackground) return
       mouse.x = e.clientX
       mouse.y = e.clientY
     }
 
     window.addEventListener('resize', handleResize)
     window.addEventListener('mousemove', handleMouseMove)
+    mobileQuery.addEventListener('change', handleResize)
+    reducedMotionQuery.addEventListener('change', handleResize)
 
     initNodes()
-    redrawScene()
+    drawScene()
+    if (!staticBackground) {
+      animationFrameId = requestAnimationFrame(redrawScene)
+    }
 
     return () => {
       window.removeEventListener('resize', handleResize)
       window.removeEventListener('mousemove', handleMouseMove)
+      mobileQuery.removeEventListener('change', handleResize)
+      reducedMotionQuery.removeEventListener('change', handleResize)
       cancelAnimationFrame(animationFrameId)
     }
   }, [])

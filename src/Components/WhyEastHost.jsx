@@ -1,8 +1,39 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import RobotSad from '../assets/robot_no_background.svg'
 import happyRobot from '../assets/robot_5_transparent.svg'
 
 const WhyEastHost = () => {
+  const sectionRef = useRef(null)
+
+  useEffect(() => {
+    const section = sectionRef.current
+    if (!section) return
+
+    const targets = section.querySelectorAll('.why-scroll-reveal')
+    const mobileQuery = window.matchMedia('(max-width: 639px)')
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+    if (mobileQuery.matches || reducedMotionQuery.matches || typeof IntersectionObserver === 'undefined') {
+      targets.forEach((target) => target.classList.add('why-is-visible'))
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('why-is-visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -48px 0px' }
+    )
+
+    targets.forEach((target) => observer.observe(target))
+    return () => observer.disconnect()
+  }, [])
+
   const weakPoints = [
     'Custom development costs more than the idea earns',
     'No-code tools hit a wall at logins, payments and data',
@@ -20,11 +51,11 @@ const WhyEastHost = () => {
   ]
 
   return (
-    <section className="site-section w-full bg-slate-50/50 py-16 font-sans overflow-hidden">
+    <section ref={sectionRef} className="site-section why-section w-full bg-slate-50/50 py-16 font-sans overflow-hidden">
       <div className="site-container relative">
         
         {/* ================= 1. HEADER SECTION ================= */}
-        <div className="relative mb-14 max-w-2xl pb-4 lg:max-w-none lg:pr-44">
+        <div className="why-scroll-reveal relative mb-14 max-w-2xl pb-4 lg:max-w-none lg:pr-44">
           
           {/* Top Pill Badge */}
           <span className="inline-flex items-center gap-1.5 bg-blue-50 text-[#0c73d5] border border-blue-200/80 rounded-full px-3.5 py-1 text-xs font-bold uppercase tracking-wide mb-4">
@@ -70,7 +101,7 @@ const WhyEastHost = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch mb-12">
           
           {/* LEFT CARD: MOST HOSTS ARE TOO WEAK */}
-          <div className="relative bg-white border-2 border-red-500 rounded-3xl p-6 sm:p-8 shadow-[0_12px_30px_rgba(239,68,68,0.08)] flex flex-col justify-between">
+          <div className="why-scroll-reveal relative bg-white border-2 border-red-500 rounded-3xl p-6 sm:p-8 shadow-[0_12px_30px_rgba(239,68,68,0.08)] flex flex-col justify-between" style={{ '--why-delay': '90ms' }}>
             <div className="absolute -top-3 right-5 flex h-9 w-9 items-center justify-center rounded-full border-2 border-red-500 bg-white text-xl font-black text-red-500 shadow-sm">
               ✕
             </div>
@@ -117,7 +148,7 @@ const WhyEastHost = () => {
           </div>
 
           {/* RIGHT CARD: EAST HOST WINS */}
-          <div className="relative bg-white border-2 border-blue-400/80 rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col justify-between">
+          <div className="why-scroll-reveal relative bg-white border-2 border-blue-400/80 rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col justify-between" style={{ '--why-delay': '180ms' }}>
             
             {/* Superior Choice Badge */}
             <div className="absolute -top-3.5 right-6 bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] text-white text-[10px] font-extrabold px-3.5 py-1 rounded-full uppercase tracking-wider shadow-md">
@@ -175,7 +206,7 @@ const WhyEastHost = () => {
         </div>
 
         {/* ================= 3. FOOTER GUARANTEES ================= */}
-        <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs font-semibold text-slate-500">
+        <div className="why-scroll-reveal flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs font-semibold text-slate-500" style={{ '--why-delay': '240ms' }}>
           <span>30-Day Money-Back Guarantee</span>
           <span className="text-slate-300">•</span>
           <span>Zero Vendor Lock-in</span>

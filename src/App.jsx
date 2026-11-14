@@ -109,7 +109,7 @@ const App = () => {
       <Navbar onNavigate={handleNavigate} currentView={currentView} />
 
       {/* Main content area — changes based on currentView */}
-      <main className="relative z-10">
+      <main key={currentView} className="page-enter relative z-10">
 
         {/* ══ HOME PAGE ══════════════════════════════════════════════
             Show all homepage sections when currentView is 'home'.
@@ -125,7 +125,6 @@ const App = () => {
             <WhyEastHost />                                       {/* Why choose us */}
             <TargetAudienceSection />                             {/* Who it's for */}
             <CompanySection />                                    {/* Trusted brands */}
-            <Footer />                                            {/* Footer */}
           </>
         )}
 
@@ -175,6 +174,7 @@ const App = () => {
         )}
 
       </main>
+      <Footer onNavigate={handleNavigate} currentView={currentView} />
     </div>
   )
 }
