@@ -93,10 +93,10 @@ const CtaBanner = ({ title, sub, btnText = 'Get Started Today' }) => (
   </section>
 );
 
-const StatBadge = ({ value, label }) => (
+const StatBadge = ({ v, l }) => (
   <div className="bg-white/10 backdrop-blur-sm rounded-xl px-5 py-3 text-center">
-    <p className="text-2xl font-extrabold text-white">{value}</p>
-    <p className="text-xs text-white/70 mt-0.5">{label}</p>
+    <p className="text-2xl font-extrabold text-white">{v}</p>
+    <p className="text-xs text-white/70 mt-0.5">{l}</p>
   </div>
 );
 
