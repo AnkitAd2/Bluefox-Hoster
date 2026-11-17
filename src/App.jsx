@@ -17,6 +17,7 @@ import React, { useState } from 'react'
 import NetworkBackground from './Components/NetworkBackground'   // Animated background
 import Navbar from './Components/Navbar'                         // Top navigation bar
 import Hero from './Components/Hero'                             // Main homepage banner
+import Brands from './Components/Brands'                         // Associated organizations slider
 import HowItWorks from './Components/HowItWorks'                 // Step-by-step section
 import PricingSection from './Components/PricingSection'         // Pricing comparison
 import Footer from './Components/Footer'                         // Bottom footer
@@ -34,6 +35,7 @@ import {
 // ── TOOL PAGES ───────────────────────────────────────────────────────
 import NpLetterGenerator from './Components/NpLetterGenerator'  // .NP domain letter tool
 import ServicePage from './Components/ServicePage'              // Generic service page
+import LoginSignupPage from './Components/LoginSignupPage'      // Account access page
 
 // ── SERVER & HOSTING PAGES ───────────────────────────────────────────
 // These are the individual pages for each hosting service
@@ -116,20 +118,22 @@ const App = () => {
             The && operator means "if true, render this component". */}
         {currentView === 'home' && (
           <>
-            <Hero />                                              {/* Big hero banner */}
+            <Hero onNavigate={handleNavigate} />                  {/* Big hero banner */}
+            <Brands />                                            {/* Associated brands slider */}
             <DomainLandingSections />                             {/* Domain section */}
             <ServerHostingHero onNavigate={handleNavigate} />    {/* Hosting section */}
             <PricingSection />                                    {/* Pricing table */}
             <CloudLandingSections onNavigate={handleNavigate} /> {/* Cloud section */}
             <HowItWorks />                                        {/* How it works */}
             <WhyEastHost />                                       {/* Why choose us */}
-            <TargetAudienceSection />                             {/* Who it's for */}
+            <TargetAudienceSection onNavigate={handleNavigate} /> {/* Who it's for */}
             <CompanySection />                                    {/* Trusted brands */}
           </>
         )}
 
         {/* ══ TOOL PAGES ═══════════════════════════════════════════ */}
         {currentView === 'generator' && <NpLetterGenerator onBack={backHome} />}
+        {currentView === 'auth' && <LoginSignupPage onBack={backHome} />}
 
         {/* ══ SERVER & HOSTING PAGES ═══════════════════════════════
             Each line shows one hosting page.

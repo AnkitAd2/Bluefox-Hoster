@@ -4,7 +4,7 @@ import Robot2 from '../assets/robot_2_transparent.svg'
 import Robot3 from '../assets/robot_3_transparent.svg'
 import Robot4 from '../assets/robot_4_transparent.svg'
 
-const TargetAudienceSection = () => {
+const TargetAudienceSection = ({ onNavigate }) => {
   // Common Gradient Style for Primary Buttons
   const gradientBtnClass = `
     w-full py-2.5 px-4 rounded-xl text-white font-bold text-xs
@@ -235,7 +235,11 @@ const TargetAudienceSection = () => {
 
             {/* Right Action Buttons */}
             <div className="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto shrink-0">
-              <button className="w-full sm:w-auto bg-white text-blue-700 hover:bg-blue-50 font-extrabold text-xs px-6 py-3.5 rounded-xl transition-all shadow-md active:scale-95 flex items-center justify-center gap-2">
+              <button
+                type="button"
+                onClick={() => onNavigate?.('auth')}
+                className="w-full sm:w-auto bg-white text-blue-700 hover:bg-blue-50 font-extrabold text-xs px-6 py-3.5 rounded-xl transition-all shadow-md active:scale-95 flex items-center justify-center gap-2"
+              >
                 <span>Get Started Now</span>
                 <span>&rarr;</span>
               </button>

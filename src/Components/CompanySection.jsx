@@ -83,7 +83,7 @@ const CompanySection = () => (
             <p className="text-sm font-bold uppercase tracking-widest text-blue-700">Quick answers</p>
             <h2 className="section-title mt-3 font-bold text-slate-950">Before you get started</h2>
             <p className="mt-3 text-sm leading-relaxed text-slate-600">Compare the options and billing terms, or contact the team if you need help choosing.</p>
-            <a href="tel:+9779815111199" className="mt-5 inline-flex font-semibold text-blue-700 hover:text-blue-900">Talk to the team <span aria-hidden="true" className="ml-2">&rarr;</span></a>
+            <a href="tel:+9779802755605" className="mt-5 inline-flex font-semibold text-blue-700 hover:text-blue-900">Talk to the team <span aria-hidden="true" className="ml-2">&rarr;</span></a>
           </div>
           <div className="divide-y divide-slate-200 border-y border-slate-200">
             {questions.map((item) => (

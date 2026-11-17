@@ -28,7 +28,7 @@ const linkGroups = [
     links: [
       { label: 'Common Questions (FAQ)', href: '#support' },
       { label: 'Payment Options & Billing', href: '#server-plans' },
-      { label: 'Contact Support Hub', href: 'tel:+9779815111199' },
+      { label: 'Contact Support Hub', href: 'tel:+9779802755605' },
       { label: '.NP Letter Generator', href: '#generator' },
     ],
   },
@@ -38,7 +38,7 @@ const linkGroups = [
       { label: 'About Infrastructure', href: '#company' },
       { label: 'Data Center Locations', href: '#company' },
       { label: 'Server Uptime Status', href: '#support' },
-      { label: 'Get Started Today', href: '#server-plans' },
+      { label: 'Get Started Today', href: '#get-started' },
     ],
   },
 ]
@@ -57,7 +57,7 @@ const socialLinks = [
   { icon: FaInstagram, href: 'https://instagram.com', label: 'Instagram' },
   { icon: FaLinkedinIn, href: 'https://linkedin.com', label: 'LinkedIn' },
   { icon: FaXTwitter, href: 'https://twitter.com', label: 'X (Twitter)' },
-  { icon: FaWhatsapp, href: 'https://wa.me/9779815111199', label: 'WhatsApp' },
+  { icon: FaWhatsapp, href: 'https://wa.me/9779802755605', label: 'WhatsApp' },
 ]
 
 const Footer = ({ onNavigate, currentView }) => {
@@ -69,6 +69,11 @@ const Footer = ({ onNavigate, currentView }) => {
   const handleSectionLink = (e, href) => {
     if (!href.startsWith('#')) return
     e.preventDefault()
+
+    if (href === '#get-started') {
+      onNavigate?.('auth')
+      return
+    }
 
     if (href === '#generator') {
       onNavigate?.('generator')
@@ -115,7 +120,7 @@ const Footer = ({ onNavigate, currentView }) => {
 
             <div className="pt-1">
               <a 
-                href="tel:+9779815111199" 
+                href="tel:+9779802755605"
                 className="group flex items-center gap-2 text-sm font-semibold text-white hover:text-blue-400 transition-colors"
               >
                 <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-600/20 text-blue-400 border border-blue-500/30 group-hover:bg-blue-600 group-hover:text-white transition-all">

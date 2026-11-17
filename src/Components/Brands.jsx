@@ -4,36 +4,75 @@ import ingLogo from '../assets/ing.avif'
 import cgLogo from '../assets/chaudhary-group.avif'
 import sitaLogo from '../assets/sitaair.avif'
 
-const BrandsVertical = () => {
-  const brands = [
-    { id: 1, name: 'Government of Nepal - Ministry of Health', logoUrl: govtLogo },
-    { id: 2, name: 'ING Group', logoUrl: ingLogo },
-    { id: 3, name: 'CG Chaudhary Group', logoUrl: cgLogo },
-    { id: 4, name: 'Sita Air', logoUrl: sitaLogo },
-  ]
+const brands = [
+  { name: 'Government of Nepal - Ministry of Health', logo: govtLogo },
+  { name: 'ING Group', logo: ingLogo },
+  { name: 'CG Chaudhary Group', logo: cgLogo },
+  { name: 'Sita Air', logo: sitaLogo },
+]
 
-  return (
-    <section className="border-y border-slate-200 bg-white py-8 font-sans">
-      <div className="site-container">
-        <div className="flex flex-col items-center gap-6 lg:flex-row lg:justify-between">
-          <h2 className="section-title max-w-xs text-center font-semibold leading-tight text-slate-900 lg:text-left">
-            Selected organizations associated with Fox Host
-          </h2>
-          <div className="grid w-full grid-cols-2 items-center gap-6 sm:grid-cols-4 lg:max-w-4xl">
-            {brands.map((brand) => (
-              <div key={brand.id} className="flex h-16 items-center justify-center px-2">
-                <img
-                  src={brand.logoUrl}
-                  alt={brand.name}
-                  className="max-h-12 max-w-[160px] w-auto object-contain"
-                />
-              </div>
-            ))}
-          </div>
+const BrandsSlider = () => (
+  <section
+    aria-labelledby="associated-brands-title"
+    className="overflow-hidden border-y border-slate-200/80 bg-white/90 py-7 font-sans sm:py-9"
+  >
+    <div className="site-container">
+      <h2
+        id="associated-brands-title"
+        className="mb-5 text-center text-xs font-bold uppercase tracking-[0.16em] text-slate-500 sm:mb-6"
+      >
+        Selected organizations associated with Fox Host
+      </h2>
+      <div className="brand-slider relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
+        <div className="brand-slider-track flex w-max items-center">
+          {Array.from({ length: 4 }, (_, copy) => (
+            <div
+              key={copy}
+              aria-hidden={copy > 0}
+              className="flex shrink-0 items-center gap-8 px-4 sm:gap-14 sm:px-7"
+            >
+              {brands.map((brand) => (
+                <div
+                  key={brand.name}
+                  className="flex h-14 w-36 shrink-0 items-center justify-center sm:h-16 sm:w-48"
+                >
+                  <img
+                    src={brand.logo}
+                    alt={copy === 0 ? brand.name : ''}
+                    className="max-h-11 max-w-full object-contain opacity-75 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 sm:max-h-12"
+                  />
+                </div>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
-    </section>
-  )
-}
+    </div>
+    <style>{`
+      @keyframes brand-slider-scroll {
+        to { transform: translateX(-25%); }
+      }
 
-export default BrandsVertical
+      .brand-slider-track {
+        animation: brand-slider-scroll 36s linear infinite;
+      }
+
+      .brand-slider:hover .brand-slider-track,
+      .brand-slider:focus-within .brand-slider-track {
+        animation-play-state: paused;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .brand-slider-track {
+          animation: none;
+        }
+
+        .brand-slider {
+          overflow-x: auto;
+        }
+      }
+    `}</style>
+  </section>
+)
+
+export default BrandsSlider

@@ -1,13 +1,11 @@
 import React from 'react'
 import {
-  Activity,
   ArrowUpRight,
   BookOpen,
   BriefcaseBusiness,
   Cloud,
   Coffee,
   CodeXml,
-  FileText,
   Globe,
   Hexagon,
   Layers3,
@@ -145,25 +143,22 @@ const emailCloudGroups = [
 const supportOptions = [
   {
     icon: MessageSquare,
-    title: 'Live Chat & WhatsApp',
-    description: 'Instant answers from our Kathmandu support team',
-    badge: '24/7',
+    title: 'WhatsApp Support',
+    description: 'Message our Kathmandu support team',
+    href: 'https://wa.me/9779802755605',
+    external: true,
   },
   {
-    icon: FileText,
-    title: 'Support Tickets',
-    description: 'Open a secure ticket for deep technical troubleshooting',
+    icon: MessageSquare,
+    title: 'Call Our Team',
+    description: 'Speak with our support team by phone',
+    href: 'tel:+9779802755605',
   },
   {
     icon: BookOpen,
-    title: 'Knowledge Base',
-    description: 'Step-by-step guides for WordPress, SSL, and emails',
-  },
-  {
-    icon: Activity,
-    title: 'Server Status',
-    description: 'Real-time uptime monitoring and maintenance logs',
-    status: 'All Systems Operational',
+    title: 'Frequently Asked Questions',
+    description: 'Find quick answers about hosting and billing',
+    href: '#support',
   },
 ]
 
@@ -197,17 +192,32 @@ const Navbar = ({ onNavigate, currentView }) => {
   }
 
   const handleSectionClick = (targetHash) => () => {
+    const scrollToTarget = () => {
+      if (targetHash) {
+        document.querySelector(targetHash)?.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+
     dismissDropdowns()
     setMobileMenuOpen(false)
     if (onNavigate && currentView !== 'home') {
       onNavigate('home')
-      setTimeout(() => {
-        if (targetHash) {
-          const el = document.querySelector(targetHash)
-          if (el) el.scrollIntoView({ behavior: 'smooth' })
-        }
-      }, 50)
+      window.setTimeout(scrollToTarget, 50)
+      return
     }
+
+    scrollToTarget()
+  }
+
+  const handleSupportOptionClick = (option) => (event) => {
+    if (option.href.startsWith('#')) {
+      event.preventDefault()
+      handleSectionClick(option.href)()
+      return
+    }
+
+    dismissDropdowns()
+    setMobileMenuOpen(false)
   }
 
   React.useEffect(() => {
@@ -273,7 +283,7 @@ const Navbar = ({ onNavigate, currentView }) => {
             </div>
 
             <div className="flex items-center gap-2.5 text-slate-600 text-[11px] sm:text-xs">
-              <a href="tel:+9779815111199" className="flex items-center gap-1.5 hover:text-blue-600 font-medium">
+              <a href="tel:+9779802755605" className="flex items-center gap-1.5 hover:text-blue-600 font-medium">
                 <svg className="w-3 h-3 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.27c1.21.49 2.53.76 3.88.76a1 1 0 011 1V20a1 1 0 01-1 1C10.07 21 3 13.93 3 5a1 1 0 011-1h3.5a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.27 1.11l-2.2 2.2z" />
                 </svg>
@@ -316,8 +326,10 @@ const Navbar = ({ onNavigate, currentView }) => {
                       {supportOptions.map((opt) => (
                         <a
                           key={opt.title}
-                          href="#support"
-                          onClick={handleSectionClick('#support')}
+                          href={opt.href}
+                          onClick={handleSupportOptionClick(opt)}
+                          target={opt.external ? '_blank' : undefined}
+                          rel={opt.external ? 'noopener noreferrer' : undefined}
                           className="flex items-start gap-3 rounded-xl border border-slate-100 p-3 transition-all hover:border-blue-200 hover:bg-blue-50/60 focus-visible:outline-2 focus-visible:outline-blue-600"
                         >
                           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
@@ -409,8 +421,8 @@ const Navbar = ({ onNavigate, currentView }) => {
                         {domainOptions.map((domain) => (
                           <a
                             key={domain.extension}
-                            href="#domain-pricing"
-                            onClick={handleSectionClick('#domain-pricing')}
+                            href={`#domain-${domain.extension.slice(1)}`}
+                            onClick={handleSectionClick(`#domain-${domain.extension.slice(1)}`)}
                             className="flex min-w-0 items-center gap-3 rounded-xl border border-slate-200 px-3 py-2.5 transition-all hover:border-blue-300 hover:bg-blue-50/60 focus-visible:outline-2 focus-visible:outline-blue-600"
                           >
                             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-50">
@@ -596,7 +608,7 @@ const Navbar = ({ onNavigate, currentView }) => {
           <div className="flex items-center gap-3 whitespace-nowrap">
             <button
               type="button"
-              onClick={() => { dismissDropdowns(); if (onNavigate) onNavigate('home'); }}
+              onClick={() => { dismissDropdowns(); if (onNavigate) onNavigate('auth'); }}
               className="hidden lg:inline-block bg-gradient-to-b from-[#1b75e7] to-[#125ec5] hover:from-[#2e93fc] hover:to-[#1777ed] text-white font-semibold text-sm 2xl:text-base px-3.5 py-2 rounded-xl transition-all cursor-pointer border-none shadow-sm"
             >
               Get Started
@@ -656,8 +668,8 @@ const Navbar = ({ onNavigate, currentView }) => {
                   {domainOptions.map((domain) => (
                     <a
                       key={domain.extension}
-                      href="#domain-pricing"
-                      onClick={handleSectionClick('#domain-pricing')}
+                      href={`#domain-${domain.extension.slice(1)}`}
+                      onClick={handleSectionClick(`#domain-${domain.extension.slice(1)}`)}
                       className="flex items-center justify-between rounded-lg border border-slate-100 px-3 py-2 text-xs font-medium text-slate-700 hover:bg-blue-50"
                     >
                       <span className="font-bold text-slate-900">{domain.extension} - {domain.description}</span>
@@ -757,8 +769,10 @@ const Navbar = ({ onNavigate, currentView }) => {
                 {supportOptions.map((opt) => (
                   <a
                     key={opt.title}
-                    href="#support"
-                    onClick={handleSectionClick('#support')}
+                    href={opt.href}
+                    onClick={handleSupportOptionClick(opt)}
+                    target={opt.external ? '_blank' : undefined}
+                    rel={opt.external ? 'noopener noreferrer' : undefined}
                     className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50"
                   >
                     <opt.icon className="h-4 w-4 text-blue-600" />
@@ -772,7 +786,7 @@ const Navbar = ({ onNavigate, currentView }) => {
             <div className="pt-2">
               <button
                 type="button"
-                onClick={() => { setMobileMenuOpen(false); if (onNavigate) onNavigate('home'); }}
+                onClick={() => { setMobileMenuOpen(false); if (onNavigate) onNavigate('auth'); }}
                 className="w-full rounded-xl bg-gradient-to-r from-[#1b75e7] to-[#125ec5] py-3 text-center text-sm font-semibold text-white shadow-md"
               >
                 Get Started

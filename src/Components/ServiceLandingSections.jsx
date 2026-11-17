@@ -87,18 +87,12 @@ const handleSpotlight = (e) => {
 
 const LandingStyles = () => (
   <style>{`
-    @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-    @keyframes scrollRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
     @keyframes slFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
     @keyframes slBlob {
       0%, 100% { transform: translate(0, 0) scale(1); }
       50% { transform: translate(26px, -20px) scale(1.1); }
     }
     @keyframes slGradient { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
-
-    .animate-scroll-left { animation: scrollLeft 35s linear infinite; }
-    .animate-scroll-right { animation: scrollRight 35s linear infinite; }
-    .animate-scroll-left:hover, .animate-scroll-right:hover { animation-play-state: paused; }
 
     .sl-float { animation: slFloat 5s ease-in-out infinite; animation-delay: var(--fd, 0s); }
     .sl-blob { animation: slBlob 16s ease-in-out infinite; }
@@ -117,7 +111,7 @@ const LandingStyles = () => (
     .is-visible .sl-item { opacity: 1; transform: translateY(0); }
 
     @media (prefers-reduced-motion: reduce) {
-      .animate-scroll-left, .animate-scroll-right, .sl-float, .sl-blob, .sl-ring, .sl-gradient-bg,
+      .sl-float, .sl-blob, .sl-ring, .sl-gradient-bg,
       .sl-btn-shine::after { animation: none !important; transition: none !important; }
       .sl-item { opacity: 1; transform: none; transition: none; }
     }
@@ -139,29 +133,6 @@ const domainOffers = [
   { extension: '.info', image: Dotinfo, description: 'For information sites', price: 'Est. Rs 1,850 / year', estimated: true },
   { extension: '.org', description: 'For communities', price: 'Rs 2,250 / year' },
 ]
-
-const MarqueeCard = ({ domain }) => (
-  <article className="group flex h-20 w-80 shrink-0 items-center gap-3.5 rounded-2xl border border-slate-200/80 bg-white p-3.5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:bg-blue-50/30 hover:shadow-md">
-    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-50 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
-      {domain.image ? (
-        <img src={domain.image} alt="" className="h-8 w-8 object-contain" />
-      ) : (
-        <span className="text-sm font-bold text-blue-700">{domain.extension}</span>
-      )}
-    </span>
-    <span className="min-w-0 flex-1">
-      <span className="block truncate text-sm font-bold text-slate-900">{domain.extension}</span>
-      <span className="mt-0.5 block truncate text-xs text-slate-500">{domain.description}</span>
-    </span>
-    {domain.price === 'Free' ? (
-      <span className="shrink-0 rounded-full bg-emerald-50 px-3 py-1 text-xs font-extrabold text-emerald-700 ring-1 ring-emerald-200/80">
-        Free
-      </span>
-    ) : (
-      <span className="shrink-0 text-right text-xs font-bold text-slate-700">{domain.price}</span>
-    )}
-  </article>
-)
 
 export const DomainLandingSections = () => (
   <>
@@ -243,37 +214,64 @@ export const DomainLandingSections = () => (
       </div>
     </section>
 
-    <section id="domain-pricing" className="site-section scroll-mt-28 overflow-hidden bg-white py-16 font-sans sm:py-20">
+    <section id="domain-pricing" className="site-section scroll-mt-28 bg-gradient-to-b from-white to-blue-50/70 py-16 font-sans sm:py-20">
       <div className="site-container">
-        <Reveal className="mb-10 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+        <Reveal className="mb-8 flex flex-col justify-between gap-4 sm:mb-10 sm:flex-row sm:items-end">
           <div>
-            <p className="text-xs font-bold uppercase tracking-wider text-blue-700">Domain pricing</p>
-            <h2 className="mt-2 text-2xl font-extrabold text-slate-950 sm:text-3xl tracking-tight">Choose your extension</h2>
+            <p className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-blue-700">
+              <Globe aria-hidden="true" className="h-3.5 w-3.5" />
+              Domain pricing
+            </p>
+            <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-slate-950 sm:text-3xl">Choose your extension</h2>
           </div>
-          <p className="max-w-md text-xs leading-relaxed text-slate-500">
-            Annual estimates shown in NPR. Final rates and .np eligibility are confirmed during registration[cite: 9].
+          <p className="max-w-md text-sm leading-relaxed text-slate-600">
+            Compare popular domain endings. Prices are per year in NPR; final rates and .np eligibility are confirmed during registration.
           </p>
         </Reveal>
 
-        <Reveal delay={150}>
-          <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
-            <div className="mb-3.5 flex overflow-hidden py-1">
-              <div className="animate-scroll-left flex shrink-0 items-center gap-4 pr-4">
-                {[...domainOffers, ...domainOffers].map((domain, index) => (
-                  <MarqueeCard key={`top-${domain.extension}-${index}`} domain={domain} />
-                ))}
-              </div>
-            </div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {domainOffers.map((domain, index) => (
+            <Reveal key={domain.extension} delay={index * 70}>
+              <article
+                id={`domain-${domain.extension.slice(1)}`}
+                className="group h-full scroll-mt-32 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-900/10 [&:target]:border-blue-500 [&:target]:ring-4 [&:target]:ring-blue-100"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex min-w-0 items-center gap-3">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-50 ring-1 ring-blue-100 transition-transform duration-300 group-hover:scale-105">
+                      {domain.image ? (
+                        <img src={domain.image} alt="" className="h-9 w-9 object-contain" />
+                      ) : (
+                        <span className="text-sm font-extrabold text-blue-700">{domain.extension}</span>
+                      )}
+                    </span>
+                    <div className="min-w-0">
+                      <h3 className="text-xl font-extrabold tracking-tight text-slate-950">{domain.extension}</h3>
+                      <p className="mt-0.5 truncate text-sm text-slate-500">{domain.description}</p>
+                    </div>
+                  </div>
+                  {domain.price === 'Free' ? (
+                    <span className="shrink-0 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-700 ring-1 ring-emerald-200">
+                      Free
+                    </span>
+                  ) : (
+                    <span className="shrink-0 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">
+                      {domain.estimated ? 'Estimate' : 'Annual'}
+                    </span>
+                  )}
+                </div>
 
-            <div className="flex overflow-hidden py-1">
-              <div className="animate-scroll-right flex shrink-0 items-center gap-4 pr-4">
-                {[...domainOffers, ...domainOffers].map((domain, index) => (
-                  <MarqueeCard key={`bottom-${domain.extension}-${index}`} domain={domain} />
-                ))}
-              </div>
-            </div>
-          </div>
-        </Reveal>
+                <div className="mt-5 flex items-end justify-between border-t border-slate-100 pt-4">
+                  <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">Per year</span>
+                  <span className={`text-lg font-extrabold tabular-nums ${domain.price === 'Free' ? 'text-emerald-700' : 'text-slate-900'}`}>
+                    {domain.price.replace(' / year', '').replace('Est. ', '')}
+                    {domain.price !== 'Free' && <span className="ml-1 text-xs font-semibold text-slate-500">NPR</span>}
+                  </span>
+                </div>
+              </article>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   </>

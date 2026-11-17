@@ -157,7 +157,7 @@ const rise = (ms) => ({ '--d': `${ms}ms` })
    Component
 --------------------------------------------------------------------------- */
 
-const Hero = () => {
+const Hero = ({ onNavigate }) => {
   const [animatedPlaceholder, setAnimatedPlaceholder] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
   const [isSearching, setIsSearching] = useState(false)
@@ -465,7 +465,7 @@ const Hero = () => {
           <div style={rise(440)} className="hero-rise mt-4 flex flex-wrap items-center gap-3">
             <button
               type="button"
-              onClick={() => handleSearch()}
+              onClick={() => onNavigate?.('auth')}
               className="btn-shimmer group cursor-pointer rounded-xl bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] px-6 py-3.5 text-sm font-bold text-white shadow-md transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:from-[#1e88e5] hover:to-[#1565c0] hover:shadow-[0_12px_28px_rgba(30,136,229,0.45)] active:scale-95 sm:text-base"
             >
               Get Started{' '}
