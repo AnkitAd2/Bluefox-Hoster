@@ -132,10 +132,11 @@ export const CloudHostingHero = ({ onBack }) => {
                 Choose Cloud Plan &rarr;
               </a>
               <a 
-                href="#features" 
-                className="rounded-xl border border-slate-300 bg-white px-5 py-3.5 text-sm sm:text-base font-semibold text-slate-700 transition-colors hover:bg-slate-100"
+                aria-disabled="true"
+                tabIndex={-1}
+                className="inline-flex items-center rounded-xl border border-slate-300 bg-white px-5 py-3.5 text-sm sm:text-base font-semibold text-slate-700 transition-colors hover:bg-slate-100"
               >
-                View Architecture
+                Ask About Architecture
               </a>
             </div>
 
@@ -169,7 +170,7 @@ export const CloudHostingHero = ({ onBack }) => {
       </section>
 
       {/* ================= CLOUD PRICING CARDS SECTION ================= */}
-      <section id="cloud-pricing" className="bg-white py-16 font-sans sm:py-20">
+      <section id="cloud-pricing" className="scroll-mt-28 bg-white py-16 font-sans sm:py-20">
         <div className="site-container">
           
           <div className="text-center max-w-2xl mx-auto mb-12">
@@ -242,7 +243,8 @@ export const CloudHostingHero = ({ onBack }) => {
 
                 <div className="mt-8 pt-4">
                   <a
-                    href="#get-started"
+                    aria-disabled="true"
+                    tabIndex={-1}
                     className={`block w-full text-center rounded-xl py-3.5 text-sm font-bold transition-all ${
                       plan.popular 
                         ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg' 

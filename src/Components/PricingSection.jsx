@@ -368,7 +368,7 @@ const PricingSection = () => {
               <Reveal
                 key={plan.id}
                 delay={index * 120}
-                className={`h-full ${plan.isPopular ? 'xl:z-10 xl:scale-[1.03]' : ''}`}
+                className={`h-full ${plan.isPopular ? 'xl:z-10' : ''}`}
               >
                 <div
                   onMouseMove={handleSpotlight}
@@ -452,10 +452,14 @@ const PricingSection = () => {
 
                       {/* Action Button */}
                       <div className="mb-6">
-                        <button type="button" className={gradientBtnStyle}>
+                        <a
+                          aria-disabled="true"
+                          tabIndex={-1}
+                          className={gradientBtnStyle}
+                        >
                           <span>Order Now</span>
                           <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
-                        </button>
+                        </a>
                       </div>
 
                       {/* Features */}

@@ -14,7 +14,18 @@ import PowerBI from '../assets/begin-journey.avif';
 
 /* ─────────────────────── shared primitives ─────────────────────── */
 const BTN_PRIMARY =
-  'rounded-xl bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] px-6 py-3.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:to-[#1565c0] hover:shadow-[0_12px_28px_rgba(30,136,229,0.45)] hover:-translate-y-0.5 active:scale-95 cursor-pointer';
+  'inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] px-6 py-3.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:to-[#1565c0] hover:shadow-[0_12px_28px_rgba(30,136,229,0.45)] hover:-translate-y-0.5 active:scale-95 cursor-pointer';
+
+const PendingCta = ({ children, className = BTN_PRIMARY }) => (
+  <button
+    type="button"
+    disabled
+    title="Online ordering will be available soon."
+    className={`${className} disabled:cursor-not-allowed disabled:opacity-60`}
+  >
+    {children}
+  </button>
+);
 
 const BackBar = ({ onBack, label = 'Back to Services' }) =>
   onBack ? (
@@ -62,7 +73,11 @@ const PlanCard = ({ name, price, period = '/user/mo', features, highlight = fals
         </li>
       ))}
     </ul>
-    <button className={BTN_PRIMARY + ' w-full text-center mt-2'}>Get Started</button>
+    <PendingCta
+      className={BTN_PRIMARY + ' w-full text-center mt-2'}
+    >
+      Get Started
+    </PendingCta>
   </div>
 );
 
@@ -86,9 +101,11 @@ const CtaBanner = ({ title, sub, btnText = 'Get Started Today' }) => (
   <section className="bg-gradient-to-r from-[#0c73d5] to-[#1565c0] py-16 px-6 text-center text-white">
     <h2 className="text-3xl font-extrabold mb-3">{title}</h2>
     <p className="text-blue-100 mb-8 max-w-xl mx-auto">{sub}</p>
-    <button className="rounded-xl bg-white text-[#0c73d5] font-bold px-8 py-3.5 shadow-md hover:bg-blue-50 transition-all duration-300 hover:-translate-y-0.5 active:scale-95 cursor-pointer">
+    <PendingCta
+      className="rounded-xl bg-white text-[#0c73d5] font-bold px-8 py-3.5 shadow-md hover:bg-blue-50 transition-all duration-300 hover:-translate-y-0.5 active:scale-95 cursor-pointer"
+    >
       {btnText}
-    </button>
+    </PendingCta>
     <PaymentNote />
   </section>
 );
@@ -124,7 +141,7 @@ export const GoogleWorkspaceHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['Professional @yourcompany.com email','30 GB – 5 TB cloud storage per user','HD video meetings with Google Meet','Real-time collaboration on Docs, Sheets, Slides'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <button className={BTN_PRIMARY}>Get Google Workspace</button>
+          <PendingCta>Get Google Workspace</PendingCta>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'3B+',l:'Gmail Users Worldwide'},{v:'99.9%',l:'Uptime SLA'},{v:'5TB',l:'Max Drive Storage'},{v:'250',l:'Meet Participants'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -184,7 +201,7 @@ export const GoogleCloudHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['Compute Engine VMs starting from $0.01/hr','Global CDN & Load Balancing','Managed Kubernetes Engine (GKE)','BigQuery petabyte-scale analytics'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <button className={BTN_PRIMARY}>Explore Google Cloud</button>
+          <PendingCta>Explore Google Cloud</PendingCta>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'200+',l:'Cloud Services'},{v:'35+',l:'Global Regions'},{v:'99.99%',l:'Compute SLA'},{v:'$0',l:'Free Tier Credits'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -242,7 +259,7 @@ export const NordVpnHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['6,200+ servers in 111 countries','AES-256-GCM encryption','Strict no-logs policy (audited)','Threat Protection Pro included'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <button className={BTN_PRIMARY}>Get NordVPN Now</button>
+          <PendingCta>Get NordVPN Now</PendingCta>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'6,200+',l:'Global Servers'},{v:'111',l:'Countries'},{v:'6',l:'Devices Per Plan'},{v:'0',l:'Logs Kept'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -300,7 +317,7 @@ export const Office365Hero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['Full Office apps on desktop & web','Business email via Outlook + Exchange','Microsoft Teams for chat & video','1 TB OneDrive cloud storage per user'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <button className={BTN_PRIMARY}>Get Microsoft 365</button>
+          <PendingCta>Get Microsoft 365</PendingCta>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'345M+',l:'Paid Seats Worldwide'},{v:'1TB',l:'OneDrive Storage'},{v:'99.9%',l:'Uptime SLA'},{v:'5',l:'Devices Per User'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -358,7 +375,7 @@ export const OfficeLtscHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['One-time purchase, no monthly fees','Full offline functionality','5 years of mainstream support','Volume licensing available for businesses'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <button className={BTN_PRIMARY}>Buy Office LTSC</button>
+          <PendingCta>Buy Office LTSC</PendingCta>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'1x',l:'One-Time Payment'},{v:'5yr',l:'Support Period'},{v:'100%',l:'Offline Ready'},{v:'0',l:'Monthly Fees'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -415,7 +432,7 @@ export const CopilotHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['AI drafting in Word & PowerPoint','Data insights via natural language in Excel','Meeting summaries & action items in Teams','Smart email replies and scheduling in Outlook'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <button className={BTN_PRIMARY}>Get Microsoft Copilot</button>
+          <PendingCta>Get Microsoft Copilot</PendingCta>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'GPT-4',l:'Powered By'},{v:'10x',l:'Productivity Boost'},{v:'M365',l:'Deep Integration'},{v:'24/7',l:'AI Availability'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -471,7 +488,7 @@ export const PowerBiHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['Interactive drag-and-drop dashboards','100+ data source connectors','Real-time streaming analytics','AI-powered insights & Q&A'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <button className={BTN_PRIMARY}>Get Power BI</button>
+          <PendingCta>Get Power BI</PendingCta>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'100+',l:'Data Connectors'},{v:'5M+',l:'Users Worldwide'},{v:'Real-time',l:'Analytics'},{v:'AI',l:'Built-in Insights'}].map(s => (
@@ -533,7 +550,7 @@ export const AzureHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['200+ cloud services & solutions','60+ global Azure regions','Hybrid cloud with Azure Arc','Microsoft Defender security built-in'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <button className={BTN_PRIMARY}>Get Azure Access</button>
+          <PendingCta>Get Azure Access</PendingCta>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'200+',l:'Cloud Services'},{v:'60+',l:'Global Regions'},{v:'95%',l:'Fortune 500 Use Azure'},{v:'$200',l:'Free Credit to Start'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -591,7 +608,7 @@ export const ZohoCrmHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['Lead capture & nurturing automation','Visual sales pipeline tracking','Multi-channel customer engagement','AI-powered sales predictions (Zia)'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <button className={BTN_PRIMARY}>Start with Zoho CRM</button>
+          <PendingCta>Start with Zoho CRM</PendingCta>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'250K+',l:'Businesses Use Zoho'},{v:'180+',l:'Countries'},{v:'Zia AI',l:'Built-in'},{v:'15-day',l:'Free Trial'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -649,7 +666,7 @@ export const BiginZohoHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['Pipeline view for visual deal management','Mobile-first CRM app for iOS & Android','Workflow automation for repetitive tasks','Built-in calling & customer communication'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <button className={BTN_PRIMARY}>Try Bigin Free</button>
+          <PendingCta>Try Bigin Free</PendingCta>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'30min',l:'Setup Time'},{v:'Free',l:'Starter Plan'},{v:'Mobile',l:'First Design'},{v:'15-day',l:'Pro Trial'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -707,7 +724,7 @@ export const ZohoMailHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['Custom @yourcompany.com domain email','Zero-advertisement inbox always','eDiscovery & data archiving','100% offline access via IMAP'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <button className={BTN_PRIMARY}>Get Zoho Mail</button>
+          <PendingCta>Get Zoho Mail</PendingCta>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'6M+',l:'Businesses Trust Zoho Mail'},{v:'99.9%',l:'Uptime SLA'},{v:'0',l:'Ads Ever'},{v:'50GB',l:'Max Mailbox'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -765,7 +782,7 @@ export const ZohoWorkplaceHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['Mail + Cliq chat + Meeting in one suite','WorkDrive for team file collaboration','Connect intranet for company culture','Integrated with 45+ Zoho apps'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <button className={BTN_PRIMARY}>Get Zoho Workplace</button>
+          <PendingCta>Get Zoho Workplace</PendingCta>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'8',l:'Apps in One Suite'},{v:'45+',l:'Zoho Integrations'},{v:'99.9%',l:'Uptime SLA'},{v:'50GB',l:'Mail + Drive Storage'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -822,7 +839,7 @@ export const AwsHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['EC2 compute instances — any size, any OS','S3 object storage with 99.999999999% durability','RDS managed databases — MySQL, Postgres & more','Lambda serverless — pay only per execution'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <button className={BTN_PRIMARY}>Start with AWS</button>
+          <PendingCta>Start with AWS</PendingCta>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'200+',l:'AWS Services'},{v:'31',l:'Global Regions'},{v:'1M+',l:'Active Customers'},{v:'$0',l:'Free Tier to Start'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -880,7 +897,7 @@ export const ZoomHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['Up to 300 meeting participants','Cloud recording with transcription','Zoom Webinars for large events','AI Companion for meeting summaries'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <button className={BTN_PRIMARY}>Get Zoom Now</button>
+          <PendingCta>Get Zoom Now</PendingCta>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'300M+',l:'Daily Meeting Participants'},{v:'300',l:'Max Participants'},{v:'HD',l:'Video Quality'},{v:'AI',l:'Companion Built-in'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -938,7 +955,7 @@ export const MicrosoftDefenderHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['Endpoint detection & response (EDR)','AI-powered threat intelligence','Zero Trust security architecture','SIEM integration with Microsoft Sentinel'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <button className={BTN_PRIMARY}>Protect Your Business</button>
+          <PendingCta>Protect Your Business</PendingCta>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'8T+',l:'Threat Signals/Day'},{v:'65+',l:'Countries Protected'},{v:'Zero Trust',l:'Architecture'},{v:'99%',l:'Threat Detection Rate'}].map(s => <StatBadge key={s.l} {...s} />)}

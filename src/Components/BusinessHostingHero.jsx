@@ -3,7 +3,7 @@ import {
   Package, ShieldCheck, BarChart2, Mail, Users, Globe, ChevronRight
 } from 'lucide-react';
 
-const BTN_PRIMARY = 'rounded-xl bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] px-6 py-3.5 text-sm sm:text-base font-semibold text-white shadow-md transition-all duration-300 hover:to-[#1565c0] hover:shadow-[0_12px_28px_rgba(30,136,229,0.45)] hover:-translate-y-0.5 active:scale-95 cursor-pointer';
+const BTN_PRIMARY = 'inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] px-6 py-3.5 text-sm sm:text-base font-semibold text-white shadow-md transition-all duration-300 hover:to-[#1565c0] hover:shadow-[0_12px_28px_rgba(30,136,229,0.45)] hover:-translate-y-0.5 active:scale-95 cursor-pointer';
 
 const resellerFeatures = [
   'WHM + cPanel Control Panel',
@@ -101,12 +101,16 @@ export function BusinessHostingHero({ onBack }) {
             360° Business Toolkit. Full white-label. Full control. Full profit.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className={BTN_PRIMARY}>
+            <a href="#business-plans" className={BTN_PRIMARY}>
               View Reseller Plans <ArrowRight className="ml-2 inline-block" size={16} />
-            </button>
-            <button className="rounded-xl border border-amber-400/40 px-6 py-3.5 text-sm font-semibold text-amber-200 transition hover:bg-white/10">
+            </a>
+            <a
+              aria-disabled="true"
+              tabIndex={-1}
+              className="inline-flex items-center justify-center rounded-xl border border-amber-400/40 px-6 py-3.5 text-sm font-semibold text-amber-200 transition hover:bg-white/10"
+            >
               Talk to Sales
-            </button>
+            </a>
           </div>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             {['WHM + cPanel', 'Free White-Label', 'WHMCS Ready', 'Unlimited Clients', 'Nepal Support'].map((t) => (
@@ -161,9 +165,13 @@ export function BusinessHostingHero({ onBack }) {
                 ))}
               </ul>
               <div className="mt-8">
-                <button className={`w-full ${BTN_PRIMARY} text-center`}>
+                <a
+                  aria-disabled="true"
+                  tabIndex={-1}
+                  className={`w-full ${BTN_PRIMARY} text-center`}
+                >
                   Start Reselling — Rs 1,850/mo
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -201,9 +209,13 @@ export function BusinessHostingHero({ onBack }) {
                 ))}
               </ul>
               <div className="mt-8">
-                <button className={`w-full ${BTN_PRIMARY} text-center`}>
+                <a
+                  aria-disabled="true"
+                  tabIndex={-1}
+                  className={`w-full ${BTN_PRIMARY} text-center`}
+                >
                   Get Toolkit — Rs 950/mo
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -215,7 +227,7 @@ export function BusinessHostingHero({ onBack }) {
       </section>
 
       {/* ── WHY RESELL CARDS ── */}
-      <section className="bg-white py-20 px-4">
+      <section id="business-plans" className="scroll-mt-28 bg-white py-20 px-4">
         <div className="mx-auto max-w-6xl">
           <div className="mb-12 text-center">
             <span className="inline-block rounded-full border border-amber-200 bg-amber-50 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-amber-600">
@@ -271,9 +283,13 @@ export function BusinessHostingHero({ onBack }) {
           </div>
 
           <div className="mt-14 text-center">
-            <button className={BTN_PRIMARY}>
+            <a
+              aria-disabled="true"
+              tabIndex={-1}
+              className={BTN_PRIMARY}
+            >
               Launch Your Hosting Brand <ArrowRight className="ml-2 inline-block" size={16} />
-            </button>
+            </a>
           </div>
         </div>
       </section>

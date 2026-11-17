@@ -139,10 +139,14 @@ const HowItWorks = () => {
 
         {/* ================= 3. CALL TO ACTION BUTTON ================= */}
         <div className="flex flex-col items-center justify-center gap-3">
-          <button className="bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] transition-all duration-300 ease-in-out hover:from-[#1e88e5] hover:to-[#1565c0] hover:shadow-[0_10px_28px_rgba(30,136,229,0.55)] hover:-translate-y-0.5 active:scale-95 text-white font-bold text-sm px-8 py-3.5 rounded-xl shadow-md flex items-center gap-2">
+          <a
+            aria-disabled="true"
+            tabIndex={-1}
+            className="bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] transition-all duration-300 ease-in-out hover:from-[#1e88e5] hover:to-[#1565c0] hover:shadow-[0_10px_28px_rgba(30,136,229,0.55)] hover:-translate-y-0.5 active:scale-95 text-white font-bold text-sm px-8 py-3.5 rounded-xl shadow-md flex items-center gap-2"
+          >
             <span>START HOSTING TODAY</span>
             <span className="text-base">&rarr;</span>
-          </button>
+          </a>
 
           {/* Subtext Guarantees */}
           <p className="text-xs font-medium text-slate-400 mt-2">

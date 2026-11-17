@@ -21,7 +21,7 @@ const BrandsSlider = () => (
         id="associated-brands-title"
         className="mb-5 text-center text-xs font-bold uppercase tracking-[0.16em] text-slate-500 sm:mb-6"
       >
-        Selected organizations associated with Fox Host
+        Selected organizations associated with Bluefox Hoster
       </h2>
       <div className="brand-slider relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
         <div className="brand-slider-track flex w-max items-center">
@@ -39,7 +39,7 @@ const BrandsSlider = () => (
                   <img
                     src={brand.logo}
                     alt={copy === 0 ? brand.name : ''}
-                    className="max-h-11 max-w-full object-contain opacity-75 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 sm:max-h-12"
+                    className="max-h-11 max-w-full object-contain sm:max-h-12"
                   />
                 </div>
               ))}

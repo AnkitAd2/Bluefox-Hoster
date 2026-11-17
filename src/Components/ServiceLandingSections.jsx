@@ -167,7 +167,7 @@ export const DomainLandingSections = () => (
             </span>
           </h2>
           <p className="mt-4 max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
-            Find a memorable address for your business, community, or next big project, with local .np options and familiar global extensions[cite: 9].
+            Find a memorable address for your business, community, or next big project, with local .np options and familiar global extensions.
           </p>
           <a href="#domains" className={`${primaryBtn} mt-7`}>
             Search a domain
@@ -208,7 +208,7 @@ export const DomainLandingSections = () => (
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
             </span>
-            Local .np registration available[cite: 9]
+            Local .np registration available
           </div>
         </div>
       </div>
@@ -268,6 +268,7 @@ export const DomainLandingSections = () => (
                     {domain.price !== 'Free' && <span className="ml-1 text-xs font-semibold text-slate-500">NPR</span>}
                   </span>
                 </div>
+
               </article>
             </Reveal>
           ))}
@@ -328,7 +329,7 @@ export const ServerHostingHero = ({ onNavigate }) => (
             </span>
           </h2>
           <p className="mt-4 max-w-lg text-sm leading-relaxed text-blue-100 sm:text-base">
-            Choose managed web hosting or scale into cloud and developer-ready environments, backed by local support and reliable infrastructure[cite: 9].
+            Choose managed web hosting or scale into cloud and developer-ready environments, backed by local support and reliable infrastructure.
           </p>
         </Reveal>
 
@@ -470,7 +471,7 @@ export const CloudLandingSections = ({ onNavigate }) => {
               </span>
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
-              Bring email, collaboration, video meetings, and cloud services together with a setup that can grow with your team[cite: 9].
+              Bring email, collaboration, video meetings, and cloud services together with a setup that can grow with your team.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
@@ -531,7 +532,7 @@ export const CloudLandingSections = ({ onNavigate }) => {
             <Reveal delay={450} className="col-span-2">
               <div className="sl-gradient-bg flex items-center gap-3.5 rounded-2xl bg-gradient-to-r from-[#0c73d5] via-[#38a3ff] to-[#0c73d5] px-6 py-4 text-white shadow-md shadow-blue-500/20 transition-all duration-300 hover:shadow-[0_14px_30px_rgba(30,136,229,0.45)]">
                 <ShieldCheck className="h-6 w-6 shrink-0" aria-hidden="true" />
-                <span className="text-sm font-bold">Productivity, security, and cloud in one place[cite: 9]</span>
+                <span className="text-sm font-bold">Productivity, security, and cloud in one place</span>
               </div>
             </Reveal>
           </div>
@@ -573,7 +574,7 @@ export const CloudLandingSections = ({ onNavigate }) => {
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block text-sm font-bold text-slate-900">{svc.label}</span>
-                    <span className="mt-0.5 block text-xs text-slate-500">Flexible setup and migration support[cite: 9]</span>
+                    <span className="mt-0.5 block text-xs text-slate-500">Flexible setup and migration support</span>
                   </span>
                   <span className="flex items-center gap-4 sm:flex-col sm:items-end sm:gap-1">
                     <span className="block text-sm font-extrabold text-slate-800">
@@ -591,7 +592,7 @@ export const CloudLandingSections = ({ onNavigate }) => {
           </Reveal>
 
           <p className="mt-5 text-xs leading-relaxed text-slate-500 max-w-3xl">
-            Illustrative estimates only. Final pricing depends on plan, license count, billing term, and tax. AWS, Azure, VPN, and security services are quoted by usage or plan[cite: 9].
+            Illustrative estimates only. Final pricing depends on plan, license count, billing term, and tax. AWS, Azure, VPN, and security services are quoted by usage or plan.
           </p>
         </div>
       </section>

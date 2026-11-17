@@ -245,7 +245,8 @@ export const EuropeVpsHero = ({ onBack }) => {
 
                   <div className="mt-8 pt-4">
                     <a
-                      href="#get-started"
+                      aria-disabled="true"
+                      tabIndex={-1}
                       className={`block w-full text-center rounded-xl py-3.5 text-sm font-bold transition-all ${
                         plan.popular
                           ? 'text-[#003399] hover:opacity-90 shadow-md hover:shadow-lg'

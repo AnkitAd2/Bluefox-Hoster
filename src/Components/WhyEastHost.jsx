@@ -147,7 +147,7 @@ const WhyEastHost = () => {
             </div>
           </div>
 
-          {/* RIGHT CARD: EAST HOST WINS */}
+          {/* RIGHT CARD: BLUE FOX HOSTER WINS */}
           <div className="why-scroll-reveal relative bg-white border-2 border-blue-400/80 rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col justify-between" style={{ '--why-delay': '180ms' }}>
             
             {/* Superior Choice Badge */}
@@ -161,7 +161,7 @@ const WhyEastHost = () => {
                 <div className="w-24 h-24 rounded-full bg-blue-50 flex items-center justify-center overflow-hidden border border-blue-100">
                   <img
                     src={happyRobot}
-                    alt="Happy East Host Character"
+                    alt="Blue Fox Hoster character"
                     className="w-16 h-16 object-contain"
                   />
                 </div>
@@ -169,7 +169,7 @@ const WhyEastHost = () => {
 
               {/* Title */}
               <h3 className="text-xl font-bold text-slate-900 mb-6 text-left">
-                East Host wins because it ships powerful hosting:
+                Blue Fox Hoster delivers powerful hosting:
               </h3>
 
               {/* Strengths List */}
@@ -195,10 +195,14 @@ const WhyEastHost = () => {
               </span>
 
               {/* Custom Gradient Button */}
-              <button className="w-full sm:w-auto bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] transition-all duration-300 ease-in-out hover:from-[#1e88e5] hover:to-[#1565c0] hover:shadow-[0_10px_28px_rgba(30,136,229,0.55)] hover:-translate-y-0.5 active:scale-95 text-white font-bold text-xs px-5 py-3 rounded-xl flex items-center justify-center gap-2">
-                <span>Deploy With East Host</span>
+              <a
+                aria-disabled="true"
+                tabIndex={-1}
+                className="w-full sm:w-auto bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] transition-all duration-300 ease-in-out hover:from-[#1e88e5] hover:to-[#1565c0] hover:shadow-[0_10px_28px_rgba(30,136,229,0.55)] hover:-translate-y-0.5 active:scale-95 text-white font-bold text-xs px-5 py-3 rounded-xl flex items-center justify-center gap-2"
+              >
+                <span>Deploy With Blue Fox Hoster</span>
                 <span>&rarr;</span>
-              </button>
+              </a>
             </div>
 
           </div>

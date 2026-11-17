@@ -211,7 +211,8 @@ export const NodeJsHostHero = ({ onBack }) => {
 
                   <div className="mt-8 pt-4">
                     <a
-                      href="#get-started"
+                      aria-disabled="true"
+                      tabIndex={-1}
                       className={`block w-full text-center rounded-xl py-3.5 text-sm font-bold transition-all ${
                         plan.popular
                           ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg'

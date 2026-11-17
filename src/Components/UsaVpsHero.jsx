@@ -238,7 +238,8 @@ export const UsaVpsHero = ({ onBack }) => {
 
                   <div className="mt-8 pt-4">
                     <a
-                      href="#get-started"
+                      aria-disabled="true"
+                      tabIndex={-1}
                       className={`block w-full text-center rounded-xl py-3.5 text-sm font-bold transition-all ${
                         plan.popular
                           ? 'bg-gradient-to-r from-[#B22234] to-[#3C3B6E] text-white hover:opacity-90 shadow-md hover:shadow-lg'

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { ArrowLeft, ArrowRight, Eye, EyeOff, ShieldCheck } from 'lucide-react'
-import BlueFoxLogo from '../assets/bluefoxlogo.svg'
 
 const LoginSignupPage = ({ onBack }) => {
   const [mode, setMode] = useState('signup')
@@ -44,8 +43,7 @@ const LoginSignupPage = ({ onBack }) => {
                 <div className="absolute -bottom-28 -left-24 h-80 w-80 rounded-full border-[50px] border-white/20" />
               </div>
               <div className="relative">
-                <img src={BlueFoxLogo} alt="Blue Fox Hoster" className="h-12 w-auto rounded-lg bg-white p-2" />
-                <p className="mt-14 text-sm font-bold uppercase tracking-[0.18em] text-blue-100">
+                <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-100">
                   Blue Fox Hoster
                 </p>
                 <h1 className="mt-3 max-w-sm text-3xl font-extrabold leading-tight xl:text-4xl">
@@ -62,10 +60,6 @@ const LoginSignupPage = ({ onBack }) => {
             </aside>
 
             <div className="p-6 sm:p-10 lg:p-12">
-              <div className="mb-8 lg:hidden">
-                <img src={BlueFoxLogo} alt="Blue Fox Hoster" className="h-10 w-auto" />
-              </div>
-
               <div className="mx-auto max-w-md">
                 <p className="text-xs font-bold uppercase tracking-[0.16em] text-blue-700">
                   {isSignup ? 'Create your account' : 'Welcome back'}

@@ -379,8 +379,9 @@ const HostingOptionsHero = ({ onBack, onNavigate }) => {
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="#contact"
-              className="rounded-xl bg-white px-7 py-3.5 text-sm font-bold text-blue-700 shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5"
+              aria-disabled="true"
+              tabIndex={-1}
+              className="inline-flex items-center justify-center rounded-xl bg-white px-7 py-3.5 text-sm font-bold text-blue-700 shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5"
             >
               Talk to an Expert →
             </a>

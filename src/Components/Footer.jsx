@@ -17,8 +17,8 @@ const linkGroups = [
   {
     title: 'Hosting Services',
     links: [
-      { label: 'Web & WordPress Hosting', href: '#plans' },
-      { label: 'Python & Node.js Hosting', href: '#plans' },
+      { label: 'Web & WordPress Hosting', href: '#server-hosting' },
+      { label: 'Python & Node.js Hosting', href: '#server-hosting' },
       { label: 'Nepal & Global VPS Locations', href: '#server-hosting' },
       { label: 'Cloud Servers & Pricing', href: '#server-plans' },
     ],
@@ -37,7 +37,7 @@ const linkGroups = [
     links: [
       { label: 'About Infrastructure', href: '#company' },
       { label: 'Data Center Locations', href: '#company' },
-      { label: 'Server Uptime Status', href: '#support' },
+      { label: 'Hosting Support', href: '#support' },
       { label: 'Get Started Today', href: '#get-started' },
     ],
   },

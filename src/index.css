@@ -41,6 +41,12 @@ body .text-slate-950 {
   color: var(--brand-navy);
 }
 
+a[aria-disabled='true'] {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 .site-section {
   position: relative;
   isolation: isolate;

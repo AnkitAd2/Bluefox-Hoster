@@ -14,10 +14,9 @@ import {
   Cloud,
   Check,
   Star,
-  Loader2,
   ChevronDown,
 } from 'lucide-react'
-import HeroRobot from '../assets/robot_5_transparent.svg'
+import HeroFox from '../assets/foxshow.png'
 import Dotcom from '../assets/Dotcom.avif'
 import Dotnet from '../assets/Dotnet.avif'
 import Dotbiz from '../assets/Dotbiz.avif'
@@ -109,11 +108,11 @@ const CountUp = ({ end, decimals = 0, prefix = '', suffix = '', duration = 1600,
 const domainPlaceholders = ['yourbrand.com', 'yourbrand.com.np', 'yourstore.net', 'youridea.org']
 
 const extensionChips = [
-  { label: '.com', image: Dotcom, name: 'brand.com' },
-  { label: '.np', image: Dotnp, name: 'brand.com.np' },
-  { label: '.net', image: Dotnet, name: 'brand.net' },
-  { label: '.biz', image: Dotbiz, name: 'brand.biz' },
-  { label: '.info', image: Dotinfo, name: 'brand.info' },
+  { label: '.com', image: Dotcom },
+  { label: '.np', image: Dotnp },
+  { label: '.net', image: Dotnet },
+  { label: '.biz', image: Dotbiz },
+  { label: '.info', image: Dotinfo },
 ]
 
 // Features displayed in the auto-scrolling ticker
@@ -160,9 +159,9 @@ const rise = (ms) => ({ '--d': `${ms}ms` })
 const Hero = ({ onNavigate }) => {
   const [animatedPlaceholder, setAnimatedPlaceholder] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
-  const [isSearching, setIsSearching] = useState(false)
+  const [searchError, setSearchError] = useState('')
+  const [searchNotice, setSearchNotice] = useState('')
   const domainSearchInputRef = useRef(null)
-  const searchTimerRef = useRef(null)
   const stageRef = useRef(null)
   const tiltEnabledRef = useRef(false)
 
@@ -218,7 +217,6 @@ const Hero = ({ onNavigate }) => {
     tiltEnabledRef.current =
       window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
       !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    return () => window.clearTimeout(searchTimerRef.current)
   }, [])
 
   const handleStageMove = (e) => {
@@ -245,21 +243,17 @@ const Hero = ({ onNavigate }) => {
     el.style.setProperty('--py', '0')
   }
 
-  // Handle Domain Search execution
-  const handleSearch = (customQuery) => {
-    const query = typeof customQuery === 'string' ? customQuery : searchQuery.trim() || animatedPlaceholder
-    if (query) {
-      setSearchQuery(query)
-      setIsSearching(true)
-      window.clearTimeout(searchTimerRef.current)
-      searchTimerRef.current = window.setTimeout(() => setIsSearching(false), 900)
-
-      const pricingSection = document.getElementById('domain-pricing') || document.getElementById('plans')
-      if (pricingSection) {
-        pricingSection.scrollIntoView({ behavior: 'smooth' })
-      }
-      console.log(`Searching domain: ${query}`)
+  const handleSearch = (event) => {
+    event.preventDefault()
+    const query = searchQuery.trim()
+    if (!query) {
+      setSearchError('Enter a domain name to check availability.')
+      setSearchNotice('')
+      return
     }
+
+    setSearchError('')
+    setSearchNotice('Domain availability checking will be available soon.')
   }
 
   const scrollDown = () => {
@@ -428,7 +422,10 @@ const Hero = ({ onNavigate }) => {
             style={rise(360)}
             className="hero-rise w-full rounded-2xl border border-blue-200/80 bg-white p-3 shadow-xl shadow-blue-500/10 transition-all duration-300 focus-within:border-blue-500 focus-within:shadow-[0_0_0_4px_rgba(59,130,246,0.15),0_20px_40px_-12px_rgba(30,136,229,0.35)] hover:border-blue-400 hover:shadow-2xl"
           >
-            <div className="flex flex-col items-stretch gap-2.5 sm:flex-row">
+            <form
+              onSubmit={handleSearch}
+              className="flex flex-col items-stretch gap-2.5 sm:flex-row"
+            >
               <div className="relative flex-1">
                 <span
                   onClick={() => domainSearchInputRef.current?.focus()}
@@ -441,24 +438,37 @@ const Hero = ({ onNavigate }) => {
                   ref={domainSearchInputRef}
                   type="text"
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value)
+                    if (searchError) setSearchError('')
+                    if (searchNotice) setSearchNotice('')
+                  }}
                   placeholder={animatedPlaceholder}
                   aria-label="Search your domain"
+                  aria-invalid={Boolean(searchError)}
+                  aria-describedby={searchError ? 'domain-search-error' : searchNotice ? 'domain-search-status' : undefined}
                   className="w-full rounded-xl border border-slate-200 bg-slate-50/80 py-3 pl-11 pr-4 text-sm font-semibold text-slate-900 transition-all placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-100 sm:text-base"
                 />
               </div>
 
               {/* Domain Search Button */}
               <button
-                type="button"
-                onClick={() => handleSearch()}
+                type="submit"
                 className="btn-shimmer flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] px-6 py-3 text-sm font-bold text-white shadow-md transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:from-[#1e88e5] hover:to-[#1565c0] hover:shadow-[0_12px_28px_rgba(30,136,229,0.45)] active:scale-95"
               >
-                {isSearching && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
-                {isSearching ? 'Searching…' : 'Search Domain'}
+                Search
               </button>
-            </div>
+            </form>
+            {searchError && (
+              <p id="domain-search-error" role="alert" className="mt-2 text-sm font-medium text-red-600">
+                {searchError}
+              </p>
+            )}
+            {searchNotice && (
+              <p id="domain-search-status" role="status" className="mt-2 text-sm font-medium text-blue-700">
+                {searchNotice}
+              </p>
+            )}
           </div>
 
           {/* Action Buttons */}
@@ -473,7 +483,7 @@ const Hero = ({ onNavigate }) => {
             </button>
 
             <a
-              href="#plans"
+              href="#server-plans"
               className="rounded-xl border border-slate-300 bg-white px-5 py-3.5 text-sm font-semibold text-slate-700 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-300 hover:bg-slate-50 hover:text-blue-600 hover:shadow-md sm:text-base"
             >
               View Hosting Plans
@@ -607,7 +617,13 @@ const Hero = ({ onNavigate }) => {
                 <button
                   key={item.label}
                   type="button"
-                  onClick={() => handleSearch(item.name)}
+                  onClick={() => {
+                    const domainName = searchQuery.trim().split('.')[0] || 'yourdomain'
+                    setSearchQuery(`${domainName}${item.label}`)
+                    setSearchError('')
+                    setSearchNotice('')
+                    domainSearchInputRef.current?.focus()
+                  }}
                   style={rise(500 + i * 110)}
                   className="hero-slide-in group flex cursor-pointer items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-2.5 py-1.5 text-xs font-bold text-slate-200 shadow-sm backdrop-blur-md transition-all duration-200 hover:scale-105 hover:border-blue-400 hover:bg-blue-600/30 hover:shadow-[0_0_20px_rgba(59,130,246,0.35)]"
                   title={`Select ${item.label}`}
@@ -637,8 +653,8 @@ const Hero = ({ onNavigate }) => {
                 style={{ transform: 'translate3d(calc(var(--px, 0) * 16px), calc(var(--py, 0) * 12px), 0)' }}
               >
                 <img
-                  src={HeroRobot}
-                  alt="Blue Fox Hoster Robot Mascot"
+                  src={HeroFox}
+                  alt="Blue Fox Hoster fox mascot"
                   className="animate-float h-56 w-auto object-contain drop-shadow-[0_20px_35px_rgba(0,0,0,0.6)] sm:h-64 lg:h-72"
                 />
               </div>
@@ -694,7 +710,7 @@ const Hero = ({ onNavigate }) => {
               </div>
 
               <a
-                href="#plans"
+                href="#server-plans"
                 className="btn-shimmer group flex items-center gap-1 rounded-xl bg-white px-3 py-2 text-xs font-bold text-blue-950 shadow-md transition-transform hover:scale-105"
               >
                 Claim <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />

@@ -3,7 +3,7 @@ import DjangoLogo from '../assets/django.svg';
 import PythonLogo from '../assets/python logo.webp';
 import NodejsLogo from '../assets/nodejs-logo.svg';
 
-const BTN_PRIMARY = 'rounded-xl bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] px-6 py-3.5 text-sm sm:text-base font-semibold text-white shadow-md transition-all duration-300 hover:to-[#1565c0] hover:shadow-[0_12px_28px_rgba(30,136,229,0.45)] hover:-translate-y-0.5 active:scale-95 cursor-pointer';
+const BTN_PRIMARY = 'inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] px-6 py-3.5 text-sm sm:text-base font-semibold text-white shadow-md transition-all duration-300 hover:to-[#1565c0] hover:shadow-[0_12px_28px_rgba(30,136,229,0.45)] hover:-translate-y-0.5 active:scale-95 cursor-pointer';
 
 const languages = [
   {
@@ -159,18 +159,26 @@ export function CodeBasedHero({ onBack }) {
           </div>
 
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className={BTN_PRIMARY}>
+            <a
+              aria-disabled="true"
+              tabIndex={-1}
+              className={BTN_PRIMARY}
+            >
               Deploy Your App <ArrowRight className="ml-2 inline-block" size={16} />
-            </button>
-            <button className="rounded-xl border border-slate-600 px-6 py-3.5 text-sm font-semibold text-slate-300 font-sans transition hover:bg-white/5">
-              View Documentation
-            </button>
+            </a>
+            <a
+              aria-disabled="true"
+              tabIndex={-1}
+              className="rounded-xl border border-slate-600 px-6 py-3.5 text-sm font-semibold text-slate-300 font-sans transition hover:bg-white/5"
+            >
+              Ask for Documentation
+            </a>
           </div>
         </div>
       </section>
 
       {/* ── LANGUAGE CARDS ── */}
-      <section className="bg-slate-950 py-20 px-4">
+      <section id="language-stacks" className="scroll-mt-28 bg-slate-950 py-20 px-4">
         <div className="mx-auto max-w-6xl">
           <div className="mb-12 text-center">
             <h2 className="text-3xl sm:text-4xl font-bold text-white font-sans">Pick Your Language Stack</h2>
@@ -211,9 +219,13 @@ export function CodeBasedHero({ onBack }) {
                     ))}
                   </ul>
 
-                  <button className={`mt-6 w-full ${BTN_PRIMARY} text-center font-sans`}>
+                  <a
+                    aria-disabled="true"
+                    tabIndex={-1}
+                    className={`mt-6 w-full ${BTN_PRIMARY} text-center font-sans`}
+                  >
                     Get Started
-                  </button>
+                  </a>
                 </div>
               </div>
             ))}
@@ -264,12 +276,16 @@ export function CodeBasedHero({ onBack }) {
             Pay with eSewa, Khalti, IME Pay, or Bank Transfer.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="rounded-xl bg-white px-8 py-3.5 text-sm font-bold text-blue-700 shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5 active:scale-95 cursor-pointer font-sans">
+            <a
+              aria-disabled="true"
+              tabIndex={-1}
+              className="rounded-xl bg-white px-8 py-3.5 text-sm font-bold text-blue-700 shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5 active:scale-95 cursor-pointer font-sans"
+            >
               Deploy Now — From Rs 250/mo
-            </button>
-            <button className="rounded-xl border border-white/30 px-6 py-3.5 text-sm font-semibold text-white font-sans transition hover:bg-white/10">
+            </a>
+            <a href="#language-stacks" className="rounded-xl border border-white/30 px-6 py-3.5 text-sm font-semibold text-white font-sans transition hover:bg-white/10">
               View All Stacks
-            </button>
+            </a>
           </div>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             {['No Lock-in', 'SSH Access', 'Git Deploy', 'NVMe SSD', '24/7 Dev Support'].map((t) => (
