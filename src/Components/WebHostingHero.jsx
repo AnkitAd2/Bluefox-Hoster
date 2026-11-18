@@ -53,12 +53,13 @@ import {
 } from 'lucide-react'
 import Flag from '../assets/Flag_of_Nepal.svg.webp'
 import HeroRobot from '../assets/robot_5_transparent.svg'
-import { getPrice } from '../utils/priceCatalog'
+import { getPriceAmount } from '../utils/priceCatalog'
 
 const hostingPlans = [
   {
-    name: 'Starter Web',
-    price: 'Rs 120',
+    name: 'Starter',
+    pricingPlanId: 'starter',
+    defaultPrices: { triennial: 120, annual: 180 },
     period: '/month',
     desc: 'Perfect for personal blogs, portfolios, and small project sites.',
     features: [
@@ -73,8 +74,9 @@ const hostingPlans = [
     cta: 'Get Started',
   },
   {
-    name: 'Business Pro',
-    price: 'Rs 350',
+    name: 'Growth',
+    pricingPlanId: 'growth',
+    defaultPrices: { triennial: 240, annual: 360 },
     period: '/month',
     desc: 'Optimized for growing Nepali businesses & e-commerce stores.',
     features: [
@@ -89,8 +91,9 @@ const hostingPlans = [
     cta: 'Start Business Plan',
   },
   {
-    name: 'Cloud Ultra',
-    price: 'Rs 850',
+    name: 'Pro',
+    pricingPlanId: 'bluefox',
+    defaultPrices: { triennial: 420, annual: 620 },
     period: '/month',
     desc: 'Maximum performance and dedicated power for high-traffic apps.',
     features: [
@@ -105,6 +108,10 @@ const hostingPlans = [
     cta: 'Scale to Cloud',
   },
 ]
+
+const getHostingPlanPrice = (plan, billingCycle) => (
+  getPriceAmount(`pricing.${plan.pricingPlanId}.${billingCycle}`, plan.defaultPrices[billingCycle])
+)
 
 const featuresList = [
   {
@@ -182,7 +189,7 @@ const featuresList = [
 ]
 
 export const WebHostingHero = ({ onBack }) => {
-  const [billingCycle, setBillingCycle] = useState('monthly')
+  const [billingCycle, setBillingCycle] = useState('triennial')
 
   return (
     <>
@@ -310,12 +317,17 @@ export const WebHostingHero = ({ onBack }) => {
             <div className="absolute bottom-4 right-4 z-10 rounded-2xl border border-white/80 bg-white/95 px-4 py-2.5 shadow-xl backdrop-blur-md">
               <div className="flex items-center gap-2">
                 <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">Starting at</span>
-                <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[9px] font-extrabold uppercase text-emerald-800">70% OFF</span>
+                <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[9px] font-extrabold uppercase text-emerald-800">
+                  {billingCycle === 'triennial' ? '70% OFF' : '25% OFF'}
+                </span>
               </div>
               <div className="mt-0.5 flex items-baseline gap-1">
-                <span className="text-2xl font-black text-slate-950">{hostingPlans[0].price}</span>
+                <span className="text-2xl font-black text-slate-950">Rs {getHostingPlanPrice(hostingPlans[0], billingCycle).toLocaleString('en-IN')}</span>
                 <span className="text-xs font-semibold text-slate-500">/mo</span>
               </div>
+              <p className="text-[10px] text-slate-500">
+                {billingCycle === 'triennial' ? '3-year rate, billed upfront' : 'Annual rate, billed upfront'}
+              </p>
             </div>
 
           </div>
@@ -341,27 +353,34 @@ export const WebHostingHero = ({ onBack }) => {
             <div className="mt-6 inline-flex items-center rounded-xl bg-slate-100 p-1 border border-slate-200">
               <button
                 type="button"
-                onClick={() => setBillingCycle('monthly')}
+                onClick={() => setBillingCycle('annual')}
                 className={`rounded-lg px-4 py-2 text-xs font-bold transition-all ${
-                  billingCycle === 'monthly' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                  billingCycle === 'annual' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                Monthly Billing
+                Annual · 12 months
               </button>
               <button
                 type="button"
-                onClick={() => setBillingCycle('yearly')}
+                onClick={() => setBillingCycle('triennial')}
                 className={`rounded-lg px-4 py-2 text-xs font-bold transition-all ${
-                  billingCycle === 'yearly' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                  billingCycle === 'triennial' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                Annual Billing <span className="ml-1 text-[10px] font-bold text-emerald-600 uppercase">(Save 20%)</span>
+                3 years · 36 months <span className="ml-1 text-[10px] font-bold text-emerald-600 uppercase">(70% off)</span>
               </button>
             </div>
+            <p className="mt-3 text-xs text-slate-500">
+              All prices are in Nepalese rupees (Rs), shown as monthly equivalents. The full selected term is charged upfront.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
-            {hostingPlans.map((plan) => (
+            {hostingPlans.map((plan) => {
+              const monthlyPrice = getHostingPlanPrice(plan, billingCycle)
+              const billingMonths = billingCycle === 'triennial' ? 36 : 12
+
+              return (
               <div 
                 key={plan.name}
                 className={`relative rounded-3xl border bg-white p-8 shadow-sm flex flex-col justify-between transition-all hover:shadow-xl hover:-translate-y-1 ${
@@ -378,9 +397,14 @@ export const WebHostingHero = ({ onBack }) => {
                   <h3 className="text-xl font-bold text-slate-900">{plan.name}</h3>
                   <p className="text-xs text-slate-500 mt-1 min-h-[32px]">{plan.desc}</p>
 
-                  <div className="mt-6 flex items-baseline gap-1 border-b border-slate-100 pb-6">
-                    <span className="text-4xl font-black text-slate-950">{getPrice(({ 'Starter Web': 'web.starter', 'Business Pro': 'web.business', 'Cloud Ultra': 'web.cloud' })[plan.name], plan.price)}</span>
-                    <span className="text-xs font-semibold text-slate-500">{plan.period}</span>
+                  <div className="mt-6 border-b border-slate-100 pb-6">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-4xl font-black text-slate-950">Rs {monthlyPrice.toLocaleString('en-IN')}</span>
+                      <span className="text-xs font-semibold text-slate-500">{plan.period}</span>
+                    </div>
+                    <p className="mt-2 text-xs leading-relaxed text-slate-500">
+                      Charged upfront: <span className="font-semibold text-slate-700">Rs {(monthlyPrice * billingMonths).toLocaleString('en-IN')}</span> for {billingMonths} months.
+                    </p>
                   </div>
 
                   <ul className="mt-6 space-y-3.5 text-sm text-slate-600">
@@ -408,7 +432,8 @@ export const WebHostingHero = ({ onBack }) => {
                   </a>
                 </div>
               </div>
-            ))}
+              )
+            })}
           </div>
 
         </div>

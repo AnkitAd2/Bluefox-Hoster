@@ -80,11 +80,11 @@ const TargetAudienceSection = ({ onNavigate }) => {
 
   // Comparison Table Data
   const comparisonRows = [
-    { feature: 'Websites', starter: '1', growth: '∞', eastHost: '∞', ultimate: '∞' },
-    { feature: 'Storage', starter: '5 GB', growth: '∞', eastHost: '∞', ultimate: '∞' },
-    { feature: 'Email Accounts', starter: '5', growth: '10', eastHost: '∞', ultimate: '∞' },
-    { feature: 'Backup Frequency', starter: 'Weekly', growth: 'Daily', eastHost: 'Daily', ultimate: 'Daily' },
-    { feature: 'Price/mo', starter: 'NPR 120', growth: 'NPR 240', eastHost: 'NPR 420', ultimate: 'NPR 720', isPrice: true }
+    { feature: 'Websites', starter: '1', growth: '∞', pro: '∞', ultimate: '∞' },
+    { feature: 'Storage', starter: '5 GB', growth: '∞', pro: '∞', ultimate: '∞' },
+    { feature: 'Email Accounts', starter: '5', growth: '10', pro: '∞', ultimate: '∞' },
+    { feature: 'Backup Frequency', starter: 'Weekly', growth: 'Daily', pro: 'Daily', ultimate: 'Daily' },
+    { feature: 'Price/mo', starter: 'NPR 120', growth: 'NPR 240', pro: 'NPR 420', ultimate: 'NPR 720', isPrice: true }
   ]
 
   return (
@@ -188,7 +188,7 @@ const TargetAudienceSection = ({ onNavigate }) => {
                   <th className="py-3 px-4 text-center">Starter</th>
                   <th className="py-3 px-4 text-center">Growth</th>
                   <th className="py-3 px-4 text-center bg-blue-50/80 text-blue-600 rounded-t-xl">
-                    East Host ★
+                    Pro ★
                   </th>
                   <th className="py-3 px-4 text-center">Ultimate</th>
                 </tr>
@@ -202,7 +202,7 @@ const TargetAudienceSection = ({ onNavigate }) => {
                     
                     {/* Highlighted Column */}
                     <td className={`py-3.5 px-4 text-center bg-blue-50/80 text-blue-600 font-bold ${row.isPrice ? 'bg-blue-100/70 text-blue-700 text-sm' : ''}`}>
-                      {row.eastHost}
+                      {row.pro}
                     </td>
 
                     <td className="py-3.5 px-4 text-center">{row.ultimate}</td>

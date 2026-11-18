@@ -139,6 +139,7 @@ const plans = [
   {
     id: 'starter',
     name: 'Starter',
+    subtitle: 'For one website and personal projects',
     Icon: Rocket,
     pricing: {
       triennial: { price: '120', wasPrice: '400', savings: '70% SAVINGS', payInfo: 'Pay Rs 4,320 today for 3 full years.', renewInfo: 'Renewal pricing is confirmed before checkout.' },
@@ -156,6 +157,7 @@ const plans = [
   {
     id: 'growth',
     name: 'Growth',
+    subtitle: 'For multiple websites and growing projects',
     Icon: Sprout,
     pricing: {
       triennial: { price: '240', wasPrice: '800', savings: '70% SAVINGS', payInfo: 'Pay Rs 8,640 today for 3 full years.', renewInfo: 'Renewal pricing is confirmed before checkout.' },
@@ -171,16 +173,16 @@ const plans = [
     ],
   },
   {
-    id: 'east-host',
-    name: 'Bluefox Hoster',
-    subtitle: 'Best for growing businesses',
+    id: 'pro',
+    name: 'Pro',
+    subtitle: 'For businesses that need unlimited email accounts',
     Icon: Zap,
     pricing: {
       triennial: { price: '420', wasPrice: '1,400', savings: '70% SAVINGS', payInfo: 'Pay Rs 15,120 today for 3 full years.', renewInfo: 'Renewal pricing is confirmed before checkout.' },
       annual: { price: '620', wasPrice: '840', savings: '26% SAVINGS', payInfo: 'Pay Rs 7,440 today for 1 full year.', renewInfo: 'Renewal pricing is confirmed before checkout.' },
     },
     isPopular: true,
-    popularTag: '★ TOP CHOICE • MOST POPULAR',
+    popularTag: 'MOST POPULAR',
     features: [
       { label: 'Websites', value: 'UNLIMITED', isBlue: true },
       { label: 'Disk', value: 'UNLIMITED', isBlue: true },
@@ -192,6 +194,7 @@ const plans = [
   {
     id: 'ultimate',
     name: 'Ultimate',
+    subtitle: 'For high-traffic sites that need maximum resources',
     Icon: Gem,
     pricing: {
       triennial: { price: '720', wasPrice: '2,400', savings: '70% SAVINGS', payInfo: 'Pay Rs 25,920 today for 3 full years.', renewInfo: 'Renewal pricing is confirmed before checkout.' },
@@ -314,7 +317,7 @@ const PricingSection = () => {
               Plan
             </h2>
             <p className="mt-1 max-w-2xl text-sm leading-relaxed text-slate-500 sm:text-base">
-              These are shared web hosting plans, priced in Nepalese rupees (Rs). The rate is per month; choose a billing term to see the amount due upfront. Domains, VPS and other services are priced separately.
+              These shared hosting prices are Nepalese rupees (Rs) per month. Choose a term to see the full amount charged upfront; domains, VPS and other services are priced separately.
             </p>
           </Reveal>
 
@@ -365,7 +368,7 @@ const PricingSection = () => {
         <div className="mb-14 grid grid-cols-1 items-stretch gap-6 pt-3 md:grid-cols-2 xl:grid-cols-4">
           {plans.map((plan, index) => {
             const currentPlan = plan.pricing[billingCycle]
-            const pricePlanId = plan.id === 'east-host' ? 'bluefox' : plan.id
+            const pricePlanId = plan.id === 'pro' ? 'bluefox' : plan.id
             const currentPrice = getPriceAmount(`pricing.${pricePlanId}.${billingCycle}`, currentPlan.price)
             const wasPrice = getPriceAmount(`pricing.${pricePlanId}.${billingCycle}.was`, currentPlan.wasPrice)
             const billingMonths = billingCycle === 'triennial' ? 36 : 12
@@ -432,12 +435,12 @@ const PricingSection = () => {
                           <span className="text-4xl font-black tracking-tight tabular-nums text-slate-900">
                             <AnimatedNumber value={currentPrice} />
                           </span>
-                          <span className="text-xs font-medium text-slate-500">/mo</span>
+                          <span className="text-xs font-medium text-slate-500">/month</span>
                         </div>
 
                         <div className="mt-1 flex flex-wrap items-center gap-2">
                           <span className="text-xs tabular-nums text-slate-400 line-through">
-                            Was Rs <AnimatedNumber value={wasPrice} />/mo
+                            Was Rs <AnimatedNumber value={wasPrice} />/month
                           </span>
                           <span
                             key={`${plan.id}-${billingCycle}`}
@@ -453,7 +456,7 @@ const PricingSection = () => {
                         key={`${plan.id}-info-${billingCycle}`}
                         className="pricing-swap mb-6 space-y-0.5 rounded-2xl border border-slate-100 bg-slate-50 p-3 text-[11px] text-slate-500 transition-colors duration-300 group-hover:bg-blue-50/50"
                       >
-                        <p className="font-semibold text-slate-700">Due today: Rs {(currentPrice * billingMonths).toLocaleString('en-IN')} for {billingCycle === 'triennial' ? '36 months' : '12 months'}.</p>
+                        <p className="font-semibold text-slate-700">Charged upfront: Rs {(currentPrice * billingMonths).toLocaleString('en-IN')} for {billingMonths} months.</p>
                         <p className="text-[10px] text-slate-400">{currentPlan.renewInfo}</p>
                       </div>
 

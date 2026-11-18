@@ -210,6 +210,12 @@ const Navbar = ({ onNavigate, currentView }) => {
     scrollToTarget()
   }
 
+  const handleGeneratorClick = () => {
+    dismissDropdowns()
+    setMobileMenuOpen(false)
+    if (onNavigate) onNavigate('generator')
+  }
+
   const handleSupportOptionClick = (option) => (event) => {
     if (option.href.startsWith('#')) {
       event.preventDefault()
@@ -446,6 +452,20 @@ const Navbar = ({ onNavigate, currentView }) => {
                           </a>
                         ))}
                       </div>
+                      <button
+                        type="button"
+                        onClick={handleGeneratorClick}
+                        className="mt-4 flex w-full items-center gap-3 rounded-xl border border-blue-100 bg-blue-50/60 p-3 text-left transition-colors hover:border-blue-200 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-blue-600"
+                      >
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white text-blue-700">
+                          <BookOpen aria-hidden="true" className="h-5 w-5" />
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-sm font-bold text-slate-900">Need a .NP domain letter?</span>
+                          <span className="mt-0.5 block text-xs text-slate-600">Prepare and download your registration request letter.</span>
+                        </span>
+                        <ArrowUpRight aria-hidden="true" className="h-4 w-4 shrink-0 text-blue-700" />
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -596,16 +616,15 @@ const Navbar = ({ onNavigate, currentView }) => {
               </li>
 
               <li>
-                <button 
-                  type="button" 
-                  onClick={() => { dismissDropdowns(); if (onNavigate) onNavigate('generator'); }} 
-                  className={`transition-colors duration-200 bg-transparent border-none cursor-pointer p-0 font-medium ${
-                    currentView === 'generator' ? 'text-blue-600 font-semibold' : 'text-slate-600 hover:text-blue-600'
-                  }`}
+                <button
+                  type="button"
+                  onClick={handleSectionClick('#company')}
+                  className="bg-transparent border-none cursor-pointer py-2.5 text-inherit hover:text-blue-600 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600 font-medium"
                 >
-                  .NP letter Generator
+                  About Us
                 </button>
               </li>
+
             </ul>
           </nav>
 
@@ -648,10 +667,17 @@ const Navbar = ({ onNavigate, currentView }) => {
               </button>
               <button
                 type="button"
-                onClick={() => { setMobileMenuOpen(false); if (onNavigate) onNavigate('generator'); }}
+                onClick={handleSectionClick('#server-plans')}
                 className="w-full rounded-xl border border-slate-200 bg-white px-3 py-3 text-left text-sm font-semibold text-slate-800 shadow-sm transition-colors hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-blue-600"
               >
-                .NP letter Generator
+                Hosting Plans
+              </button>
+              <button
+                type="button"
+                onClick={handleSectionClick('#company')}
+                className="w-full rounded-xl border border-slate-200 bg-white px-3 py-3 text-left text-sm font-semibold text-slate-800 shadow-sm transition-colors hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-blue-600"
+              >
+                About Us
               </button>
             </div>
 
@@ -685,6 +711,20 @@ const Navbar = ({ onNavigate, currentView }) => {
                       </span>
                     </a>
                   ))}
+                  <button
+                    type="button"
+                    onClick={handleGeneratorClick}
+                    className="col-span-full flex w-full items-center gap-3 rounded-lg border border-blue-100 bg-white px-3 py-3 text-left transition-colors hover:border-blue-200 hover:bg-blue-50/60 focus-visible:outline-2 focus-visible:outline-blue-600"
+                  >
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-700">
+                      <BookOpen aria-hidden="true" className="h-4 w-4" />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block text-xs font-bold text-slate-900">.NP domain letter generator</span>
+                      <span className="mt-0.5 block text-[11px] text-slate-500">Prepare and download your registration request letter.</span>
+                    </span>
+                    <ArrowUpRight aria-hidden="true" className="ml-auto h-4 w-4 shrink-0 text-blue-700" />
+                  </button>
                 </div>
               )}
             </div>
