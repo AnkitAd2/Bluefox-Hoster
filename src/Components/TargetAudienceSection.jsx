@@ -84,7 +84,7 @@ const TargetAudienceSection = ({ onNavigate }) => {
     { feature: 'Storage', starter: '5 GB', growth: '∞', eastHost: '∞', ultimate: '∞' },
     { feature: 'Email Accounts', starter: '5', growth: '10', eastHost: '∞', ultimate: '∞' },
     { feature: 'Backup Frequency', starter: 'Weekly', growth: 'Daily', eastHost: 'Daily', ultimate: 'Daily' },
-    { feature: 'Price/mo', starter: '₹120', growth: '₹240', eastHost: '₹420', ultimate: '₹720', isPrice: true }
+    { feature: 'Price/mo', starter: 'NPR 120', growth: 'NPR 240', eastHost: 'NPR 420', ultimate: 'NPR 720', isPrice: true }
   ]
 
   return (

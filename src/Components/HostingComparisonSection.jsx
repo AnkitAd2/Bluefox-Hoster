@@ -149,6 +149,7 @@ const HostingComparisonSection = () => (
             <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-600">
               Compare Web Starter, Web Plus, Web Pro, and Web Elite, including the cPanel tools bundled with each plan.
             </p>
+            <p className="mt-2 text-sm text-slate-500">Prices are shown in Nepali rupees (NPR).</p>
             <p className="mt-3 text-sm text-slate-500 lg:hidden">Swipe sideways to compare plans.</p>
           </div>
 
