@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { getPrice } from '../utils/priceCatalog'
+import { getPrice, getPriceAmount } from '../utils/priceCatalog'
 import {
   Activity,
   ArrowRight,
@@ -283,7 +283,7 @@ export const DomainLandingSections = () => (
 --------------------------------------------------------------------------- */
 
 const hostingCards = [
-  { label: 'Web Hosting', image: WebHostingLogo, from: 'Rs 120/mo', priceId: 'home.hosting.web', badge: 'Popular', path: 'web-hosting' },
+  { label: 'Web Hosting', image: WebHostingLogo, from: 'Rs 120/mo', priceId: 'pricing.starter.triennial', badge: 'Popular', path: 'web-hosting' },
   { label: 'Cloud Hosting', image: CloudHostingLogo, from: 'Rs 450/mo', priceId: 'home.hosting.cloud', path: 'cloud-hosting' },
   { label: 'WordPress', image: WordPressLogo, from: 'Rs 199/mo', priceId: 'home.hosting.wordpress', path: 'wordpress-hosting' },
   { label: 'eCommerce', image: EcommerceLogo, from: 'Rs 349/mo', priceId: 'home.hosting.ecommerce', path: 'ecommerce-hosting' },
@@ -384,7 +384,11 @@ export const ServerHostingHero = ({ onNavigate }) => (
                 </span>
                 <span className="relative mt-1 space-y-1">
                   <span className="block text-xs font-bold leading-tight text-white">{card.label}</span>
-                  <span className="block text-[10px] font-semibold text-blue-300">From {getPrice(card.priceId, card.from)}</span>
+                  <span className="block text-[10px] font-semibold text-blue-300">
+                    From {card.priceId === 'pricing.starter.triennial'
+                      ? `Rs ${getPriceAmount(card.priceId, 120).toLocaleString('en-IN')}/mo`
+                      : getPrice(card.priceId, card.from)}
+                  </span>
                 </span>
                 <span className="relative mt-auto flex items-center gap-1 text-[10px] font-semibold text-blue-300 transition-colors group-hover:text-white">
                   View plans{' '}

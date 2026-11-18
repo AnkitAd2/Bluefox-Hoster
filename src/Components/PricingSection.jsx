@@ -166,7 +166,7 @@ const plans = [
     isPopular: false,
     features: [
       { label: 'Websites', value: 'UNLIMITED', isBlue: true },
-      { label: 'Disk', value: 'UNLIMITED', isBlue: true },
+      { label: 'Disk', value: '50GB', isBlue: false },
       { label: 'Bandwidth', value: 'UNLIMITED', isBlue: true },
       { label: 'Email', value: '10 ACCOUNTS', isBlue: false },
       { label: 'Backup', value: 'DAILY', isBlue: false },
@@ -185,7 +185,7 @@ const plans = [
     popularTag: 'MOST POPULAR',
     features: [
       { label: 'Websites', value: 'UNLIMITED', isBlue: true },
-      { label: 'Disk', value: 'UNLIMITED', isBlue: true },
+      { label: 'Disk', value: '100GB', isBlue: false },
       { label: 'Bandwidth', value: 'UNLIMITED', isBlue: true },
       { label: 'Email', value: 'UNLIMITED', isBlue: true },
       { label: 'Backup', value: 'DAILY', isBlue: false },
@@ -207,6 +207,9 @@ const plans = [
       { label: 'Bandwidth', value: 'UNLIMITED', isBlue: true },
       { label: 'Email', value: 'UNLIMITED', isBlue: true },
       { label: 'Backup', value: 'DAILY', isBlue: false },
+      { label: 'Dedicated IP address', value: 'INCLUDED', isBlue: true },
+      { label: 'LiteSpeed + LSCache', value: 'INCLUDED', isBlue: true },
+      { label: 'VIP dedicated support', value: 'INCLUDED', isBlue: true },
     ],
   },
 ]

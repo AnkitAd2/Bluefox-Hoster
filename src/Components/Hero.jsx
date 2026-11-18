@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { getPrice } from '../utils/priceCatalog'
+import { getPriceAmount } from '../utils/priceCatalog'
 import {
   Zap,
   Server,
@@ -689,7 +689,7 @@ const Hero = ({ onNavigate }) => {
               <div>
                 <span className="block text-[9px] font-extrabold uppercase tracking-widest text-blue-200">Starting Offer</span>
                 <div className="mt-0.5 flex items-baseline gap-1">
-                  <span className="text-xl font-black text-white">{getPrice('web.starter', 'Rs 120')}</span>
+                  <span className="text-xl font-black text-white">Rs {getPriceAmount('pricing.starter.triennial', 120).toLocaleString('en-IN')}</span>
                   <span className="text-[10px] font-semibold text-blue-100">/mo</span>
                 </div>
               </div>

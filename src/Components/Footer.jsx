@@ -3,6 +3,9 @@ import { FaWhatsapp } from 'react-icons/fa6'
 import BlueFoxLogo from '../assets/bluefoxlogo.svg'
 import ESewaLogo from '../assets/esewalogo.png'
 import Khalti from '../assets/khaltilogo.png'
+import ImePay from '../assets/Ime.png'
+import Fonepay from '../assets/fonepay.png'
+import Visa from '../assets/visa.png'
 
 const linkGroups = [
   {
@@ -26,6 +29,9 @@ const linkGroups = [
 const paymentMethods = [
   { name: 'eSewa', image: ESewaLogo },
   { name: 'Khalti', image: Khalti },
+  { name: 'IME Pay', image: ImePay },
+  { name: 'Fonepay', image: Fonepay },
+  { name: 'Visa', image: Visa },
   { name: 'Bank transfer', color: 'bg-slate-900/90 text-slate-300 border-slate-800' },
   { name: 'PayPal', color: 'bg-slate-900/90 text-slate-300 border-slate-800' },
 ]
@@ -146,7 +152,7 @@ const Footer = ({ onNavigate, currentView }) => {
                 Payment options
               </span>
               <p className="mt-0.5 text-xs text-slate-500">
-                eSewa, Khalti, bank transfer and PayPal. Confirm available methods during checkout.
+                eSewa, Khalti, IME Pay, Fonepay, Visa, bank transfer and PayPal. Confirm available methods during checkout.
               </p>
             </div>
 
@@ -155,13 +161,13 @@ const Footer = ({ onNavigate, currentView }) => {
                 method.image ? (
                   <div
                     key={method.name}
-                    className="flex h-9 items-center justify-center rounded-lg border border-slate-800 bg-slate-900/90 px-3 py-1.5 shadow-sm hover:border-slate-700 transition-all hover:scale-105"
+                    className="flex h-10 items-center justify-center rounded-lg border border-slate-200 bg-white px-3 py-1.5 shadow-sm transition-all hover:border-slate-300 hover:scale-105"
                     title={method.name}
                   >
                     <img
                       src={method.image}
                       alt={method.name}
-                      className="h-5 w-auto max-w-[4.5rem] object-contain"
+                      className="h-6 w-auto max-w-[5rem] object-contain"
                     />
                   </div>
                 ) : (

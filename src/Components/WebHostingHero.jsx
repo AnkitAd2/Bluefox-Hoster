@@ -64,11 +64,11 @@ const hostingPlans = [
     desc: 'Perfect for personal blogs, portfolios, and small project sites.',
     features: [
       '1 Website Hosted',
-      '10 GB NVMe SSD Storage',
-      'Free .com Domain Included',
+      '5 GB NVMe SSD Storage',
+      '5 Email Accounts',
       'Unmetered Bandwidth',
       'Free SSL Certificate',
-      'Daily Automated Backups',
+      'Weekly Automated Backups',
     ],
     popular: false,
     cta: 'Get Started',
@@ -82,30 +82,53 @@ const hostingPlans = [
     features: [
       'Unlimited Websites',
       '50 GB High-Speed NVMe SSD',
+      '10 Email Accounts',
+      'Unmetered Bandwidth',
       'Free .com Domain Included',
       '2x CPU & Memory Resources',
       'Free SSL & DDoS Protection',
+      'Daily Automated Backups',
       '24/7 Priority Support',
     ],
-    popular: true,
-    cta: 'Start Business Plan',
+    popular: false,
+    cta: 'Choose Growth',
   },
   {
     name: 'Pro',
     pricingPlanId: 'bluefox',
     defaultPrices: { triennial: 420, annual: 620 },
     period: '/month',
-    desc: 'Maximum performance and dedicated power for high-traffic apps.',
+    desc: 'For established sites that need more storage and unlimited email.',
     features: [
       'Unlimited Websites',
-      '100 GB NVMe SSD Storage',
+      '100 GB High-Speed NVMe SSD',
+      'Unlimited Email Accounts',
+      'Unmetered Bandwidth',
+      'Free SSL & DDoS Protection',
+      'Daily Automated Backups',
+    ],
+    popular: true,
+    cta: 'Choose Pro',
+  },
+  {
+    name: 'Ultimate',
+    pricingPlanId: 'ultimate',
+    defaultPrices: { triennial: 720, annual: 980 },
+    period: '/month',
+    desc: 'For high-traffic sites needing unlimited storage and premium support.',
+    features: [
+      'Unlimited Websites',
+      'Unlimited NVMe SSD Storage',
+      'Unlimited Email Accounts',
+      'Unmetered Bandwidth',
       'Free .com / .np Domain',
       'Dedicated IP Address',
       'LiteSpeed Web Server + LSCache',
       'VIP Dedicated Account Support',
+      'Daily Automated Backups',
     ],
     popular: false,
-    cta: 'Scale to Cloud',
+    cta: 'Choose Ultimate',
   },
 ]
 
@@ -375,7 +398,7 @@ export const WebHostingHero = ({ onBack }) => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 items-stretch">
             {hostingPlans.map((plan) => {
               const monthlyPrice = getHostingPlanPrice(plan, billingCycle)
               const billingMonths = billingCycle === 'triennial' ? 36 : 12

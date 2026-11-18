@@ -45,7 +45,9 @@ const WebsitePrices = ({ priceStore }) => {
   const [message, setMessage] = useState('')
   const [query, setQuery] = useState('')
 
-  const visiblePrices = priceStore.catalog.filter(({ category, item }) => `${category} ${item}`.toLowerCase().includes(query.toLowerCase()))
+  const visiblePrices = priceStore.catalog.filter(({ category, item, adminVisible = true }) => (
+    adminVisible && `${category} ${item}`.toLowerCase().includes(query.toLowerCase())
+  ))
 
   const updateDraft = (id, value) => setDrafts((current) => ({ ...current, [id]: value }))
 
@@ -86,6 +88,9 @@ const WebsitePrices = ({ priceStore }) => {
           <h2 className="text-sm font-bold text-slate-900">Manage website prices</h2>
           <p className="mt-1 text-xs leading-relaxed text-slate-500">
             Update the prices shown across the website. Changes are saved in this browser and appear on the website opened from this same browser.
+          </p>
+          <p className="mt-2 text-xs leading-relaxed text-slate-500">
+            Web Hosting plan rates are in Rs per month and shared between the homepage and Web Hosting page. Annual and three-year billed totals update automatically from these rates.
           </p>
         </div>
 

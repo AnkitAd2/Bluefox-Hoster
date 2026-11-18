@@ -25,7 +25,7 @@
  */
 
 import React from 'react'
-import { getPrice } from '../utils/priceCatalog'
+import { getPrice, getPriceAmount } from '../utils/priceCatalog'
 import {
   Globe,
   Server,
@@ -57,7 +57,7 @@ const hostingGroups = [
       {
         name: 'Web Hosting',
         price: 'From Rs 120/mo',
-        priceId: 'hosting-options.web',
+        priceId: 'pricing.starter.triennial',
         description: 'cPanel hosting on NVMe SSD with free SSL & domain.',
         icon: Globe,
         view: 'web-hosting',
@@ -366,7 +366,11 @@ const HostingOptionsHero = ({ onBack, onNavigate }) => {
 
                       {/* Price + arrow footer */}
                       <div className="mt-5 flex items-center justify-between border-t border-slate-100 pt-4">
-                        <span className="text-xs font-bold text-blue-700">{getPrice(service.priceId, service.price)}</span>
+                        <span className="text-xs font-bold text-blue-700">
+                          {service.priceId === 'pricing.starter.triennial'
+                            ? `From Rs ${getPriceAmount(service.priceId, 120).toLocaleString('en-IN')}/mo`
+                            : getPrice(service.priceId, service.price)}
+                        </span>
                         {/* Arrow icon slides right on hover via group-hover Tailwind class */}
                         <ArrowRight className="h-4 w-4 text-slate-300 transition-transform group-hover:translate-x-1 group-hover:text-blue-500" />
                       </div>

@@ -81,7 +81,7 @@ const TargetAudienceSection = ({ onNavigate }) => {
   // Comparison Table Data
   const comparisonRows = [
     { feature: 'Websites', starter: '1', growth: '∞', pro: '∞', ultimate: '∞' },
-    { feature: 'Storage', starter: '5 GB', growth: '∞', pro: '∞', ultimate: '∞' },
+    { feature: 'Storage', starter: '5 GB', growth: '50 GB', pro: '100 GB', ultimate: 'Unlimited' },
     { feature: 'Email Accounts', starter: '5', growth: '10', pro: '∞', ultimate: '∞' },
     { feature: 'Backup Frequency', starter: 'Weekly', growth: 'Daily', pro: 'Daily', ultimate: 'Daily' },
     { feature: 'Price/mo', starter: 'NPR 120', growth: 'NPR 240', pro: 'NPR 420', ultimate: 'NPR 720', isPrice: true }
