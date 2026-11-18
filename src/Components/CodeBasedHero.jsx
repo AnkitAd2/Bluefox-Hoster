@@ -1,14 +1,16 @@
 import { Check, ArrowRight, Terminal, GitBranch, Zap, Code2, Coffee } from 'lucide-react';
+import { getPrice } from '../utils/priceCatalog'
 import DjangoLogo from '../assets/django.svg';
 import PythonLogo from '../assets/python logo.webp';
 import NodejsLogo from '../assets/nodejs-logo.svg';
 
-const BTN_PRIMARY = 'inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] px-6 py-3.5 text-sm sm:text-base font-semibold text-white shadow-md transition-all duration-300 hover:to-[#1565c0] hover:shadow-[0_12px_28px_rgba(30,136,229,0.45)] hover:-translate-y-0.5 active:scale-95 cursor-pointer';
+const BTN_PRIMARY = 'rounded-xl bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] px-6 py-3.5 text-sm sm:text-base font-semibold text-white shadow-md transition-all duration-300 hover:to-[#1565c0] hover:shadow-[0_12px_28px_rgba(30,136,229,0.45)] hover:-translate-y-0.5 active:scale-95 cursor-pointer';
 
 const languages = [
   {
     name: 'Bluefox Java',
     price: 'Rs 350/mo',
+    priceId: 'code-page.java',
     icon: Coffee,
     logo: null,
     gradient: 'from-orange-500 to-red-600',
@@ -24,6 +26,7 @@ const languages = [
   {
     name: 'Django Hosting',
     price: 'Rs 290/mo',
+    priceId: 'code-page.django',
     icon: null,
     logo: DjangoLogo,
     gradient: 'from-green-600 to-emerald-700',
@@ -39,6 +42,7 @@ const languages = [
   {
     name: 'Python Hosting',
     price: 'Rs 290/mo',
+    priceId: 'code-page.python',
     icon: null,
     logo: PythonLogo,
     gradient: 'from-yellow-500 to-blue-600',
@@ -54,6 +58,7 @@ const languages = [
   {
     name: 'Node.js Hosting',
     price: 'Rs 250/mo',
+    priceId: 'code-page.node',
     icon: null,
     logo: NodejsLogo,
     gradient: 'from-lime-500 to-green-600',
@@ -159,26 +164,18 @@ export function CodeBasedHero({ onBack }) {
           </div>
 
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              aria-disabled="true"
-              tabIndex={-1}
-              className={BTN_PRIMARY}
-            >
+            <button className={BTN_PRIMARY}>
               Deploy Your App <ArrowRight className="ml-2 inline-block" size={16} />
-            </a>
-            <a
-              aria-disabled="true"
-              tabIndex={-1}
-              className="rounded-xl border border-slate-600 px-6 py-3.5 text-sm font-semibold text-slate-300 font-sans transition hover:bg-white/5"
-            >
-              Ask for Documentation
-            </a>
+            </button>
+            <button className="rounded-xl border border-slate-600 px-6 py-3.5 text-sm font-semibold text-slate-300 font-sans transition hover:bg-white/5">
+              View Documentation
+            </button>
           </div>
         </div>
       </section>
 
       {/* ── LANGUAGE CARDS ── */}
-      <section id="language-stacks" className="scroll-mt-28 bg-slate-950 py-20 px-4">
+      <section className="bg-slate-950 py-20 px-4">
         <div className="mx-auto max-w-6xl">
           <div className="mb-12 text-center">
             <h2 className="text-3xl sm:text-4xl font-bold text-white font-sans">Pick Your Language Stack</h2>
@@ -187,7 +184,7 @@ export function CodeBasedHero({ onBack }) {
             </p>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {languages.map(({ name, price, icon: Icon, logo, gradient, badgeColor, badge, features }) => (
+            {languages.map(({ name, price, priceId, icon: Icon, logo, gradient, badgeColor, badge, features }) => (
               <div
                 key={name}
                 className="group flex flex-col rounded-2xl border border-slate-800 bg-slate-900 transition-all duration-300 hover:-translate-y-1.5 hover:border-slate-600 hover:shadow-2xl hover:shadow-black/60 overflow-hidden"
@@ -206,7 +203,7 @@ export function CodeBasedHero({ onBack }) {
                     {badge}
                   </span>
                   <h3 className="mt-1.5 text-lg font-bold text-white font-sans">{name}</h3>
-                  <p className="mt-1 text-2xl font-extrabold text-white font-sans">{price}</p>
+                  <p className="mt-1 text-2xl font-extrabold text-white font-sans">{getPrice(priceId, price)}</p>
 
                   <ul className="mt-5 space-y-2.5 flex-1">
                     {features.map((f) => (
@@ -219,13 +216,9 @@ export function CodeBasedHero({ onBack }) {
                     ))}
                   </ul>
 
-                  <a
-                    aria-disabled="true"
-                    tabIndex={-1}
-                    className={`mt-6 w-full ${BTN_PRIMARY} text-center font-sans`}
-                  >
+                  <button className={`mt-6 w-full ${BTN_PRIMARY} text-center font-sans`}>
                     Get Started
-                  </a>
+                  </button>
                 </div>
               </div>
             ))}
@@ -276,16 +269,12 @@ export function CodeBasedHero({ onBack }) {
             Pay with eSewa, Khalti, IME Pay, or Bank Transfer.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              aria-disabled="true"
-              tabIndex={-1}
-              className="rounded-xl bg-white px-8 py-3.5 text-sm font-bold text-blue-700 shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5 active:scale-95 cursor-pointer font-sans"
-            >
-              Deploy Now — From Rs 250/mo
-            </a>
-            <a href="#language-stacks" className="rounded-xl border border-white/30 px-6 py-3.5 text-sm font-semibold text-white font-sans transition hover:bg-white/10">
+            <button className="rounded-xl bg-white px-8 py-3.5 text-sm font-bold text-blue-700 shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5 active:scale-95 cursor-pointer font-sans">
+              Deploy Now — {getPrice('hosting-options.node', 'From Rs 250/mo')}
+            </button>
+            <button className="rounded-xl border border-white/30 px-6 py-3.5 text-sm font-semibold text-white font-sans transition hover:bg-white/10">
               View All Stacks
-            </a>
+            </button>
           </div>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             {['No Lock-in', 'SSH Access', 'Git Deploy', 'NVMe SSD', '24/7 Dev Support'].map((t) => (

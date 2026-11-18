@@ -23,7 +23,7 @@ const BrandsSlider = () => (
       >
         Selected organizations associated with Bluefox Hoster
       </h2>
-      <div className="brand-slider relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
+      <div className="brand-slider relative overflow-hidden mask-[linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
         <div className="brand-slider-track flex w-max items-center">
           {Array.from({ length: 4 }, (_, copy) => (
             <div

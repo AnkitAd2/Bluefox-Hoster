@@ -1,4 +1,4 @@
-﻿/**
+/**
  * CloudHostingHero.jsx
  * -----------------------------------------------------------------
  * Component: CloudHostingHero  (also exported as a named export)
@@ -35,6 +35,7 @@
  */
 import React, { useState } from 'react'
 import { Check, Cloud, Zap, ShieldCheck, Server } from 'lucide-react'
+import { getPrice } from '../utils/priceCatalog'
 
 const cloudPlans = [
   {
@@ -132,11 +133,10 @@ export const CloudHostingHero = ({ onBack }) => {
                 Choose Cloud Plan &rarr;
               </a>
               <a 
-                aria-disabled="true"
-                tabIndex={-1}
-                className="inline-flex items-center rounded-xl border border-slate-300 bg-white px-5 py-3.5 text-sm sm:text-base font-semibold text-slate-700 transition-colors hover:bg-slate-100"
+                href="#features" 
+                className="rounded-xl border border-slate-300 bg-white px-5 py-3.5 text-sm sm:text-base font-semibold text-slate-700 transition-colors hover:bg-slate-100"
               >
-                Ask About Architecture
+                View Architecture
               </a>
             </div>
 
@@ -170,7 +170,7 @@ export const CloudHostingHero = ({ onBack }) => {
       </section>
 
       {/* ================= CLOUD PRICING CARDS SECTION ================= */}
-      <section id="cloud-pricing" className="scroll-mt-28 bg-white py-16 font-sans sm:py-20">
+      <section id="cloud-pricing" className="bg-white py-16 font-sans sm:py-20">
         <div className="site-container">
           
           <div className="text-center max-w-2xl mx-auto mb-12">
@@ -225,7 +225,7 @@ export const CloudHostingHero = ({ onBack }) => {
                   <p className="text-xs text-slate-500 mt-1 min-h-[32px]">{plan.desc}</p>
 
                   <div className="mt-6 flex items-baseline gap-1 border-b border-slate-100 pb-6">
-                    <span className="text-4xl font-black text-slate-950">{plan.price}</span>
+                    <span className="text-4xl font-black text-slate-950">{getPrice(({ 'Cloud Starter': 'cloud.starter', 'Cloud Business Pro': 'cloud.business', 'Cloud Enterprise': 'cloud.enterprise' })[plan.name], plan.price)}</span>
                     <span className="text-xs font-semibold text-slate-500">{plan.period}</span>
                   </div>
 
@@ -243,8 +243,7 @@ export const CloudHostingHero = ({ onBack }) => {
 
                 <div className="mt-8 pt-4">
                   <a
-                    aria-disabled="true"
-                    tabIndex={-1}
+                    href="#get-started"
                     className={`block w-full text-center rounded-xl py-3.5 text-sm font-bold transition-all ${
                       plan.popular 
                         ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg' 

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Check, MapPin, Server, Cpu, HardDrive } from 'lucide-react'
 import Flag from '../assets/Flag_of_Nepal.svg.webp'
+import { getPrice } from '../utils/priceCatalog'
 
 const vpsPlans = [
   { name: 'Nepal Based VPS', location: 'Kathmandu, NP', price: 'Rs 999', period: '/month', specs: '2 vCPU | 4 GB RAM | 80 GB NVMe', desc: 'Ultra-low latency for local Nepali users and institutions.' },
@@ -63,7 +64,7 @@ export const VpsHostingHero = ({ onBack }) => {
                   <h3 className="text-xl font-bold text-slate-900 mt-3">{v.name}</h3>
                   <p className="text-xs text-slate-500 mt-1">{v.desc}</p>
                   <div className="mt-4 bg-slate-50 p-3 rounded-xl text-xs font-bold text-slate-800">{v.specs}</div>
-                  <div className="mt-6 text-4xl font-black text-slate-950">{v.price}<span className="text-xs text-slate-500">{v.period}</span></div>
+                  <div className="mt-6 text-4xl font-black text-slate-950">{getPrice(({ 'Nepal Based VPS': 'vps.nepal', 'USA Based VPS': 'vps.usa', 'Europe Based VPS': 'vps.europe' })[v.name], v.price)}<span className="text-xs text-slate-500">{v.period}</span></div>
                 </div>
                 <button className="mt-8 w-full rounded-xl bg-emerald-600 py-3.5 text-sm font-bold text-white shadow-md hover:bg-emerald-700">Configure VPS &rarr;</button>
               </div>

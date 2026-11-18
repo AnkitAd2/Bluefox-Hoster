@@ -41,12 +41,6 @@ body .text-slate-950 {
   color: var(--brand-navy);
 }
 
-a[aria-disabled='true'] {
-  pointer-events: none;
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
 .site-section {
   position: relative;
   isolation: isolate;
@@ -108,6 +102,36 @@ section.site-section + .site-section,
 button,
 a {
   -webkit-tap-highlight-color: transparent;
+}
+
+:where(button, a)[class*="from-[#0c73d5]"][class*="text-white"],
+:where(button, a)[class*="from-[#1b75e7]"][class*="text-white"],
+:where(button, a)[class*="from-blue-600"][class*="text-white"],
+:where(button, a)[class*="bg-blue-600"][class*="text-white"] {
+  background-image: linear-gradient(to right, #0c73d5, #0e6cc8);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 700;
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 0.1),
+    0 2px 4px -2px rgb(0 0 0 / 0.1);
+  transition: all 300ms ease-in-out;
+}
+
+:where(button, a)[class*="from-[#0c73d5]"][class*="text-white"]:hover,
+:where(button, a)[class*="from-[#1b75e7]"][class*="text-white"]:hover,
+:where(button, a)[class*="from-blue-600"][class*="text-white"]:hover,
+:where(button, a)[class*="bg-blue-600"][class*="text-white"]:hover {
+  background-image: linear-gradient(to right, #1e88e5, #1565c0);
+  translate: 0 -0.125rem;
+  box-shadow: 0 12px 28px rgba(30, 136, 229, 0.45);
+}
+
+:where(button, a)[class*="from-[#0c73d5]"][class*="text-white"]:active,
+:where(button, a)[class*="from-[#1b75e7]"][class*="text-white"]:active,
+:where(button, a)[class*="from-blue-600"][class*="text-white"]:active,
+:where(button, a)[class*="bg-blue-600"][class*="text-white"]:active {
+  scale: 0.95;
 }
 
 button:focus-visible,

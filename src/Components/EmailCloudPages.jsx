@@ -1,4 +1,5 @@
 import React from 'react';
+import { getPrice } from '../utils/priceCatalog'
 import { FaAws, FaMicrosoft } from 'react-icons/fa6';
 import { SiGoogle, SiGooglecloud, SiNordvpn, SiZoho, SiZoom } from 'react-icons/si';
 import {
@@ -14,18 +15,7 @@ import PowerBI from '../assets/begin-journey.avif';
 
 /* ─────────────────────── shared primitives ─────────────────────── */
 const BTN_PRIMARY =
-  'inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] px-6 py-3.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:to-[#1565c0] hover:shadow-[0_12px_28px_rgba(30,136,229,0.45)] hover:-translate-y-0.5 active:scale-95 cursor-pointer';
-
-const PendingCta = ({ children, className = BTN_PRIMARY }) => (
-  <button
-    type="button"
-    disabled
-    title="Online ordering will be available soon."
-    className={`${className} disabled:cursor-not-allowed disabled:opacity-60`}
-  >
-    {children}
-  </button>
-);
+  'rounded-xl bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] px-6 py-3.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:to-[#1565c0] hover:shadow-[0_12px_28px_rgba(30,136,229,0.45)] hover:-translate-y-0.5 active:scale-95 cursor-pointer';
 
 const BackBar = ({ onBack, label = 'Back to Services' }) =>
   onBack ? (
@@ -47,7 +37,7 @@ const CheckItem = ({ text }) => (
   </li>
 );
 
-const PlanCard = ({ name, price, period = '/user/mo', features, highlight = false }) => (
+const PlanCard = ({ name, price, priceId, period = '/user/mo', features, highlight = false }) => (
   <div
     className={`relative rounded-2xl p-6 flex flex-col gap-4 border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
       highlight
@@ -62,7 +52,7 @@ const PlanCard = ({ name, price, period = '/user/mo', features, highlight = fals
     )}
     <div>
       <p className={`text-xs font-semibold uppercase tracking-wider mb-1 ${highlight ? 'text-blue-100' : 'text-slate-500'}`}>{name}</p>
-      <p className={`text-3xl font-extrabold ${highlight ? 'text-white' : 'text-slate-900'}`}>{price}</p>
+      <p className={`text-3xl font-extrabold ${highlight ? 'text-white' : 'text-slate-900'}`}>{getPrice(priceId, price)}</p>
       {period && <p className={`text-xs mt-0.5 ${highlight ? 'text-blue-100' : 'text-slate-500'}`}>{period}</p>}
     </div>
     <ul className="flex flex-col gap-2 flex-1">
@@ -73,11 +63,7 @@ const PlanCard = ({ name, price, period = '/user/mo', features, highlight = fals
         </li>
       ))}
     </ul>
-    <PendingCta
-      className={BTN_PRIMARY + ' w-full text-center mt-2'}
-    >
-      Get Started
-    </PendingCta>
+    <button className={BTN_PRIMARY + ' w-full text-center mt-2'}>Get Started</button>
   </div>
 );
 
@@ -101,11 +87,9 @@ const CtaBanner = ({ title, sub, btnText = 'Get Started Today' }) => (
   <section className="bg-gradient-to-r from-[#0c73d5] to-[#1565c0] py-16 px-6 text-center text-white">
     <h2 className="text-3xl font-extrabold mb-3">{title}</h2>
     <p className="text-blue-100 mb-8 max-w-xl mx-auto">{sub}</p>
-    <PendingCta
-      className="rounded-xl bg-white text-[#0c73d5] font-bold px-8 py-3.5 shadow-md hover:bg-blue-50 transition-all duration-300 hover:-translate-y-0.5 active:scale-95 cursor-pointer"
-    >
+    <button className="rounded-xl bg-white text-[#0c73d5] font-bold px-8 py-3.5 shadow-md hover:bg-blue-50 transition-all duration-300 hover:-translate-y-0.5 active:scale-95 cursor-pointer">
       {btnText}
-    </PendingCta>
+    </button>
     <PaymentNote />
   </section>
 );
@@ -141,7 +125,7 @@ export const GoogleWorkspaceHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['Professional @yourcompany.com email','30 GB – 5 TB cloud storage per user','HD video meetings with Google Meet','Real-time collaboration on Docs, Sheets, Slides'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <PendingCta>Get Google Workspace</PendingCta>
+          <button className={BTN_PRIMARY}>Get Google Workspace</button>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'3B+',l:'Gmail Users Worldwide'},{v:'99.9%',l:'Uptime SLA'},{v:'5TB',l:'Max Drive Storage'},{v:'250',l:'Meet Participants'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -154,9 +138,9 @@ export const GoogleWorkspaceHero = ({ onBack }) => (
       <h2 className="text-3xl font-extrabold text-slate-800 text-center mb-2">Simple, Transparent Pricing</h2>
       <p className="text-slate-500 text-center mb-10">Choose the plan that fits your team size and needs</p>
       <div className="grid md:grid-cols-3 gap-6">
-        <PlanCard name="Business Starter" price="Rs 780" period="/user/mo" features={['Custom Gmail domain','30 GB Drive per user','100 participant Meet','24/7 support']} />
-        <PlanCard name="Business Standard" price="Rs 1,550" period="/user/mo" highlight features={['2 TB Drive per user','150 participant Meet','Meeting recordings','Shared drives']} />
-        <PlanCard name="Business Plus" price="Rs 2,300" period="/user/mo" features={['5 TB Drive per user','500 participant Meet','eDiscovery & audit','Advanced security']} />
+        <PlanCard name="Business Starter" priceId="email.google.starter" price="Rs 780" period="/user/mo" features={['Custom Gmail domain','30 GB Drive per user','100 participant Meet','24/7 support']} />
+        <PlanCard name="Business Standard" priceId="email.google.standard" price="Rs 1,550" period="/user/mo" highlight features={['2 TB Drive per user','150 participant Meet','Meeting recordings','Shared drives']} />
+        <PlanCard name="Business Plus" priceId="email.google.plus" price="Rs 2,300" period="/user/mo" features={['5 TB Drive per user','500 participant Meet','eDiscovery & audit','Advanced security']} />
       </div>
       <PaymentNote />
     </section>
@@ -201,7 +185,7 @@ export const GoogleCloudHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['Compute Engine VMs starting from $0.01/hr','Global CDN & Load Balancing','Managed Kubernetes Engine (GKE)','BigQuery petabyte-scale analytics'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <PendingCta>Explore Google Cloud</PendingCta>
+          <button className={BTN_PRIMARY}>Explore Google Cloud</button>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'200+',l:'Cloud Services'},{v:'35+',l:'Global Regions'},{v:'99.99%',l:'Compute SLA'},{v:'$0',l:'Free Tier Credits'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -213,9 +197,9 @@ export const GoogleCloudHero = ({ onBack }) => (
       <h2 className="text-3xl font-extrabold text-slate-800 text-center mb-2">Flexible Cloud Pricing</h2>
       <p className="text-slate-500 text-center mb-10">Only pay for what you use — no hidden fees</p>
       <div className="grid md:grid-cols-3 gap-6">
-        <PlanCard name="Pay-As-You-Go" price="Usage-Based" period="" features={['No upfront commitment','Compute Engine & GCS','Free tier included','Per-second billing']} />
-        <PlanCard name="Committed Use" price="Rs 2,200" period="/mo" highlight features={['1 or 3-year commitment','Up to 57% savings','All compute resources','Priority support']} />
-        <PlanCard name="Enterprise" price="Custom Quote" period="" features={['Dedicated account team','Custom SLA agreements','Advanced security tools','Private pricing']} />
+        <PlanCard name="Pay-As-You-Go" priceId="email.google-cloud.payg" price="Usage-Based" period="" features={['No upfront commitment','Compute Engine & GCS','Free tier included','Per-second billing']} />
+        <PlanCard name="Committed Use" priceId="email.google-cloud.committed" price="Rs 2,200" period="/mo" highlight features={['1 or 3-year commitment','Up to 57% savings','All compute resources','Priority support']} />
+        <PlanCard name="Enterprise" priceId="email.google-cloud.enterprise" price="Custom Quote" period="" features={['Dedicated account team','Custom SLA agreements','Advanced security tools','Private pricing']} />
       </div>
       <PaymentNote />
     </section>
@@ -259,7 +243,7 @@ export const NordVpnHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['6,200+ servers in 111 countries','AES-256-GCM encryption','Strict no-logs policy (audited)','Threat Protection Pro included'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <PendingCta>Get NordVPN Now</PendingCta>
+          <button className={BTN_PRIMARY}>Get NordVPN Now</button>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'6,200+',l:'Global Servers'},{v:'111',l:'Countries'},{v:'6',l:'Devices Per Plan'},{v:'0',l:'Logs Kept'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -271,9 +255,9 @@ export const NordVpnHero = ({ onBack }) => (
       <h2 className="text-3xl font-extrabold text-slate-800 text-center mb-2">Choose Your Protection</h2>
       <p className="text-slate-500 text-center mb-10">All plans include a 30-day money-back guarantee</p>
       <div className="grid md:grid-cols-3 gap-6">
-        <PlanCard name="Basic" price="Rs 350" period="/mo" features={['VPN protection','6 devices','6,200+ servers','24/7 support']} />
-        <PlanCard name="Plus" price="Rs 650" period="/mo" highlight features={['Everything in Basic','Threat Protection Pro','Password Manager','Data breach scanner']} />
-        <PlanCard name="Complete" price="Rs 950" period="/mo" features={['Everything in Plus','1 TB encrypted cloud','NordPass Premium','Priority support']} />
+        <PlanCard name="Basic" priceId="email.nord.basic" price="Rs 350" period="/mo" features={['VPN protection','6 devices','6,200+ servers','24/7 support']} />
+        <PlanCard name="Plus" priceId="email.nord.plus" price="Rs 650" period="/mo" highlight features={['Everything in Basic','Threat Protection Pro','Password Manager','Data breach scanner']} />
+        <PlanCard name="Complete" priceId="email.nord.complete" price="Rs 950" period="/mo" features={['Everything in Plus','1 TB encrypted cloud','NordPass Premium','Priority support']} />
       </div>
       <PaymentNote />
     </section>
@@ -317,7 +301,7 @@ export const Office365Hero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['Full Office apps on desktop & web','Business email via Outlook + Exchange','Microsoft Teams for chat & video','1 TB OneDrive cloud storage per user'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <PendingCta>Get Microsoft 365</PendingCta>
+          <button className={BTN_PRIMARY}>Get Microsoft 365</button>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'345M+',l:'Paid Seats Worldwide'},{v:'1TB',l:'OneDrive Storage'},{v:'99.9%',l:'Uptime SLA'},{v:'5',l:'Devices Per User'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -329,9 +313,9 @@ export const Office365Hero = ({ onBack }) => (
       <h2 className="text-3xl font-extrabold text-slate-800 text-center mb-2">Microsoft 365 Plans</h2>
       <p className="text-slate-500 text-center mb-10">All plans billed monthly per user</p>
       <div className="grid md:grid-cols-3 gap-6">
-        <PlanCard name="Business Basic" price="Rs 650" period="/user/mo" features={['Web & mobile Office apps','Exchange email hosting','Microsoft Teams','1 TB OneDrive']} />
-        <PlanCard name="Apps for Business" price="Rs 850" period="/user/mo" highlight features={['Desktop Office apps','OneDrive 1 TB','5 devices per user','Business email add-on']} />
-        <PlanCard name="Business Premium" price="Rs 1,250" period="/user/mo" features={['Everything in Apps','Advanced security','Intune device mgmt','Azure AD Premium']} />
+        <PlanCard name="Business Basic" priceId="email.microsoft.basic" price="Rs 650" period="/user/mo" features={['Web & mobile Office apps','Exchange email hosting','Microsoft Teams','1 TB OneDrive']} />
+        <PlanCard name="Apps for Business" priceId="email.microsoft.apps" price="Rs 850" period="/user/mo" highlight features={['Desktop Office apps','OneDrive 1 TB','5 devices per user','Business email add-on']} />
+        <PlanCard name="Business Premium" priceId="email.microsoft.premium" price="Rs 1,250" period="/user/mo" features={['Everything in Apps','Advanced security','Intune device mgmt','Azure AD Premium']} />
       </div>
       <PaymentNote />
     </section>
@@ -375,7 +359,7 @@ export const OfficeLtscHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['One-time purchase, no monthly fees','Full offline functionality','5 years of mainstream support','Volume licensing available for businesses'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <PendingCta>Buy Office LTSC</PendingCta>
+          <button className={BTN_PRIMARY}>Buy Office LTSC</button>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'1x',l:'One-Time Payment'},{v:'5yr',l:'Support Period'},{v:'100%',l:'Offline Ready'},{v:'0',l:'Monthly Fees'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -387,8 +371,8 @@ export const OfficeLtscHero = ({ onBack }) => (
       <h2 className="text-3xl font-extrabold text-slate-800 text-center mb-2">LTSC 2024 Licenses</h2>
       <p className="text-slate-500 text-center mb-10">One-time purchase — use forever</p>
       <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-        <PlanCard name="LTSC Standard" price="Rs 8,500" period="one-time" features={['Word, Excel, PowerPoint','Outlook email client','OneNote included','1 PC / 1 Mac activation']} />
-        <PlanCard name="LTSC Professional" price="Rs 12,000" period="one-time" highlight features={['All Standard apps','Publisher & Access','Advanced features','Volume licensing eligible']} />
+        <PlanCard name="LTSC Standard" priceId="email.microsoft.ltsc-standard" price="Rs 8,500" period="one-time" features={['Word, Excel, PowerPoint','Outlook email client','OneNote included','1 PC / 1 Mac activation']} />
+        <PlanCard name="LTSC Professional" priceId="email.microsoft.ltsc-professional" price="Rs 12,000" period="one-time" highlight features={['All Standard apps','Publisher & Access','Advanced features','Volume licensing eligible']} />
       </div>
       <PaymentNote />
     </section>
@@ -432,7 +416,7 @@ export const CopilotHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['AI drafting in Word & PowerPoint','Data insights via natural language in Excel','Meeting summaries & action items in Teams','Smart email replies and scheduling in Outlook'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <PendingCta>Get Microsoft Copilot</PendingCta>
+          <button className={BTN_PRIMARY}>Get Microsoft Copilot</button>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'GPT-4',l:'Powered By'},{v:'10x',l:'Productivity Boost'},{v:'M365',l:'Deep Integration'},{v:'24/7',l:'AI Availability'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -444,8 +428,8 @@ export const CopilotHero = ({ onBack }) => (
       <h2 className="text-3xl font-extrabold text-slate-800 text-center mb-2">Copilot Plans</h2>
       <p className="text-slate-500 text-center mb-10">Requires a base Microsoft 365 subscription</p>
       <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-        <PlanCard name="Copilot for M365" price="Rs 2,800" period="/user/mo" features={['AI in Word/Excel/PPT','Teams meeting summaries','Outlook smart replies','Copilot Studio access']} />
-        <PlanCard name="Copilot Pro" price="Rs 1,800" period="/mo" highlight features={['Personal Copilot access','Web-grounded answers','Priority AI model access','Image creation with Designer']} />
+        <PlanCard name="Copilot for M365" priceId="email.copilot.m365" price="Rs 2,800" period="/user/mo" features={['AI in Word/Excel/PPT','Teams meeting summaries','Outlook smart replies','Copilot Studio access']} />
+        <PlanCard name="Copilot Pro" priceId="email.copilot.pro" price="Rs 1,800" period="/mo" highlight features={['Personal Copilot access','Web-grounded answers','Priority AI model access','Image creation with Designer']} />
       </div>
       <PaymentNote />
     </section>
@@ -488,7 +472,7 @@ export const PowerBiHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['Interactive drag-and-drop dashboards','100+ data source connectors','Real-time streaming analytics','AI-powered insights & Q&A'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <PendingCta>Get Power BI</PendingCta>
+          <button className={BTN_PRIMARY}>Get Power BI</button>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'100+',l:'Data Connectors'},{v:'5M+',l:'Users Worldwide'},{v:'Real-time',l:'Analytics'},{v:'AI',l:'Built-in Insights'}].map(s => (
@@ -505,8 +489,8 @@ export const PowerBiHero = ({ onBack }) => (
       <h2 className="text-3xl font-extrabold text-slate-800 text-center mb-2">Power BI Pricing</h2>
       <p className="text-slate-500 text-center mb-10">All plans include mobile app access</p>
       <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-        <PlanCard name="Power BI Pro" price="Rs 850" period="/user/mo" features={['Interactive dashboards','100+ connectors','Publish & share reports','8 GB storage per user']} />
-        <PlanCard name="Premium Per User" price="Rs 2,800" period="/user/mo" highlight features={['Everything in Pro','Paginated reports','AI visuals & AutoML','100 GB storage per user']} />
+        <PlanCard name="Power BI Pro" priceId="email.powerbi.pro" price="Rs 850" period="/user/mo" features={['Interactive dashboards','100+ connectors','Publish & share reports','8 GB storage per user']} />
+        <PlanCard name="Premium Per User" priceId="email.powerbi.premium" price="Rs 2,800" period="/user/mo" highlight features={['Everything in Pro','Paginated reports','AI visuals & AutoML','100 GB storage per user']} />
       </div>
       <PaymentNote />
     </section>
@@ -550,7 +534,7 @@ export const AzureHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['200+ cloud services & solutions','60+ global Azure regions','Hybrid cloud with Azure Arc','Microsoft Defender security built-in'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <PendingCta>Get Azure Access</PendingCta>
+          <button className={BTN_PRIMARY}>Get Azure Access</button>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'200+',l:'Cloud Services'},{v:'60+',l:'Global Regions'},{v:'95%',l:'Fortune 500 Use Azure'},{v:'$200',l:'Free Credit to Start'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -562,9 +546,9 @@ export const AzureHero = ({ onBack }) => (
       <h2 className="text-3xl font-extrabold text-slate-800 text-center mb-2">Azure Pricing Options</h2>
       <p className="text-slate-500 text-center mb-10">Start for free, scale as you grow</p>
       <div className="grid md:grid-cols-3 gap-6">
-        <PlanCard name="Pay-As-You-Go" price="Free to Start" period="" features={['$200 free credits','No upfront cost','All 200+ services','Cancel anytime']} />
-        <PlanCard name="Dev / Test" price="Rs 3,500" period="/mo" highlight features={['Dev/Test pricing discounts','Visual Studio subscriber pricing','Non-production workloads','Shared Azure services']} />
-        <PlanCard name="Enterprise" price="Custom Quote" period="" features={['Azure Enterprise Agreement','Flexible commitment terms','Dedicated support team','Private pricing & SLAs']} />
+        <PlanCard name="Pay-As-You-Go" priceId="email.azure.payg" price="Free to Start" period="" features={['$200 free credits','No upfront cost','All 200+ services','Cancel anytime']} />
+        <PlanCard name="Dev / Test" priceId="email.azure.dev-test" price="Rs 3,500" period="/mo" highlight features={['Dev/Test pricing discounts','Visual Studio subscriber pricing','Non-production workloads','Shared Azure services']} />
+        <PlanCard name="Enterprise" priceId="email.azure.enterprise" price="Custom Quote" period="" features={['Azure Enterprise Agreement','Flexible commitment terms','Dedicated support team','Private pricing & SLAs']} />
       </div>
       <PaymentNote />
     </section>
@@ -608,7 +592,7 @@ export const ZohoCrmHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['Lead capture & nurturing automation','Visual sales pipeline tracking','Multi-channel customer engagement','AI-powered sales predictions (Zia)'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <PendingCta>Start with Zoho CRM</PendingCta>
+          <button className={BTN_PRIMARY}>Start with Zoho CRM</button>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'250K+',l:'Businesses Use Zoho'},{v:'180+',l:'Countries'},{v:'Zia AI',l:'Built-in'},{v:'15-day',l:'Free Trial'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -620,9 +604,9 @@ export const ZohoCrmHero = ({ onBack }) => (
       <h2 className="text-3xl font-extrabold text-slate-800 text-center mb-2">Zoho CRM Plans</h2>
       <p className="text-slate-500 text-center mb-10">All plans include mobile CRM app</p>
       <div className="grid md:grid-cols-3 gap-6">
-        <PlanCard name="Standard" price="Rs 700" period="/user/mo" features={['Lead & contact management','Sales pipeline','Email integration','5 custom reports']} />
-        <PlanCard name="Professional" price="Rs 1,200" period="/user/mo" highlight features={['Everything in Standard','Workflow automation','Sales signals','Blueprint process']} />
-        <PlanCard name="Enterprise" price="Rs 2,000" period="/user/mo" features={['Everything in Professional','Zia AI assistant','Multi-user portals','Advanced analytics']} />
+        <PlanCard name="Standard" priceId="email.zoho-crm.standard" price="Rs 700" period="/user/mo" features={['Lead & contact management','Sales pipeline','Email integration','5 custom reports']} />
+        <PlanCard name="Professional" priceId="email.zoho-crm.professional" price="Rs 1,200" period="/user/mo" highlight features={['Everything in Standard','Workflow automation','Sales signals','Blueprint process']} />
+        <PlanCard name="Enterprise" priceId="email.zoho-crm.enterprise" price="Rs 2,000" period="/user/mo" features={['Everything in Professional','Zia AI assistant','Multi-user portals','Advanced analytics']} />
       </div>
       <PaymentNote />
     </section>
@@ -666,7 +650,7 @@ export const BiginZohoHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['Pipeline view for visual deal management','Mobile-first CRM app for iOS & Android','Workflow automation for repetitive tasks','Built-in calling & customer communication'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <PendingCta>Try Bigin Free</PendingCta>
+          <button className={BTN_PRIMARY}>Try Bigin Free</button>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'30min',l:'Setup Time'},{v:'Free',l:'Starter Plan'},{v:'Mobile',l:'First Design'},{v:'15-day',l:'Pro Trial'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -678,9 +662,9 @@ export const BiginZohoHero = ({ onBack }) => (
       <h2 className="text-3xl font-extrabold text-slate-800 text-center mb-2">Bigin Plans</h2>
       <p className="text-slate-500 text-center mb-10">Start free — upgrade as your team grows</p>
       <div className="grid md:grid-cols-3 gap-6">
-        <PlanCard name="Free" price="Rs 0" period="1 user forever" features={['1 pipeline','500 records','Basic workflow','Mobile app']} />
-        <PlanCard name="Express" price="Rs 450" period="/user/mo" highlight features={['3 pipelines','50,000 records','Workflow automation','Built-in calling']} />
-        <PlanCard name="Premier" price="Rs 750" period="/user/mo" features={['25 pipelines','Unlimited records','Advanced automation','Customer portal']} />
+        <PlanCard name="Free" priceId="email.bigin.free" price="Rs 0" period="1 user forever" features={['1 pipeline','500 records','Basic workflow','Mobile app']} />
+        <PlanCard name="Express" priceId="email.bigin.express" price="Rs 450" period="/user/mo" highlight features={['3 pipelines','50,000 records','Workflow automation','Built-in calling']} />
+        <PlanCard name="Premier" priceId="email.bigin.premier" price="Rs 750" period="/user/mo" features={['25 pipelines','Unlimited records','Advanced automation','Customer portal']} />
       </div>
       <PaymentNote />
     </section>
@@ -724,7 +708,7 @@ export const ZohoMailHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['Custom @yourcompany.com domain email','Zero-advertisement inbox always','eDiscovery & data archiving','100% offline access via IMAP'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <PendingCta>Get Zoho Mail</PendingCta>
+          <button className={BTN_PRIMARY}>Get Zoho Mail</button>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'6M+',l:'Businesses Trust Zoho Mail'},{v:'99.9%',l:'Uptime SLA'},{v:'0',l:'Ads Ever'},{v:'50GB',l:'Max Mailbox'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -736,9 +720,9 @@ export const ZohoMailHero = ({ onBack }) => (
       <h2 className="text-3xl font-extrabold text-slate-800 text-center mb-2">Zoho Mail Plans</h2>
       <p className="text-slate-500 text-center mb-10">All plans include custom domain email</p>
       <div className="grid md:grid-cols-3 gap-6">
-        <PlanCard name="Mail Lite" price="Rs 350" period="/user/mo" features={['5 GB per mailbox','Custom domain email','POP/IMAP/ActiveSync','Ad-free inbox']} />
-        <PlanCard name="Mail Premium" price="Rs 700" period="/user/mo" highlight features={['50 GB per mailbox','Email archiving','S/MIME encryption','eDiscovery tools']} />
-        <PlanCard name="Workplace" price="Rs 1,050" period="/user/mo" features={['50 GB email + cloud','Zoho Cliq & Meet','WorkDrive included','Admin controls']} />
+        <PlanCard name="Mail Lite" priceId="email.zoho.mail-lite" price="Rs 350" period="/user/mo" features={['5 GB per mailbox','Custom domain email','POP/IMAP/ActiveSync','Ad-free inbox']} />
+        <PlanCard name="Mail Premium" priceId="email.zoho.mail-premium" price="Rs 700" period="/user/mo" highlight features={['50 GB per mailbox','Email archiving','S/MIME encryption','eDiscovery tools']} />
+        <PlanCard name="Workplace" priceId="email.zoho.workplace" price="Rs 1,050" period="/user/mo" features={['50 GB email + cloud','Zoho Cliq & Meet','WorkDrive included','Admin controls']} />
       </div>
       <PaymentNote />
     </section>
@@ -782,7 +766,7 @@ export const ZohoWorkplaceHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['Mail + Cliq chat + Meeting in one suite','WorkDrive for team file collaboration','Connect intranet for company culture','Integrated with 45+ Zoho apps'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <PendingCta>Get Zoho Workplace</PendingCta>
+          <button className={BTN_PRIMARY}>Get Zoho Workplace</button>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'8',l:'Apps in One Suite'},{v:'45+',l:'Zoho Integrations'},{v:'99.9%',l:'Uptime SLA'},{v:'50GB',l:'Mail + Drive Storage'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -794,8 +778,8 @@ export const ZohoWorkplaceHero = ({ onBack }) => (
       <h2 className="text-3xl font-extrabold text-slate-800 text-center mb-2">Workplace Plans</h2>
       <p className="text-slate-500 text-center mb-10">Everything your team needs to collaborate</p>
       <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-        <PlanCard name="Standard" price="Rs 700" period="/user/mo" features={['Zoho Mail 10GB','Cliq messaging','Meeting HD video','WorkDrive 10GB']} />
-        <PlanCard name="Professional" price="Rs 1,200" period="/user/mo" highlight features={['Zoho Mail 50GB','Advanced Cliq bots','Meeting recordings','WorkDrive 100GB + Connect']} />
+        <PlanCard name="Standard" priceId="email.zoho-workplace.standard" price="Rs 700" period="/user/mo" features={['Zoho Mail 10GB','Cliq messaging','Meeting HD video','WorkDrive 10GB']} />
+        <PlanCard name="Professional" priceId="email.zoho-workplace.professional" price="Rs 1,200" period="/user/mo" highlight features={['Zoho Mail 50GB','Advanced Cliq bots','Meeting recordings','WorkDrive 100GB + Connect']} />
       </div>
       <PaymentNote />
     </section>
@@ -839,7 +823,7 @@ export const AwsHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['EC2 compute instances — any size, any OS','S3 object storage with 99.999999999% durability','RDS managed databases — MySQL, Postgres & more','Lambda serverless — pay only per execution'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <PendingCta>Start with AWS</PendingCta>
+          <button className={BTN_PRIMARY}>Start with AWS</button>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'200+',l:'AWS Services'},{v:'31',l:'Global Regions'},{v:'1M+',l:'Active Customers'},{v:'$0',l:'Free Tier to Start'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -851,9 +835,9 @@ export const AwsHero = ({ onBack }) => (
       <h2 className="text-3xl font-extrabold text-slate-800 text-center mb-2">AWS Pricing Models</h2>
       <p className="text-slate-500 text-center mb-10">Flexible pricing that scales with your workload</p>
       <div className="grid md:grid-cols-3 gap-6">
-        <PlanCard name="Free Tier" price="Rs 0" period="12 months free" features={['750 hrs EC2 t2.micro/mo','5 GB S3 storage','750 hrs RDS micro','1 million Lambda calls/mo']} />
-        <PlanCard name="On-Demand" price="Usage-Based" period="per resource" highlight features={['Pay per second/hour','No long-term commitment','All 200+ services','Instant provisioning']} />
-        <PlanCard name="Savings Plans" price="Rs 4,500+" period="/mo" features={['Up to 66% savings','1 or 3-year commitment','Compute & EC2 plans','Reserved instance pricing']} />
+        <PlanCard name="Free Tier" priceId="email.aws.free" price="Rs 0" period="12 months free" features={['750 hrs EC2 t2.micro/mo','5 GB S3 storage','750 hrs RDS micro','1 million Lambda calls/mo']} />
+        <PlanCard name="On-Demand" priceId="email.aws.on-demand" price="Usage-Based" period="per resource" highlight features={['Pay per second/hour','No long-term commitment','All 200+ services','Instant provisioning']} />
+        <PlanCard name="Savings Plans" priceId="email.aws.savings" price="Rs 4,500+" period="/mo" features={['Up to 66% savings','1 or 3-year commitment','Compute & EC2 plans','Reserved instance pricing']} />
       </div>
       <PaymentNote />
     </section>
@@ -897,7 +881,7 @@ export const ZoomHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['Up to 300 meeting participants','Cloud recording with transcription','Zoom Webinars for large events','AI Companion for meeting summaries'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <PendingCta>Get Zoom Now</PendingCta>
+          <button className={BTN_PRIMARY}>Get Zoom Now</button>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'300M+',l:'Daily Meeting Participants'},{v:'300',l:'Max Participants'},{v:'HD',l:'Video Quality'},{v:'AI',l:'Companion Built-in'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -909,9 +893,9 @@ export const ZoomHero = ({ onBack }) => (
       <h2 className="text-3xl font-extrabold text-slate-800 text-center mb-2">Zoom Plans for Every Team</h2>
       <p className="text-slate-500 text-center mb-10">All paid plans include cloud recording</p>
       <div className="grid md:grid-cols-3 gap-6">
-        <PlanCard name="Zoom Pro" price="Rs 1,350" period="/host/mo" features={['100 participants','30-hour meeting limit','Cloud recording 5GB','Social media streaming']} />
-        <PlanCard name="Business" price="Rs 1,850" period="/host/mo" highlight features={['300 participants','Unlimited cloud recording','Meeting scheduler','Company branding']} />
-        <PlanCard name="Business+" price="Rs 2,500" period="/host/mo" features={['300 participants','Zoom Phone included','Unlimited whiteboards','Workspace reservations']} />
+        <PlanCard name="Zoom Pro" priceId="email.zoom.pro" price="Rs 1,350" period="/host/mo" features={['100 participants','30-hour meeting limit','Cloud recording 5GB','Social media streaming']} />
+        <PlanCard name="Business" priceId="email.zoom.business" price="Rs 1,850" period="/host/mo" highlight features={['300 participants','Unlimited cloud recording','Meeting scheduler','Company branding']} />
+        <PlanCard name="Business+" priceId="email.zoom.business-plus" price="Rs 2,500" period="/host/mo" features={['300 participants','Zoom Phone included','Unlimited whiteboards','Workspace reservations']} />
       </div>
       <PaymentNote />
     </section>
@@ -955,7 +939,7 @@ export const MicrosoftDefenderHero = ({ onBack }) => (
           <ul className="flex flex-col gap-3 mb-8">
             {['Endpoint detection & response (EDR)','AI-powered threat intelligence','Zero Trust security architecture','SIEM integration with Microsoft Sentinel'].map(t => <CheckItem key={t} text={t} />)}
           </ul>
-          <PendingCta>Protect Your Business</PendingCta>
+          <button className={BTN_PRIMARY}>Protect Your Business</button>
         </div>
         <div className="flex-1 grid grid-cols-2 gap-4">
           {[{v:'8T+',l:'Threat Signals/Day'},{v:'65+',l:'Countries Protected'},{v:'Zero Trust',l:'Architecture'},{v:'99%',l:'Threat Detection Rate'}].map(s => <StatBadge key={s.l} {...s} />)}
@@ -967,8 +951,8 @@ export const MicrosoftDefenderHero = ({ onBack }) => (
       <h2 className="text-3xl font-extrabold text-slate-800 text-center mb-2">Defender Plans</h2>
       <p className="text-slate-500 text-center mb-10">Protect every device, user, and workload</p>
       <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-        <PlanCard name="Defender for Business" price="Rs 850" period="/user/mo" features={['Endpoint protection','Vulnerability management','Firewall & network protection','Security recommendations']} />
-        <PlanCard name="Defender P2" price="Rs 1,400" period="/user/mo" highlight features={['Everything in Business','Identity protection (AAD P2)','Advanced threat hunting','SIEM/SOAR integration','Attack simulation training']} />
+        <PlanCard name="Defender for Business" priceId="email.defender.business" price="Rs 850" period="/user/mo" features={['Endpoint protection','Vulnerability management','Firewall & network protection','Security recommendations']} />
+        <PlanCard name="Defender P2" priceId="email.defender.p2" price="Rs 1,400" period="/user/mo" highlight features={['Everything in Business','Identity protection (AAD P2)','Advanced threat hunting','SIEM/SOAR integration','Attack simulation training']} />
       </div>
       <PaymentNote />
     </section>

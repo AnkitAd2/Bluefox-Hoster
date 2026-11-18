@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Rocket, Sprout, Zap, Gem, Check, ArrowRight, ShieldCheck, Headset } from 'lucide-react'
+import { getPriceAmount } from '../utils/priceCatalog'
 
 /* ---------------------------------------------------------------------------
    Small animation helpers (no extra dependencies)
@@ -362,6 +363,10 @@ const PricingSection = () => {
         <div className="mb-14 grid grid-cols-1 items-stretch gap-6 pt-3 md:grid-cols-2 xl:grid-cols-4">
           {plans.map((plan, index) => {
             const currentPlan = plan.pricing[billingCycle]
+            const pricePlanId = plan.id === 'east-host' ? 'bluefox' : plan.id
+            const currentPrice = getPriceAmount(`pricing.${pricePlanId}.${billingCycle}`, currentPlan.price)
+            const wasPrice = getPriceAmount(`pricing.${pricePlanId}.${billingCycle}.was`, currentPlan.wasPrice)
+            const billingMonths = billingCycle === 'triennial' ? 36 : 12
             const { Icon } = plan
 
             return (
@@ -423,14 +428,14 @@ const PricingSection = () => {
                         <div className="flex items-baseline gap-1">
                           <span className="text-lg font-bold text-slate-800">₹</span>
                           <span className="text-4xl font-black tracking-tight tabular-nums text-slate-900">
-                            <AnimatedNumber value={currentPlan.price} />
+                            <AnimatedNumber value={currentPrice} />
                           </span>
                           <span className="text-xs font-medium text-slate-500">/mo</span>
                         </div>
 
                         <div className="mt-1 flex flex-wrap items-center gap-2">
                           <span className="text-xs tabular-nums text-slate-400 line-through">
-                            Was ₹<AnimatedNumber value={currentPlan.wasPrice} />/mo
+                            Was ₹<AnimatedNumber value={wasPrice} />/mo
                           </span>
                           <span
                             key={`${plan.id}-${billingCycle}`}
@@ -446,20 +451,16 @@ const PricingSection = () => {
                         key={`${plan.id}-info-${billingCycle}`}
                         className="pricing-swap mb-6 space-y-0.5 rounded-2xl border border-slate-100 bg-slate-50 p-3 text-[11px] text-slate-500 transition-colors duration-300 group-hover:bg-blue-50/50"
                       >
-                        <p className="font-semibold text-slate-700">{currentPlan.payInfo}</p>
+                        <p className="font-semibold text-slate-700">Pay Rs {(currentPrice * billingMonths).toLocaleString('en-IN')} today for {billingCycle === 'triennial' ? '3 full years' : '1 full year'}.</p>
                         <p className="text-[10px] text-slate-400">{currentPlan.renewInfo}</p>
                       </div>
 
                       {/* Action Button */}
                       <div className="mb-6">
-                        <a
-                          aria-disabled="true"
-                          tabIndex={-1}
-                          className={gradientBtnStyle}
-                        >
+                        <button type="button" className={gradientBtnStyle}>
                           <span>Order Now</span>
                           <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
-                        </a>
+                        </button>
                       </div>
 
                       {/* Features */}

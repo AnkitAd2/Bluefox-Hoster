@@ -80,11 +80,11 @@ const TargetAudienceSection = ({ onNavigate }) => {
 
   // Comparison Table Data
   const comparisonRows = [
-    { feature: 'Websites', starter: '1', growth: '∞', blueFox: '∞', ultimate: '∞' },
-    { feature: 'Storage', starter: '5 GB', growth: '∞', blueFox: '∞', ultimate: '∞' },
-    { feature: 'Email Accounts', starter: '5', growth: '10', blueFox: '∞', ultimate: '∞' },
-    { feature: 'Backup Frequency', starter: 'Weekly', growth: 'Daily', blueFox: 'Daily', ultimate: 'Daily' },
-    { feature: 'Price/mo', starter: 'Rs 120', growth: 'Rs 240', blueFox: 'Rs 420', ultimate: 'Rs 720', isPrice: true }
+    { feature: 'Websites', starter: '1', growth: '∞', eastHost: '∞', ultimate: '∞' },
+    { feature: 'Storage', starter: '5 GB', growth: '∞', eastHost: '∞', ultimate: '∞' },
+    { feature: 'Email Accounts', starter: '5', growth: '10', eastHost: '∞', ultimate: '∞' },
+    { feature: 'Backup Frequency', starter: 'Weekly', growth: 'Daily', eastHost: 'Daily', ultimate: 'Daily' },
+    { feature: 'Price/mo', starter: '₹120', growth: '₹240', eastHost: '₹420', ultimate: '₹720', isPrice: true }
   ]
 
   return (
@@ -159,14 +159,10 @@ const TargetAudienceSection = ({ onNavigate }) => {
 
               {/* Action Button */}
               <div>
-                <a
-                  aria-disabled="true"
-                  tabIndex={-1}
-                  className={gradientBtnClass}
-                >
+                <button className={gradientBtnClass}>
                   <span>{card.btnText}</span>
                   <span>&rarr;</span>
-                </a>
+                </button>
               </div>
 
             </div>
@@ -192,7 +188,7 @@ const TargetAudienceSection = ({ onNavigate }) => {
                   <th className="py-3 px-4 text-center">Starter</th>
                   <th className="py-3 px-4 text-center">Growth</th>
                   <th className="py-3 px-4 text-center bg-blue-50/80 text-blue-600 rounded-t-xl">
-                    Blue Fox Hoster ★
+                    East Host ★
                   </th>
                   <th className="py-3 px-4 text-center">Ultimate</th>
                 </tr>
@@ -206,7 +202,7 @@ const TargetAudienceSection = ({ onNavigate }) => {
                     
                     {/* Highlighted Column */}
                     <td className={`py-3.5 px-4 text-center bg-blue-50/80 text-blue-600 font-bold ${row.isPrice ? 'bg-blue-100/70 text-blue-700 text-sm' : ''}`}>
-                      {row.blueFox}
+                      {row.eastHost}
                     </td>
 
                     <td className="py-3.5 px-4 text-center">{row.ultimate}</td>
@@ -229,7 +225,7 @@ const TargetAudienceSection = ({ onNavigate }) => {
               </span>
 
               <h3 className="text-2xl sm:text-3xl font-black tracking-tight mb-2">
-                Ready to elevate your web presence with Blue Fox Hoster?
+                Ready to elevate your web presence with East Host?
               </h3>
 
               <p className="text-xs sm:text-sm text-blue-100/90 leading-relaxed font-normal">
@@ -248,13 +244,9 @@ const TargetAudienceSection = ({ onNavigate }) => {
                 <span>&rarr;</span>
               </button>
 
-              <a
-                aria-disabled="true"
-                tabIndex={-1}
-                className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold text-xs px-6 py-3.5 rounded-xl transition-all flex items-center justify-center gap-2"
-              >
+              <button className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold text-xs px-6 py-3.5 rounded-xl transition-all flex items-center justify-center gap-2">
                 <span>💬 Talk to Migration Expert</span>
-              </a>
+              </button>
             </div>
 
           </div>

@@ -36,6 +36,8 @@ import {
 import NpLetterGenerator from './Components/NpLetterGenerator'  // .NP domain letter tool
 import ServicePage from './Components/ServicePage'              // Generic service page
 import LoginSignupPage from './Components/LoginSignupPage'      // Account access page
+import AdminDashboard from './Components/AdminDashboard'
+import { usePriceStore } from './utils/priceCatalog'
 
 // ── SERVER & HOSTING PAGES ───────────────────────────────────────────
 // These are the individual pages for each hosting service
@@ -80,9 +82,12 @@ import {
  * the appropriate page based on what the user clicked.
  */
 const App = () => {
+  usePriceStore()
   // 'currentView' tracks which page to show.
   // Default is 'home' — the main landing page.
-  const [currentView, setCurrentView] = useState('home')
+  const [currentView, setCurrentView] = useState(() => (
+    window.location.pathname === '/admin' ? 'admin' : 'home'
+  ))
 
   // 'selectedService' stores extra data when navigating to a service page
   const [selectedService, setSelectedService] = useState(null)
@@ -93,6 +98,11 @@ const App = () => {
    * @param {object} data  - Optional extra data (e.g., service details)
    */
   const handleNavigate = (view, data = null) => {
+    if (view === 'admin') {
+      window.history.pushState({}, '', '/admin')
+    } else if (currentView === 'admin') {
+      window.history.pushState({}, '', '/')
+    }
     setCurrentView(view)                          // Change the displayed page
     if (data) setSelectedService(data)            // Save any extra data
     window.scrollTo({ top: 0, behavior: 'smooth' }) // Scroll to top of page
@@ -100,6 +110,18 @@ const App = () => {
 
   // Shortcut function to go back to the homepage
   const backHome = () => handleNavigate('home')
+
+  React.useEffect(() => {
+    const handlePopState = () => {
+      setCurrentView(window.location.pathname === '/admin' ? 'admin' : 'home')
+    }
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [])
+
+  if (currentView === 'admin') {
+    return <AdminDashboard onExit={backHome} />
+  }
 
   return (
     // The outer wrapper div — full screen, light gray background

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { getPriceAmount } from '../utils/priceCatalog'
 import { Check, Layers3, Zap, ShieldCheck, Terminal } from 'lucide-react'
 
 const djangoPlans = [
@@ -174,7 +175,8 @@ export const DjangoHostHero = ({ onBack }) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
             {djangoPlans.map((plan) => {
               const yearly = billingCycle === 'yearly'
-              const price = yearly ? Math.round(plan.monthly * 12 * 0.8) : plan.monthly
+              const monthlyPrice = getPriceAmount(({ 'Django Starter': 'django.starter', 'Django Business': 'django.business', 'Django Enterprise': 'django.pro' })[plan.name], plan.monthly)
+              const price = yearly ? Math.round(monthlyPrice * 12 * 0.8) : monthlyPrice
               return (
                 <div
                   key={plan.name}
@@ -211,8 +213,7 @@ export const DjangoHostHero = ({ onBack }) => {
 
                   <div className="mt-8 pt-4">
                     <a
-                      aria-disabled="true"
-                      tabIndex={-1}
+                      href="#get-started"
                       className={`block w-full text-center rounded-xl py-3.5 text-sm font-bold transition-all ${
                         plan.popular
                           ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg'

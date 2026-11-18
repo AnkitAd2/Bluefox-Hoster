@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { getPriceAmount } from '../utils/priceCatalog'
 import { Check, MapPin, Zap, ShieldCheck, Terminal, Globe, Clock, Cpu } from 'lucide-react'
 
 const nepalPlans = [
@@ -199,7 +200,8 @@ export const NepalVpsHero = ({ onBack }) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
             {nepalPlans.map((plan) => {
               const yearly = billingCycle === 'yearly'
-              const price = yearly ? Math.round(plan.monthly * 12 * 0.8) : plan.monthly
+              const monthlyPrice = getPriceAmount(({ 'Nepal VPS Starter': 'vps.nepal.starter', 'Nepal VPS Business': 'vps.nepal.business', 'Nepal VPS Enterprise': 'vps.nepal.enterprise' })[plan.name], plan.monthly)
+              const price = yearly ? Math.round(monthlyPrice * 12 * 0.8) : monthlyPrice
               return (
                 <div
                   key={plan.name}
@@ -239,8 +241,7 @@ export const NepalVpsHero = ({ onBack }) => {
 
                   <div className="mt-8 pt-4">
                     <a
-                      aria-disabled="true"
-                      tabIndex={-1}
+                      href="#get-started"
                       className={`block w-full text-center rounded-xl py-3.5 text-sm font-bold transition-all ${
                         plan.popular
                           ? 'text-white hover:opacity-90 shadow-md hover:shadow-lg'

@@ -53,6 +53,7 @@ import {
 } from 'lucide-react'
 import Flag from '../assets/Flag_of_Nepal.svg.webp'
 import HeroRobot from '../assets/robot_5_transparent.svg'
+import { getPrice } from '../utils/priceCatalog'
 
 const hostingPlans = [
   {
@@ -312,7 +313,7 @@ export const WebHostingHero = ({ onBack }) => {
                 <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[9px] font-extrabold uppercase text-emerald-800">70% OFF</span>
               </div>
               <div className="mt-0.5 flex items-baseline gap-1">
-                <span className="text-2xl font-black text-slate-950">Rs 120</span>
+                <span className="text-2xl font-black text-slate-950">{hostingPlans[0].price}</span>
                 <span className="text-xs font-semibold text-slate-500">/mo</span>
               </div>
             </div>
@@ -378,7 +379,7 @@ export const WebHostingHero = ({ onBack }) => {
                   <p className="text-xs text-slate-500 mt-1 min-h-[32px]">{plan.desc}</p>
 
                   <div className="mt-6 flex items-baseline gap-1 border-b border-slate-100 pb-6">
-                    <span className="text-4xl font-black text-slate-950">{plan.price}</span>
+                    <span className="text-4xl font-black text-slate-950">{getPrice(({ 'Starter Web': 'web.starter', 'Business Pro': 'web.business', 'Cloud Ultra': 'web.cloud' })[plan.name], plan.price)}</span>
                     <span className="text-xs font-semibold text-slate-500">{plan.period}</span>
                   </div>
 
@@ -396,8 +397,7 @@ export const WebHostingHero = ({ onBack }) => {
 
                 <div className="mt-8 pt-4">
                   <a
-                    aria-disabled="true"
-                    tabIndex={-1}
+                    href="#get-started"
                     className={`block w-full text-center rounded-xl py-3.5 text-sm font-bold transition-all ${
                       plan.popular 
                         ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg' 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { getPrice } from '../utils/priceCatalog'
 import { Send, Check, ShieldCheck, Zap, Server, ShoppingBag, Lock, Headphones, RefreshCw, Cpu, Database, CreditCard } from 'lucide-react'
 import Flag from '../assets/Flag_of_Nepal.svg.webp'
 import HeroRobot from '../assets/robot_5_transparent.svg'
@@ -253,7 +254,7 @@ export const EcomHostHero = ({ onBack }) => {
                 <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[9px] font-extrabold uppercase text-emerald-800">FAST SETUP</span>
               </div>
               <div className="mt-0.5 flex items-baseline gap-1">
-                <span className="text-2xl font-black text-slate-950">Rs 450</span>
+                <span className="text-2xl font-black text-slate-950">{getPrice('ecommerce.starter', 'Rs 450')}</span>
                 <span className="text-xs font-semibold text-slate-500">/mo</span>
               </div>
             </div>
@@ -319,7 +320,7 @@ export const EcomHostHero = ({ onBack }) => {
                   <p className="text-xs text-slate-500 mt-1 min-h-[32px]">{plan.desc}</p>
 
                   <div className="mt-6 flex items-baseline gap-1 border-b border-slate-100 pb-6">
-                    <span className="text-4xl font-black text-slate-950">{plan.price}</span>
+                    <span className="text-4xl font-black text-slate-950">{getPrice(({ 'Starter Store': 'ecommerce.starter', 'Growth Ecom': 'ecommerce.business', 'Enterprise Shop': 'ecommerce.pro' })[plan.name], plan.price)}</span>
                     <span className="text-xs font-semibold text-slate-500">{plan.period}</span>
                   </div>
 
@@ -337,8 +338,7 @@ export const EcomHostHero = ({ onBack }) => {
 
                 <div className="mt-8 pt-4">
                   <a
-                    aria-disabled="true"
-                    tabIndex={-1}
+                    href="#get-started"
                     className={`block w-full text-center rounded-xl py-3.5 text-sm font-bold transition-all ${
                       plan.popular 
                         ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg' 

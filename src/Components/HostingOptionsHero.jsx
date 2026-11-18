@@ -25,6 +25,7 @@
  */
 
 import React from 'react'
+import { getPrice } from '../utils/priceCatalog'
 import {
   Globe,
   Server,
@@ -56,6 +57,7 @@ const hostingGroups = [
       {
         name: 'Web Hosting',
         price: 'From Rs 120/mo',
+        priceId: 'hosting-options.web',
         description: 'cPanel hosting on NVMe SSD with free SSL & domain.',
         icon: Globe,
         view: 'web-hosting',
@@ -65,6 +67,7 @@ const hostingGroups = [
       {
         name: 'Cloud Hosting',
         price: 'From Rs 350/mo',
+        priceId: 'hosting-options.cloud',
         description: 'Auto-scaling cloud nodes with 99.99% uptime SLA.',
         icon: Cloud,
         view: 'cloud-hosting',
@@ -104,6 +107,7 @@ const hostingGroups = [
       {
         name: 'Django Hosting',
         price: 'From Rs 290/mo',
+        priceId: 'hosting-options.django',
         description: 'Gunicorn + Nginx + PostgreSQL, pre-configured.',
         icon: Code2,
         view: 'django-hosting',
@@ -113,6 +117,7 @@ const hostingGroups = [
       {
         name: 'Python Hosting',
         price: 'From Rs 290/mo',
+        priceId: 'hosting-options.python',
         description: 'Flask / FastAPI with virtual env isolation.',
         icon: Code2,
         view: 'python-hosting',
@@ -122,6 +127,7 @@ const hostingGroups = [
       {
         name: 'Node.js Hosting',
         price: 'From Rs 250/mo',
+        priceId: 'hosting-options.node',
         description: 'PM2-managed Node 18/20 LTS with WebSocket support.',
         icon: Zap,
         view: 'nodejs-hosting',
@@ -131,6 +137,7 @@ const hostingGroups = [
       {
         name: 'Bluefox Java',
         price: 'From Rs 350/mo',
+        priceId: 'hosting-options.java',
         description: 'Tomcat & Spring Boot with JVM tuning & Maven CI.',
         icon: Coffee,
         view: 'code-based',
@@ -152,6 +159,7 @@ const hostingGroups = [
       {
         name: 'Nepal VPS',
         price: 'From Rs 1,200/mo',
+        priceId: 'hosting-options.nepal-vps',
         description: 'Kathmandu data center — lowest latency for local users.',
         icon: Globe,
         view: 'nepal-vps',
@@ -161,6 +169,7 @@ const hostingGroups = [
       {
         name: 'USA VPS',
         price: 'From Rs 1,500/mo',
+        priceId: 'hosting-options.usa-vps',
         description: 'Premium US data centers with 10 Gbps uplink.',
         icon: Server,
         view: 'usa-vps',
@@ -170,6 +179,7 @@ const hostingGroups = [
       {
         name: 'Europe VPS',
         price: 'From Rs 1,400/mo',
+        priceId: 'hosting-options.europe-vps',
         description: 'European data centers with GDPR-ready infrastructure.',
         icon: Server,
         view: 'europe-vps',
@@ -191,6 +201,7 @@ const hostingGroups = [
       {
         name: 'Reseller Hosting',
         price: 'From Rs 1,850/mo',
+        priceId: 'hosting-options.reseller',
         description: 'WHM + cPanel, private nameservers, WHMCS ready.',
         icon: Globe,
         view: 'reseller-hosting',
@@ -200,6 +211,7 @@ const hostingGroups = [
       {
         name: '360° Business Toolkit',
         price: 'From Rs 950/mo',
+        priceId: 'hosting-options.business-toolkit',
         description: 'SEO, email marketing, firewall & analytics bundle.',
         icon: Briefcase,
         view: 'business-toolkit',
@@ -354,7 +366,7 @@ const HostingOptionsHero = ({ onBack, onNavigate }) => {
 
                       {/* Price + arrow footer */}
                       <div className="mt-5 flex items-center justify-between border-t border-slate-100 pt-4">
-                        <span className="text-xs font-bold text-blue-700">{service.price}</span>
+                        <span className="text-xs font-bold text-blue-700">{getPrice(service.priceId, service.price)}</span>
                         {/* Arrow icon slides right on hover via group-hover Tailwind class */}
                         <ArrowRight className="h-4 w-4 text-slate-300 transition-transform group-hover:translate-x-1 group-hover:text-blue-500" />
                       </div>
@@ -379,9 +391,8 @@ const HostingOptionsHero = ({ onBack, onNavigate }) => {
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              aria-disabled="true"
-              tabIndex={-1}
-              className="inline-flex items-center justify-center rounded-xl bg-white px-7 py-3.5 text-sm font-bold text-blue-700 shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5"
+              href="#contact"
+              className="rounded-xl bg-white px-7 py-3.5 text-sm font-bold text-blue-700 shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5"
             >
               Talk to an Expert →
             </a>

@@ -54,7 +54,7 @@ const questions = [
 
 const CompanySection = () => (
   <>
-    <section id="company" className="site-section scroll-mt-32 overflow-hidden bg-gradient-to-br from-[#3189ed] via-[#176fd2] to-[#0d55ad] py-16 font-sans text-white sm:py-20">
+    <section id="company" className="site-section scroll-mt-32 overflow-hidden bg-linear-to-br from-[#3189ed] via-[#176fd2] to-[#0d55ad] py-16 font-sans text-white sm:py-20">
       <div className="site-container">
         <div className="mx-auto max-w-2xl text-center">
           <span aria-hidden="true" className="mx-auto block h-1 w-4 rounded-full bg-white/70" />
@@ -63,7 +63,7 @@ const CompanySection = () => (
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {reasons.map((reason) => (
-            <article className="min-h-48 rounded-xl border border-white/15 bg-white/[0.07] p-6 transition-colors hover:bg-white/[0.11] sm:p-7" key={reason.title}>
+            <article className="min-h-48 rounded-xl border border-white/15 bg-white/[0.07] p-6 transition-colors hover:bg-white/11 sm:p-7" key={reason.title}>
               <span className="flex h-12 w-12 items-center justify-center rounded-lg border border-white/15 bg-white/10 text-white">
                 <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d={reason.icon} />

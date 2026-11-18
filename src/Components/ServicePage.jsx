@@ -1,4 +1,5 @@
 import React from 'react'
+import { getPrice } from '../utils/priceCatalog'
 import { ArrowLeft, ShieldCheck, Zap, Server } from 'lucide-react'
 
 const ServicePage = ({ service, onBack }) => {
@@ -31,14 +32,13 @@ const ServicePage = ({ service, onBack }) => {
           </div>
           <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-6 text-white text-center min-w-[200px] shadow-lg shadow-blue-600/20">
             <span className="text-xs uppercase tracking-wider text-blue-200 font-bold block">Starting at</span>
-            <span className="text-2xl font-black mt-1 block">Rs 499<span className="text-sm font-normal text-blue-100">/mo</span></span>
-            <a
-              aria-disabled="true"
-              tabIndex={-1}
-              className="mt-4 inline-flex w-full items-center justify-center bg-white text-blue-700 font-bold text-sm py-2.5 px-4 rounded-xl hover:bg-blue-50 transition-colors cursor-pointer"
+            <span className="text-2xl font-black mt-1 block">{getPrice('service-page.generic', 'Rs 499')}<span className="text-sm font-normal text-blue-100">/mo</span></span>
+            <button 
+              onClick={() => alert(`Redirecting to checkout for ${service.title}`)}
+              className="mt-4 w-full bg-white text-blue-700 font-bold text-sm py-2.5 px-4 rounded-xl hover:bg-blue-50 transition-colors cursor-pointer"
             >
               Deploy Now
-            </a>
+            </button>
           </div>
         </div>
 
@@ -63,13 +63,12 @@ const ServicePage = ({ service, onBack }) => {
         <div className="bg-blue-50/60 rounded-2xl border border-blue-100 p-8 text-center">
           <h3 className="text-xl font-bold text-slate-900 mb-2">Ready to launch {service.title}?</h3>
           <p className="text-slate-600 text-sm max-w-xl mx-auto mb-6">Experience secure infrastructure, instant provisioning, and seamless scalability.</p>
-          <a
-            aria-disabled="true"
-            tabIndex={-1}
-            className="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl shadow-lg shadow-blue-600/20 transition-all cursor-pointer"
+          <button 
+            onClick={() => alert(`Configuring ${service.title}!`)}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl shadow-lg shadow-blue-600/20 transition-all cursor-pointer"
           >
             Configure & Order
-          </a>
+          </button>
         </div>
       </div>
     </div>

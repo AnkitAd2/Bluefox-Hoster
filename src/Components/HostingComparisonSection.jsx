@@ -1,4 +1,5 @@
 import React from 'react'
+import { getPrice } from '../utils/priceCatalog'
 
 const plans = [
   { name: 'Web Starter', price: '83' },
@@ -165,7 +166,7 @@ const HostingComparisonSection = () => (
                         <span className="flex flex-col items-center gap-1.5">
                           <span className="text-[15px] font-semibold text-slate-950">{plan.name}</span>
                           {plan.popular ? <span className="rounded-full bg-blue-600 px-2 py-0.5 text-[11px] font-medium text-white">Most popular</span> : <span className="h-5" aria-hidden="true" />}
-                          <span className="text-sm text-slate-600">NPR {plan.price}<span className="text-slate-400">/mo</span></span>
+                          <span className="text-sm text-slate-600">NPR {getPrice(({ 'Web Starter': 'comparison.web-starter', 'Web Plus': 'comparison.web-plus', 'Web Pro': 'comparison.web-pro', 'Web Elite': 'comparison.web-elite' })[plan.name], plan.price)}<span className="text-slate-400">/mo</span></span>
                           <span className="text-[11px] text-slate-500">3-year plan</span>
                         </span>
                       </th>

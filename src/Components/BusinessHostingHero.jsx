@@ -2,8 +2,9 @@ import {
   Check, ArrowRight, TrendingUp, Settings, Tag, Headphones,
   Package, ShieldCheck, BarChart2, Mail, Users, Globe, ChevronRight
 } from 'lucide-react';
+import { getPriceAmount } from '../utils/priceCatalog'
 
-const BTN_PRIMARY = 'inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] px-6 py-3.5 text-sm sm:text-base font-semibold text-white shadow-md transition-all duration-300 hover:to-[#1565c0] hover:shadow-[0_12px_28px_rgba(30,136,229,0.45)] hover:-translate-y-0.5 active:scale-95 cursor-pointer';
+const BTN_PRIMARY = 'rounded-xl bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] px-6 py-3.5 text-sm sm:text-base font-semibold text-white shadow-md transition-all duration-300 hover:to-[#1565c0] hover:shadow-[0_12px_28px_rgba(30,136,229,0.45)] hover:-translate-y-0.5 active:scale-95 cursor-pointer';
 
 const resellerFeatures = [
   'WHM + cPanel Control Panel',
@@ -101,16 +102,12 @@ export function BusinessHostingHero({ onBack }) {
             360° Business Toolkit. Full white-label. Full control. Full profit.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="#business-plans" className={BTN_PRIMARY}>
+            <button className={BTN_PRIMARY}>
               View Reseller Plans <ArrowRight className="ml-2 inline-block" size={16} />
-            </a>
-            <a
-              aria-disabled="true"
-              tabIndex={-1}
-              className="inline-flex items-center justify-center rounded-xl border border-amber-400/40 px-6 py-3.5 text-sm font-semibold text-amber-200 transition hover:bg-white/10"
-            >
+            </button>
+            <button className="rounded-xl border border-amber-400/40 px-6 py-3.5 text-sm font-semibold text-amber-200 transition hover:bg-white/10">
               Talk to Sales
-            </a>
+            </button>
           </div>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             {['WHM + cPanel', 'Free White-Label', 'WHMCS Ready', 'Unlimited Clients', 'Nepal Support'].map((t) => (
@@ -148,7 +145,7 @@ export function BusinessHostingHero({ onBack }) {
                 </div>
               </div>
               <div className="mt-4 flex items-end gap-1">
-                <span className="text-4xl font-extrabold text-slate-800">Rs 1,850</span>
+                <span className="text-4xl font-extrabold text-slate-800">Rs {getPriceAmount('hosting-options.reseller', 1850).toLocaleString('en-IN')}</span>
                 <span className="mb-1 text-slate-400 text-sm">/mo</span>
               </div>
               <p className="mt-2 text-sm text-slate-500 leading-relaxed">
@@ -165,13 +162,9 @@ export function BusinessHostingHero({ onBack }) {
                 ))}
               </ul>
               <div className="mt-8">
-                <a
-                  aria-disabled="true"
-                  tabIndex={-1}
-                  className={`w-full ${BTN_PRIMARY} text-center`}
-                >
-                  Start Reselling — Rs 1,850/mo
-                </a>
+                <button className={`w-full ${BTN_PRIMARY} text-center`}>
+                  Start Reselling — Rs {getPriceAmount('hosting-options.reseller', 1850).toLocaleString('en-IN')}/mo
+                </button>
               </div>
             </div>
           </div>
@@ -192,7 +185,7 @@ export function BusinessHostingHero({ onBack }) {
                 </div>
               </div>
               <div className="mt-4 flex items-end gap-1">
-                <span className="text-4xl font-extrabold text-slate-800">Rs 950</span>
+                <span className="text-4xl font-extrabold text-slate-800">Rs {getPriceAmount('hosting-options.business-toolkit', 950).toLocaleString('en-IN')}</span>
                 <span className="mb-1 text-slate-400 text-sm">/mo</span>
               </div>
               <p className="mt-2 text-sm text-slate-500 leading-relaxed">
@@ -209,13 +202,9 @@ export function BusinessHostingHero({ onBack }) {
                 ))}
               </ul>
               <div className="mt-8">
-                <a
-                  aria-disabled="true"
-                  tabIndex={-1}
-                  className={`w-full ${BTN_PRIMARY} text-center`}
-                >
-                  Get Toolkit — Rs 950/mo
-                </a>
+                <button className={`w-full ${BTN_PRIMARY} text-center`}>
+                  Get Toolkit — Rs {getPriceAmount('hosting-options.business-toolkit', 950).toLocaleString('en-IN')}/mo
+                </button>
               </div>
             </div>
           </div>
@@ -227,7 +216,7 @@ export function BusinessHostingHero({ onBack }) {
       </section>
 
       {/* ── WHY RESELL CARDS ── */}
-      <section id="business-plans" className="scroll-mt-28 bg-white py-20 px-4">
+      <section className="bg-white py-20 px-4">
         <div className="mx-auto max-w-6xl">
           <div className="mb-12 text-center">
             <span className="inline-block rounded-full border border-amber-200 bg-amber-50 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-amber-600">
@@ -283,13 +272,9 @@ export function BusinessHostingHero({ onBack }) {
           </div>
 
           <div className="mt-14 text-center">
-            <a
-              aria-disabled="true"
-              tabIndex={-1}
-              className={BTN_PRIMARY}
-            >
+            <button className={BTN_PRIMARY}>
               Launch Your Hosting Brand <ArrowRight className="ml-2 inline-block" size={16} />
-            </a>
+            </button>
           </div>
         </div>
       </section>

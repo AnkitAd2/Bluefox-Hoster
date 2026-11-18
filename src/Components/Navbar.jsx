@@ -1,4 +1,5 @@
 import React from 'react'
+import { getPrice } from '../utils/priceCatalog'
 import {
   ArrowUpRight,
   BookOpen,
@@ -247,7 +248,7 @@ const Navbar = ({ onNavigate, currentView }) => {
     <>
       <div 
         aria-hidden="true"
-        className={`fixed inset-0 z-[90] bg-slate-900/30 backdrop-blur-sm transition-all duration-300 pointer-events-none ${
+        className={`fixed inset-0 z-[90] bg-slate-950/15 backdrop-blur-[1px] transition-all duration-300 pointer-events-none ${
           activeDropdown || mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0'
         }`}
         onClick={() => { dismissDropdowns(); setMobileMenuOpen(false); }}
@@ -260,6 +261,9 @@ const Navbar = ({ onNavigate, currentView }) => {
             pointer-events: none;
             opacity: 0;
             transform: translateY(0.5rem);
+            max-height: calc(100vh - 7rem);
+            overflow-y: auto;
+            overscroll-behavior: contain;
             transition: opacity 150ms ease, transform 150ms ease, visibility 150ms ease;
           }
           .nav-dropdown[data-open="true"] > .nav-dropdown-panel {
@@ -376,7 +380,7 @@ const Navbar = ({ onNavigate, currentView }) => {
             <ul className="flex items-center gap-4 2xl:gap-6 text-sm 2xl:text-base font-medium text-slate-600 whitespace-nowrap">
             
               <li
-                className="nav-dropdown relative"
+                className="nav-dropdown"
                 data-open={activeDropdown === 'domains'}
                 onMouseEnter={() => !pinnedDropdown && setHoveredDropdown('domains')}
                 onMouseLeave={() => !pinnedDropdown && setHoveredDropdown(null)}
@@ -437,7 +441,7 @@ const Navbar = ({ onNavigate, currentView }) => {
                               <span className="mt-0.5 block truncate text-xs text-slate-500">{domain.description}</span>
                             </span>
                             <span className={`shrink-0 text-xs font-bold ${domain.price === 'Free' ? 'text-emerald-700' : 'text-slate-700'}`}>
-                              {domain.sample && 'Est. '}{domain.price}
+                              {domain.sample && 'Est. '}{getPrice(`domain.${domain.extension.slice(1)}`, domain.price)}
                             </span>
                           </a>
                         ))}
@@ -448,7 +452,7 @@ const Navbar = ({ onNavigate, currentView }) => {
               </li>
 
               <li
-                className="nav-dropdown relative"
+                className="nav-dropdown"
                 data-open={activeDropdown === 'hosting'}
                 onMouseEnter={() => !pinnedDropdown && setHoveredDropdown('hosting')}
                 onMouseLeave={() => !pinnedDropdown && setHoveredDropdown(null)}
@@ -519,7 +523,7 @@ const Navbar = ({ onNavigate, currentView }) => {
               </li>
 
               <li
-                className="nav-dropdown relative"
+                className="nav-dropdown"
                 data-open={activeDropdown === 'cloud'}
                 onMouseEnter={() => !pinnedDropdown && setHoveredDropdown('cloud')}
                 onMouseLeave={() => !pinnedDropdown && setHoveredDropdown(null)}
@@ -631,21 +635,21 @@ const Navbar = ({ onNavigate, currentView }) => {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div id="mobile-navigation" className="lg:hidden absolute left-0 top-full w-full max-h-[85vh] overflow-y-auto bg-white border-b border-slate-200 shadow-2xl transition-all p-4 space-y-4">
+          <div id="mobile-navigation" className="lg:hidden absolute left-0 top-full w-full max-h-[85vh] overflow-y-auto rounded-b-2xl border-x border-b border-slate-200 bg-white p-3 shadow-2xl transition-all sm:p-4">
             
             {/* Quick Links */}
-            <div className="space-y-1">
+            <div className="grid grid-cols-2 gap-2">
               <button
                 type="button"
                 onClick={() => { setMobileMenuOpen(false); if (onNavigate) onNavigate('home'); }}
-                className="w-full text-left rounded-lg px-3 py-2.5 text-sm font-semibold text-slate-800 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                className="w-full rounded-xl border border-slate-200 bg-white px-3 py-3 text-left text-sm font-semibold text-slate-800 shadow-sm transition-colors hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-blue-600"
               >
                 Home
               </button>
               <button
                 type="button"
                 onClick={() => { setMobileMenuOpen(false); if (onNavigate) onNavigate('generator'); }}
-                className="w-full text-left rounded-lg px-3 py-2.5 text-sm font-semibold text-slate-800 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                className="w-full rounded-xl border border-slate-200 bg-white px-3 py-3 text-left text-sm font-semibold text-slate-800 shadow-sm transition-colors hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-blue-600"
               >
                 .NP letter Generator
               </button>
@@ -658,22 +662,27 @@ const Navbar = ({ onNavigate, currentView }) => {
                 onClick={() => setMobileSubMenu(mobileSubMenu === 'domains' ? null : 'domains')}
                 aria-expanded={mobileSubMenu === 'domains'}
                 aria-controls="mobile-domains"
-                className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-bold text-slate-900 bg-slate-50 hover:bg-slate-100"
+                className={`flex w-full items-center justify-between rounded-xl border px-3 py-3 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-blue-600 ${
+                  mobileSubMenu === 'domains' ? 'border-blue-200 bg-blue-50 text-blue-800' : 'border-slate-200 bg-white text-slate-900 hover:border-blue-200 hover:bg-blue-50/60'
+                }`}
               >
                 <span>Domains &amp; Pricing</span>
                 <RiArrowDropDownLine className={`h-6 w-6 transition-transform ${mobileSubMenu === 'domains' ? 'rotate-180' : ''}`} />
               </button>
               {mobileSubMenu === 'domains' && (
-                <div id="mobile-domains" className="mt-2 grid grid-cols-1 gap-2 pl-2">
+                <div id="mobile-domains" className="mt-2 grid grid-cols-1 gap-2 rounded-xl border border-slate-100 bg-slate-50/70 p-2 sm:grid-cols-2">
                   {domainOptions.map((domain) => (
                     <a
                       key={domain.extension}
                       href={`#domain-${domain.extension.slice(1)}`}
                       onClick={handleSectionClick(`#domain-${domain.extension.slice(1)}`)}
-                      className="flex items-center justify-between rounded-lg border border-slate-100 px-3 py-2 text-xs font-medium text-slate-700 hover:bg-blue-50"
+                      className="flex min-w-0 items-center gap-2 rounded-lg border border-slate-200 bg-white px-2.5 py-2.5 text-xs transition-colors hover:border-blue-200 hover:bg-blue-50/60 focus-visible:outline-2 focus-visible:outline-blue-600"
                     >
-                      <span className="font-bold text-slate-900">{domain.extension} - {domain.description}</span>
-                      <span className="text-blue-600 font-bold">{domain.price}</span>
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-[10px] font-bold text-blue-700">{domain.extension}</span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate font-bold text-slate-900">{domain.description}</span>
+                        <span className="mt-0.5 block text-[11px] font-semibold text-blue-700">{getPrice(`domain.${domain.extension.slice(1)}`, domain.price)}</span>
+                      </span>
                     </a>
                   ))}
                 </div>
@@ -687,16 +696,18 @@ const Navbar = ({ onNavigate, currentView }) => {
                 onClick={() => setMobileSubMenu(mobileSubMenu === 'hosting' ? null : 'hosting')}
                 aria-expanded={mobileSubMenu === 'hosting'}
                 aria-controls="mobile-hosting"
-                className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-bold text-slate-900 bg-slate-50 hover:bg-slate-100"
+                className={`flex w-full items-center justify-between rounded-xl border px-3 py-3 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-blue-600 ${
+                  mobileSubMenu === 'hosting' ? 'border-blue-200 bg-blue-50 text-blue-800' : 'border-slate-200 bg-white text-slate-900 hover:border-blue-200 hover:bg-blue-50/60'
+                }`}
               >
                 <span>Server &amp; Hosting</span>
                 <RiArrowDropDownLine className={`h-6 w-6 transition-transform ${mobileSubMenu === 'hosting' ? 'rotate-180' : ''}`} />
               </button>
               {mobileSubMenu === 'hosting' && (
-                <div id="mobile-hosting" className="mt-2 space-y-3 pl-2">
+                <div id="mobile-hosting" className="mt-2 space-y-2 rounded-xl border border-slate-100 bg-slate-50/70 p-2">
                   {hostingGroups.map((group) => (
-                    <div key={group.title} className="space-y-1">
-                      <span className="text-[11px] font-bold uppercase text-blue-600 px-2">{group.title}</span>
+                    <div key={group.title} className="rounded-lg border border-slate-100 bg-white p-2">
+                      <span className="px-1 text-[11px] font-bold uppercase tracking-wide text-blue-700">{group.title}</span>
                       {group.items.map((item) => (
                         <a
                           key={item.title}
@@ -706,10 +717,15 @@ const Navbar = ({ onNavigate, currentView }) => {
                             setMobileMenuOpen(false)
                             if (onNavigate) onNavigate(item.path, item)
                           }}
-                          className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600"
+                          className="flex items-center gap-2.5 rounded-lg px-2 py-2 text-xs font-semibold text-slate-700 transition-colors hover:bg-blue-50 hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-blue-600"
                         >
-                          <span className="h-2 w-2 rounded-full bg-blue-500"></span>
-                          <span>{item.title}</span>
+                          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-700">
+                            {item.image ? <img src={item.image} alt="" className="h-5 w-5 object-contain" /> : <item.icon aria-hidden="true" className="h-4 w-4" />}
+                          </span>
+                          <span className="min-w-0">
+                            <span className="block">{item.title}</span>
+                            <span className="mt-0.5 block text-[11px] font-normal leading-snug text-slate-500">{item.description}</span>
+                          </span>
                         </a>
                       ))}
                     </div>
@@ -725,16 +741,18 @@ const Navbar = ({ onNavigate, currentView }) => {
                 onClick={() => setMobileSubMenu(mobileSubMenu === 'cloud' ? null : 'cloud')}
                 aria-expanded={mobileSubMenu === 'cloud'}
                 aria-controls="mobile-cloud"
-                className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-bold text-slate-900 bg-slate-50 hover:bg-slate-100"
+                className={`flex w-full items-center justify-between rounded-xl border px-3 py-3 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-blue-600 ${
+                  mobileSubMenu === 'cloud' ? 'border-blue-200 bg-blue-50 text-blue-800' : 'border-slate-200 bg-white text-slate-900 hover:border-blue-200 hover:bg-blue-50/60'
+                }`}
               >
                 <span>Emails &amp; Clouds</span>
                 <RiArrowDropDownLine className={`h-6 w-6 transition-transform ${mobileSubMenu === 'cloud' ? 'rotate-180' : ''}`} />
               </button>
               {mobileSubMenu === 'cloud' && (
-                <div id="mobile-cloud" className="mt-2 space-y-3 pl-2">
+                <div id="mobile-cloud" className="mt-2 space-y-2 rounded-xl border border-slate-100 bg-slate-50/70 p-2">
                   {emailCloudGroups.map((group) => (
-                    <div key={group.title} className="space-y-1">
-                      <span className="px-2 text-[11px] font-bold uppercase text-blue-600">{group.title}</span>
+                    <div key={group.title} className="rounded-lg border border-slate-100 bg-white p-2">
+                      <span className="px-1 text-[11px] font-bold uppercase tracking-wide text-blue-700">{group.title}</span>
                       {group.items.map((item) => (
                         <a
                           key={item.title}
@@ -744,7 +762,7 @@ const Navbar = ({ onNavigate, currentView }) => {
                             setMobileMenuOpen(false)
                             if (onNavigate) onNavigate(item.path, item)
                           }}
-                          className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600"
+                          className="flex items-center gap-2.5 rounded-lg px-2 py-2 text-xs font-semibold text-slate-700 transition-colors hover:bg-blue-50 hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-blue-600"
                         >
                           <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
                             {item.image ? (
@@ -753,7 +771,10 @@ const Navbar = ({ onNavigate, currentView }) => {
                               <item.icon aria-hidden="true" className="h-4 w-4" />
                             )}
                           </span>
-                          <span>{item.title}</span>
+                          <span className="min-w-0">
+                            <span className="block">{item.title}</span>
+                            <span className="mt-0.5 block text-[11px] font-normal leading-snug text-slate-500">{item.description}</span>
+                          </span>
                         </a>
                       ))}
                     </div>
@@ -764,8 +785,8 @@ const Navbar = ({ onNavigate, currentView }) => {
 
             {/* Support Section */}
             <div className="border-t border-slate-100 pt-3 pb-2">
-              <span className="text-[11px] font-bold uppercase text-slate-400 px-3">Support &amp; Contact</span>
-              <div className="mt-2 grid grid-cols-1 gap-2 pl-2">
+              <span className="px-1 text-[11px] font-bold uppercase tracking-wide text-slate-500">Support &amp; Contact</span>
+              <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
                 {supportOptions.map((opt) => (
                   <a
                     key={opt.title}
@@ -773,17 +794,22 @@ const Navbar = ({ onNavigate, currentView }) => {
                     onClick={handleSupportOptionClick(opt)}
                     target={opt.external ? '_blank' : undefined}
                     rel={opt.external ? 'noopener noreferrer' : undefined}
-                    className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50"
+                    className="flex items-start gap-2.5 rounded-xl border border-slate-200 bg-white px-3 py-3 text-xs font-semibold text-slate-700 transition-colors hover:border-blue-200 hover:bg-blue-50/60 focus-visible:outline-2 focus-visible:outline-blue-600"
                   >
-                    <opt.icon className="h-4 w-4 text-blue-600" />
-                    <span>{opt.title}</span>
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-700">
+                      <opt.icon aria-hidden="true" className="h-4 w-4" />
+                    </span>
+                    <span>
+                      <span className="block">{opt.title}</span>
+                      <span className="mt-0.5 block text-[11px] font-normal leading-snug text-slate-500">{opt.description}</span>
+                    </span>
                   </a>
                 ))}
               </div>
             </div>
 
             {/* CTA Button */}
-            <div className="pt-2">
+            <div className="pt-1">
               <button
                 type="button"
                 onClick={() => { setMobileMenuOpen(false); if (onNavigate) onNavigate('auth'); }}

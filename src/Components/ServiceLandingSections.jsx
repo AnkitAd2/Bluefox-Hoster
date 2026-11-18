@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { getPrice } from '../utils/priceCatalog'
 import {
   Activity,
   ArrowRight,
@@ -196,7 +197,7 @@ export const DomainLandingSections = () => (
                       </span>
                     )}
                     <span className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-r from-[#0c73d5] to-[#0e6cc8] py-1.5 text-center text-[10px] font-bold text-white transition-transform duration-300 group-hover:translate-y-0">
-                      {domain.price === 'Free' ? 'Free' : domain.price.replace(' / year', '/yr')}
+                      {getPrice(`domain.${domain.extension.slice(1)}`, domain.price)}
                     </span>
                   </div>
                 </div>
@@ -250,7 +251,7 @@ export const DomainLandingSections = () => (
                       <p className="mt-0.5 truncate text-sm text-slate-500">{domain.description}</p>
                     </div>
                   </div>
-                  {domain.price === 'Free' ? (
+                  {getPrice(`domain.${domain.extension.slice(1)}`, domain.price) === 'Free' ? (
                     <span className="shrink-0 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-700 ring-1 ring-emerald-200">
                       Free
                     </span>
@@ -263,12 +264,11 @@ export const DomainLandingSections = () => (
 
                 <div className="mt-5 flex items-end justify-between border-t border-slate-100 pt-4">
                   <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">Per year</span>
-                  <span className={`text-lg font-extrabold tabular-nums ${domain.price === 'Free' ? 'text-emerald-700' : 'text-slate-900'}`}>
-                    {domain.price.replace(' / year', '').replace('Est. ', '')}
-                    {domain.price !== 'Free' && <span className="ml-1 text-xs font-semibold text-slate-500">NPR</span>}
+                  <span className={`text-lg font-extrabold tabular-nums ${getPrice(`domain.${domain.extension.slice(1)}`, domain.price) === 'Free' ? 'text-emerald-700' : 'text-slate-900'}`}>
+                    {getPrice(`domain.${domain.extension.slice(1)}`, domain.price).replace(' / year', '').replace('Est. ', '')}
+                    {getPrice(`domain.${domain.extension.slice(1)}`, domain.price) !== 'Free' && <span className="ml-1 text-xs font-semibold text-slate-500">NPR</span>}
                   </span>
                 </div>
-
               </article>
             </Reveal>
           ))}
@@ -283,16 +283,16 @@ export const DomainLandingSections = () => (
 --------------------------------------------------------------------------- */
 
 const hostingCards = [
-  { label: 'Web Hosting', image: WebHostingLogo, from: 'Rs 120/mo', badge: 'Popular', path: 'web-hosting' },
-  { label: 'Cloud Hosting', image: CloudHostingLogo, from: 'Rs 450/mo', path: 'cloud-hosting' },
-  { label: 'WordPress', image: WordPressLogo, from: 'Rs 199/mo', path: 'wordpress-hosting' },
-  { label: 'eCommerce', image: EcommerceLogo, from: 'Rs 349/mo', path: 'ecommerce-hosting' },
-  { label: 'Django', image: DjangoLogo, from: 'Rs 290/mo', path: 'django-hosting' },
-  { label: 'Python', image: PythonLogo, from: 'Rs 290/mo', path: 'python-hosting' },
-  { label: 'Node.js', image: NodejsLogo, from: 'Rs 250/mo', path: 'nodejs-hosting' },
-  { label: 'USA VPS', image: UsaLogo, from: 'Rs 1,500/mo', path: 'usa-vps' },
-  { label: 'Europe VPS', image: EuropeLogo, from: 'Rs 1,500/mo', path: 'europe-vps' },
-  { label: 'Nepal VPS', image: NepalLogo, from: 'Rs 1,200/mo', path: 'nepal-vps' },
+  { label: 'Web Hosting', image: WebHostingLogo, from: 'Rs 120/mo', priceId: 'home.hosting.web', badge: 'Popular', path: 'web-hosting' },
+  { label: 'Cloud Hosting', image: CloudHostingLogo, from: 'Rs 450/mo', priceId: 'home.hosting.cloud', path: 'cloud-hosting' },
+  { label: 'WordPress', image: WordPressLogo, from: 'Rs 199/mo', priceId: 'home.hosting.wordpress', path: 'wordpress-hosting' },
+  { label: 'eCommerce', image: EcommerceLogo, from: 'Rs 349/mo', priceId: 'home.hosting.ecommerce', path: 'ecommerce-hosting' },
+  { label: 'Django', image: DjangoLogo, from: 'Rs 290/mo', priceId: 'home.hosting.django', path: 'django-hosting' },
+  { label: 'Python', image: PythonLogo, from: 'Rs 290/mo', priceId: 'home.hosting.python', path: 'python-hosting' },
+  { label: 'Node.js', image: NodejsLogo, from: 'Rs 250/mo', priceId: 'home.hosting.node', path: 'nodejs-hosting' },
+  { label: 'USA VPS', image: UsaLogo, from: 'Rs 1,500/mo', priceId: 'home.hosting.usa-vps', path: 'usa-vps' },
+  { label: 'Europe VPS', image: EuropeLogo, from: 'Rs 1,500/mo', priceId: 'home.hosting.europe-vps', path: 'europe-vps' },
+  { label: 'Nepal VPS', image: NepalLogo, from: 'Rs 1,200/mo', priceId: 'home.hosting.nepal-vps', path: 'nepal-vps' },
 ]
 
 const hostingPerks = [
@@ -384,7 +384,7 @@ export const ServerHostingHero = ({ onNavigate }) => (
                 </span>
                 <span className="relative mt-1 space-y-1">
                   <span className="block text-xs font-bold leading-tight text-white">{card.label}</span>
-                  <span className="block text-[10px] font-semibold text-blue-300">From {card.from}</span>
+                  <span className="block text-[10px] font-semibold text-blue-300">From {getPrice(card.priceId, card.from)}</span>
                 </span>
                 <span className="relative mt-auto flex items-center gap-1 text-[10px] font-semibold text-blue-300 transition-colors group-hover:text-white">
                   View plans{' '}
@@ -425,10 +425,10 @@ export const ServerHostingHero = ({ onNavigate }) => (
 --------------------------------------------------------------------------- */
 
 const cloudServices = [
-  { icon: SiGoogle, label: 'Google Workspace', price: 'Rs 780', unit: '/user/mo', color: 'text-[#4285f4]', path: 'google-workspace' },
-  { icon: FaMicrosoft, image: Microsoft365, label: 'Microsoft 365', price: 'Rs 650', unit: '/user/mo', color: 'text-[#2675d8]', path: 'office-365' },
-  { icon: SiZoho, label: 'Zoho Workplace', price: 'Rs 700', unit: '/user/mo', color: 'text-[#e44b36]', path: 'zoho-workplace' },
-  { icon: SiZoom, label: 'Zoom Business', price: 'Rs 1,850', unit: '/host/mo', color: 'text-[#2d8cff]', path: 'zoom' },
+  { icon: SiGoogle, label: 'Google Workspace', price: 'Rs 780', priceId: 'home.email.google', unit: '/user/mo', color: 'text-[#4285f4]', path: 'google-workspace' },
+  { icon: FaMicrosoft, image: Microsoft365, label: 'Microsoft 365', price: 'Rs 650', priceId: 'home.email.microsoft', unit: '/user/mo', color: 'text-[#2675d8]', path: 'office-365' },
+  { icon: SiZoho, label: 'Zoho Workplace', price: 'Rs 700', priceId: 'home.email.zoho', unit: '/user/mo', color: 'text-[#e44b36]', path: 'zoho-workplace' },
+  { icon: SiZoom, label: 'Zoom Business', price: 'Rs 1,850', priceId: 'home.email.zoom', unit: '/host/mo', color: 'text-[#2d8cff]', path: 'zoom' },
 ]
 
 const moreCloudLinks = [
@@ -513,7 +513,7 @@ export const CloudLandingSections = ({ onNavigate }) => {
                   <span className="min-w-0 flex-1">
                     <span className="block text-sm font-bold leading-tight text-slate-800">{svc.label}</span>
                     <span className="mt-1 block text-xs text-slate-500">
-                      {svc.price}
+                      {getPrice(svc.priceId, svc.price)}
                       <span className="text-slate-400 font-medium">{svc.unit}</span>
                     </span>
                     <span className="mt-1.5 block text-[10px] font-bold text-blue-600">
@@ -578,7 +578,7 @@ export const CloudLandingSections = ({ onNavigate }) => {
                   </span>
                   <span className="flex items-center gap-4 sm:flex-col sm:items-end sm:gap-1">
                     <span className="block text-sm font-extrabold text-slate-800">
-                      {svc.price}
+                      {getPrice(svc.priceId, svc.price)}
                       <span className="text-xs font-semibold text-slate-500">{svc.unit}</span>
                     </span>
                     <span className="text-xs font-bold text-blue-600 group-hover:text-blue-700">
