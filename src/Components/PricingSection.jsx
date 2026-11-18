@@ -141,8 +141,8 @@ const plans = [
     name: 'Starter',
     Icon: Rocket,
     pricing: {
-      triennial: { price: '120', wasPrice: '400', savings: '70% SAVINGS', payInfo: 'Pay Rs 4,320 today for 3 full years.', renewInfo: 'Renews at same price on 9 October, 2029' },
-      annual: { price: '180', wasPrice: '240', savings: '25% SAVINGS', payInfo: 'Pay Rs 2,160 today for 1 full year.', renewInfo: 'Renews at same price on 9 October, 2029' },
+      triennial: { price: '120', wasPrice: '400', savings: '70% SAVINGS', payInfo: 'Pay Rs 4,320 today for 3 full years.', renewInfo: 'Renewal pricing is confirmed before checkout.' },
+      annual: { price: '180', wasPrice: '240', savings: '25% SAVINGS', payInfo: 'Pay Rs 2,160 today for 1 full year.', renewInfo: 'Renewal pricing is confirmed before checkout.' },
     },
     isPopular: false,
     features: [
@@ -158,8 +158,8 @@ const plans = [
     name: 'Growth',
     Icon: Sprout,
     pricing: {
-      triennial: { price: '240', wasPrice: '800', savings: '70% SAVINGS', payInfo: 'Pay Rs 8,640 today for 3 full years.', renewInfo: 'Renews at same price on 9 October, 2029' },
-      annual: { price: '360', wasPrice: '480', savings: '25% SAVINGS', payInfo: 'Pay Rs 4,320 today for 1 full year.', renewInfo: 'Renews at same price on 9 October, 2029' },
+      triennial: { price: '240', wasPrice: '800', savings: '70% SAVINGS', payInfo: 'Pay Rs 8,640 today for 3 full years.', renewInfo: 'Renewal pricing is confirmed before checkout.' },
+      annual: { price: '360', wasPrice: '480', savings: '25% SAVINGS', payInfo: 'Pay Rs 4,320 today for 1 full year.', renewInfo: 'Renewal pricing is confirmed before checkout.' },
     },
     isPopular: false,
     features: [
@@ -176,8 +176,8 @@ const plans = [
     subtitle: 'Best for growing businesses',
     Icon: Zap,
     pricing: {
-      triennial: { price: '420', wasPrice: '1,400', savings: '70% SAVINGS', payInfo: 'Pay Rs 15,120 today for 3 full years.', renewInfo: 'Renews at same price on 9 October, 2029' },
-      annual: { price: '620', wasPrice: '840', savings: '26% SAVINGS', payInfo: 'Pay Rs 7,440 today for 1 full year.', renewInfo: 'Renews at same price on 9 October, 2029' },
+      triennial: { price: '420', wasPrice: '1,400', savings: '70% SAVINGS', payInfo: 'Pay Rs 15,120 today for 3 full years.', renewInfo: 'Renewal pricing is confirmed before checkout.' },
+      annual: { price: '620', wasPrice: '840', savings: '26% SAVINGS', payInfo: 'Pay Rs 7,440 today for 1 full year.', renewInfo: 'Renewal pricing is confirmed before checkout.' },
     },
     isPopular: true,
     popularTag: '★ TOP CHOICE • MOST POPULAR',
@@ -194,8 +194,8 @@ const plans = [
     name: 'Ultimate',
     Icon: Gem,
     pricing: {
-      triennial: { price: '720', wasPrice: '2,400', savings: '70% SAVINGS', payInfo: 'Pay Rs 25,920 today for 3 full years.', renewInfo: 'Renews at same price on 9 October, 2029' },
-      annual: { price: '980', wasPrice: '1,200', savings: '18% SAVINGS', payInfo: 'Pay Rs 11,760 today for 1 full year.', renewInfo: 'Renews at same price on 9 October, 2029' },
+      triennial: { price: '720', wasPrice: '2,400', savings: '70% SAVINGS', payInfo: 'Pay Rs 25,920 today for 3 full years.', renewInfo: 'Renewal pricing is confirmed before checkout.' },
+      annual: { price: '980', wasPrice: '1,200', savings: '18% SAVINGS', payInfo: 'Pay Rs 11,760 today for 1 full year.', renewInfo: 'Renewal pricing is confirmed before checkout.' },
     },
     isPopular: false,
     features: [
@@ -304,16 +304,18 @@ const PricingSection = () => {
               className="pricing-swap mb-3 inline-flex items-center gap-1.5 rounded-full border border-blue-200/80 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-600 shadow-sm"
             >
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-blue-600" />
-              {billingCycle === 'triennial' ? 'Special Triennial Discount Active' : 'Flexible Annual Pricing Available'}
+              Shared web hosting
             </span>
             <h2 className="section-title font-extrabold tracking-tight text-slate-900">
-              Choose Your{' '}
+              Choose a{' '}
               <span className="bg-gradient-to-r from-[#0c73d5] to-[#1e88e5] bg-clip-text text-transparent">
-                Unlimited Hosting
+                Web Hosting
               </span>{' '}
               Plan
             </h2>
-            <p className="mt-1 text-sm text-slate-500 sm:text-base">Plans made to match your needs and budget</p>
+            <p className="mt-1 max-w-2xl text-sm leading-relaxed text-slate-500 sm:text-base">
+              These are shared web hosting plans, priced in Nepalese rupees (Rs). The rate is per month; choose a billing term to see the amount due upfront. Domains, VPS and other services are priced separately.
+            </p>
           </Reveal>
 
           {/* Billing Cycle Toggle with sliding highlight */}
@@ -336,7 +338,7 @@ const PricingSection = () => {
                   billingCycle === 'annual' ? 'text-white' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                Annually
+                Annual · 12 months
               </button>
               <button
                 type="button"
@@ -346,7 +348,7 @@ const PricingSection = () => {
                   billingCycle === 'triennial' ? 'text-white' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                <span>Triennially</span>
+                <span>3 years · 36 months</span>
                 <span
                   className={`badge-shine rounded-md px-1.5 py-0.5 text-[9px] font-extrabold transition-colors duration-300 ${
                     billingCycle === 'triennial' ? 'bg-white/20 text-white' : 'bg-blue-50 text-blue-600'
@@ -426,7 +428,7 @@ const PricingSection = () => {
                       {/* Price Display */}
                       <div className="my-4">
                         <div className="flex items-baseline gap-1">
-                          <span className="text-lg font-bold text-slate-800">₹</span>
+                          <span className="text-lg font-bold text-slate-800">Rs</span>
                           <span className="text-4xl font-black tracking-tight tabular-nums text-slate-900">
                             <AnimatedNumber value={currentPrice} />
                           </span>
@@ -435,7 +437,7 @@ const PricingSection = () => {
 
                         <div className="mt-1 flex flex-wrap items-center gap-2">
                           <span className="text-xs tabular-nums text-slate-400 line-through">
-                            Was ₹<AnimatedNumber value={wasPrice} />/mo
+                            Was Rs <AnimatedNumber value={wasPrice} />/mo
                           </span>
                           <span
                             key={`${plan.id}-${billingCycle}`}
@@ -451,7 +453,7 @@ const PricingSection = () => {
                         key={`${plan.id}-info-${billingCycle}`}
                         className="pricing-swap mb-6 space-y-0.5 rounded-2xl border border-slate-100 bg-slate-50 p-3 text-[11px] text-slate-500 transition-colors duration-300 group-hover:bg-blue-50/50"
                       >
-                        <p className="font-semibold text-slate-700">Pay Rs {(currentPrice * billingMonths).toLocaleString('en-IN')} today for {billingCycle === 'triennial' ? '3 full years' : '1 full year'}.</p>
+                        <p className="font-semibold text-slate-700">Due today: Rs {(currentPrice * billingMonths).toLocaleString('en-IN')} for {billingCycle === 'triennial' ? '36 months' : '12 months'}.</p>
                         <p className="text-[10px] text-slate-400">{currentPlan.renewInfo}</p>
                       </div>
 

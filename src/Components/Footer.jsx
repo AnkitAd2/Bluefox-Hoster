@@ -1,44 +1,24 @@
 import React from 'react'
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedinIn,
-  FaXTwitter,
-  FaWhatsapp,
-} from 'react-icons/fa6'
+import { FaWhatsapp } from 'react-icons/fa6'
 import BlueFoxLogo from '../assets/bluefoxlogo.svg'
 import ESewaLogo from '../assets/esewalogo.png'
-import IMELogo from '../assets/Ime.png'
-import FONEPAY from '../assets/fonepay.png'
-import visaLogo from '../assets/visa.png'
 import Khalti from '../assets/khaltilogo.png'
 
 const linkGroups = [
   {
-    title: 'Hosting Services',
+    title: 'Services & pricing',
     links: [
-      { label: 'Web & WordPress Hosting', href: '#plans' },
-      { label: 'Python & Node.js Hosting', href: '#plans' },
-      { label: 'Nepal & Global VPS Locations', href: '#server-hosting' },
-      { label: 'Cloud Servers & Pricing', href: '#server-plans' },
+      { label: 'Hosting options', href: '#server-hosting' },
+      { label: 'Web hosting plans & prices', href: '#server-plans' },
+      { label: 'Domain prices', href: '#domain-pricing' },
     ],
   },
   {
-    title: 'Support & Help',
+    title: 'Explore & help',
     links: [
-      { label: 'Common Questions (FAQ)', href: '#support' },
-      { label: 'Payment Options & Billing', href: '#server-plans' },
-      { label: 'Contact Support Hub', href: 'tel:+9779802755605' },
-      { label: '.NP Letter Generator', href: '#generator' },
-    ],
-  },
-  {
-    title: 'Blue Fox Hoster',
-    links: [
-      { label: 'About Infrastructure', href: '#company' },
-      { label: 'Data Center Locations', href: '#company' },
-      { label: 'Server Uptime Status', href: '#support' },
-      { label: 'Get Started Today', href: '#get-started' },
+      { label: 'FAQs & billing information', href: '#support' },
+      { label: 'Why choose Blue Fox Hoster', href: '#company' },
+      { label: 'Free .np letter generator', href: '#generator' },
     ],
   },
 ]
@@ -46,34 +26,24 @@ const linkGroups = [
 const paymentMethods = [
   { name: 'eSewa', image: ESewaLogo },
   { name: 'Khalti', image: Khalti },
-  { name: 'IME Pay', image: IMELogo },
-  { name: 'Fonepay', image: FONEPAY },
-  { name: 'Visa / Mastercard', image: visaLogo },
-  { name: 'Direct Bank Transfer', color: 'bg-slate-900/90 text-slate-300 border-slate-800' },
-]
-
-const socialLinks = [
-  { icon: FaFacebookF, href: 'https://facebook.com', label: 'Facebook' },
-  { icon: FaInstagram, href: 'https://instagram.com', label: 'Instagram' },
-  { icon: FaLinkedinIn, href: 'https://linkedin.com', label: 'LinkedIn' },
-  { icon: FaXTwitter, href: 'https://twitter.com', label: 'X (Twitter)' },
-  { icon: FaWhatsapp, href: 'https://wa.me/9779802755605', label: 'WhatsApp' },
+  { name: 'Bank transfer', color: 'bg-slate-900/90 text-slate-300 border-slate-800' },
+  { name: 'PayPal', color: 'bg-slate-900/90 text-slate-300 border-slate-800' },
 ]
 
 const Footer = ({ onNavigate, currentView }) => {
-  const handleScrollToTop = (e) => {
+  const handleHomeClick = (e) => {
     e.preventDefault()
+    if (currentView !== 'home') {
+      onNavigate?.('home')
+      window.setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 80)
+      return
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleSectionLink = (e, href) => {
     if (!href.startsWith('#')) return
     e.preventDefault()
-
-    if (href === '#get-started') {
-      onNavigate?.('auth')
-      return
-    }
 
     if (href === '#generator') {
       onNavigate?.('generator')
@@ -103,7 +73,7 @@ const Footer = ({ onNavigate, currentView }) => {
           <div className="space-y-4">
             <a 
               href="#top" 
-              onClick={handleScrollToTop}
+              onClick={handleHomeClick}
               className="inline-block focus:outline-none hover:opacity-90 transition-opacity" 
               aria-label="Blue Fox Hoster Home"
             >
@@ -115,41 +85,9 @@ const Footer = ({ onNavigate, currentView }) => {
             </a>
 
             <p className="max-w-xs text-sm leading-relaxed text-slate-400">
-              High-performance cloud hosting & sovereign digital infrastructure from Kathmandu, Nepal.
+              Web hosting, VPS, domains and cloud services for businesses in Nepal.
             </p>
 
-            <div className="pt-1">
-              <a 
-                href="tel:+9779802755605"
-                className="group flex items-center gap-2 text-sm font-semibold text-white hover:text-blue-400 transition-colors"
-              >
-                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-600/20 text-blue-400 border border-blue-500/30 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                  📞
-                </span>
-                +977-9802-7556-05
-              </a>
-            </div>
-
-            {/* Social Media Links */}
-            <div className="pt-2">
-              <span className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2.5">
-                Connect With Us
-              </span>
-              <div className="flex items-center gap-2">
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={social.label}
-                    className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-800 bg-slate-900 text-slate-400 hover:border-blue-500/50 hover:bg-blue-600/20 hover:text-blue-400 transition-all"
-                  >
-                    <social.icon className="h-3.5 w-3.5" />
-                  </a>
-                ))}
-              </div>
-            </div>
           </div>
 
           {/* Navigation Link Columns */}
@@ -162,7 +100,7 @@ const Footer = ({ onNavigate, currentView }) => {
                 {group.links.map((link) => (
                   <li key={link.label}>
                     <a 
-                      className="text-slate-400 hover:text-blue-400 transition-colors" 
+                      className="text-slate-400 transition-colors hover:text-blue-400" 
                       href={link.href}
                       onClick={(e) => handleSectionLink(e, link.href)}
                     >
@@ -173,6 +111,31 @@ const Footer = ({ onNavigate, currentView }) => {
               </ul>
             </nav>
           ))}
+
+          <div>
+            <h2 className="text-sm font-bold uppercase tracking-wider text-white">Contact</h2>
+            <p className="mt-4 text-sm leading-relaxed text-slate-400">Need help choosing a plan? Talk to our team.</p>
+            <div className="mt-4 space-y-3">
+              <a 
+                href="tel:+9779802755605"
+                className="flex items-center gap-2 text-sm font-semibold text-white transition-colors hover:text-blue-400"
+              >
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg border border-blue-500/30 bg-blue-600/20 text-blue-400">
+                  <span aria-hidden="true">☎</span>
+                </span>
+                +977-9802-7556-05
+              </a>
+              <a
+                href="https://wa.me/9779802755605"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg border border-slate-800 px-3 py-2 text-sm font-semibold text-slate-300 transition-colors hover:border-emerald-500/50 hover:text-emerald-400"
+              >
+                <FaWhatsapp className="h-4 w-4" aria-hidden="true" />
+                Chat on WhatsApp
+              </a>
+            </div>
+          </div>
         </div>
 
         {/* Accepted Payment Options */}
@@ -180,10 +143,10 @@ const Footer = ({ onNavigate, currentView }) => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                Accepted Payment Options in Nepal &amp; Global
+                Payment options
               </span>
-              <p className="text-xs text-slate-500 mt-0.5">
-                Instant digital wallet activation &amp; automated eSewa/Khalti billing.
+              <p className="mt-0.5 text-xs text-slate-500">
+                eSewa, Khalti, bank transfer and PayPal. Confirm available methods during checkout.
               </p>
             </div>
 
@@ -214,14 +177,12 @@ const Footer = ({ onNavigate, currentView }) => {
           </div>
         </div>
 
-        {/* Copyright & Legal Bar */}
+        {/* Copyright and pricing note */}
         <div className="mt-8 border-t border-slate-800/50 pt-6 text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-3">
           <div>
             &copy; {new Date().getFullYear()} <span className="font-semibold text-slate-400">Blue Fox Hoster</span>. All rights reserved.
           </div>
-          <div className="flex items-center gap-4">
-            <span className="text-slate-400">Fast, Secure &amp; Low-Latency Nepal Cloud Hosting</span>
-          </div>
+          <p className="text-center text-slate-400">Prices are shown in Nepalese rupees (Rs); check each plan for its billing term.</p>
         </div>
 
       </div>
