@@ -128,6 +128,8 @@ const TargetAudienceSection = ({ onNavigate }) => {
                     src={card.image}
                     alt={card.title}
                     className="w-20 h-20 object-contain drop-shadow-md"
+                    loading="lazy"
+                    decoding="async"
                   />
 
                   {/* Overlay Badge on Image */}

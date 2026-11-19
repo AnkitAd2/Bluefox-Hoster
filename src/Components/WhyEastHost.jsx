@@ -113,6 +113,8 @@ const WhyEastHost = () => {
                     src={RobotSad}
                     alt="Sad Host Character"
                     className="w-16 h-16 object-contain"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
               </div>
@@ -163,6 +165,8 @@ const WhyEastHost = () => {
                     src={happyRobot}
                     alt="Happy East Host Character"
                     className="w-16 h-16 object-contain"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
               </div>

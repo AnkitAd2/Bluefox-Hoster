@@ -16,16 +16,20 @@ const NetworkBackground = () => {
     const FRAME_INTERVAL = 1000 / 30
     const ANCHOR_LENGTH = 20
     const MOUSE_RADIUS = 220
+    const hardwareConcurrency = navigator.hardwareConcurrency || 0
+    const deviceMemory = navigator.deviceMemory || 0
+    const connection = navigator.connection
+    const lowPowerDevice =
+      (hardwareConcurrency > 0 && hardwareConcurrency <= 4) ||
+      (deviceMemory > 0 && deviceMemory <= 4) ||
+      Boolean(connection && connection.saveData)
     const mobileQuery = window.matchMedia('(max-width: 639px)')
     const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-    let staticBackground = mobileQuery.matches || reducedMotionQuery.matches
+    let staticBackground = mobileQuery.matches || reducedMotionQuery.matches || lowPowerDevice
     const circ = 2 * Math.PI
     let nodes = []
     let lastFrameTime = 0
-    let mouse = {
-      x: canvas.width / 2,
-      y: canvas.height / 2,
-    }
+    let mouse = { x: 0, y: 0 }
 
     const resizeWindow = () => {
       if (canvas.width !== window.innerWidth) canvas.width = window.innerWidth
@@ -33,6 +37,8 @@ const NetworkBackground = () => {
     }
 
     resizeWindow()
+    mouse.x = canvas.width / 2
+    mouse.y = canvas.height / 2
 
     function Node(x, y) {
       this.anchorX = x
@@ -108,31 +114,53 @@ const NetworkBackground = () => {
     }
 
     function findSiblings() {
-      let node1, node2, distance
-      for (let i = 0; i < NODES_QTY; i++) {
-        node1 = nodes[i]
+      const cells = new Map()
+      const cellCoordinate = (value) => Math.floor(value / SENSITIVITY)
+
+      for (const node of nodes) {
+        const key = `${cellCoordinate(node.x)},${cellCoordinate(node.y)}`
+        const cell = cells.get(key)
+        if (cell) cell.push(node)
+        else cells.set(key, [node])
+      }
+
+      const sensitivitySquared = SENSITIVITY * SENSITIVITY
+      for (const node1 of nodes) {
         node1.siblings = []
-        for (let j = 0; j < NODES_QTY; j++) {
-          node2 = nodes[j]
-          if (node1 !== node2) {
-            distance = calcDistance(node1, node2)
-            if (distance < SENSITIVITY) {
+        const cellX = cellCoordinate(node1.x)
+        const cellY = cellCoordinate(node1.y)
+
+        for (let x = cellX - 1; x <= cellX + 1; x++) {
+          for (let y = cellY - 1; y <= cellY + 1; y++) {
+            const cell = cells.get(`${x},${y}`)
+            if (!cell) continue
+
+            for (const node2 of cell) {
+              if (node1 === node2) continue
+              const dx = node1.x - node2.x
+              const dy = node1.y - node2.y
+              const distanceSquared = dx * dx + dy * dy
+              if (distanceSquared >= sensitivitySquared) continue
+
               if (node1.siblings.length < SIBLINGS_LIMIT) {
                 node1.siblings.push(node2)
-              } else {
-                let max_distance = 0
-                let s = 0
-                for (let k = 0; k < SIBLINGS_LIMIT; k++) {
-                  const node_sibling_distance = calcDistance(node1, node1.siblings[k])
-                  if (node_sibling_distance > max_distance) {
-                    max_distance = node_sibling_distance
-                    s = k
-                  }
+                continue
+              }
+
+              let farthestIndex = 0
+              let farthestDistanceSquared = 0
+              for (let i = 0; i < node1.siblings.length; i++) {
+                const sibling = node1.siblings[i]
+                const siblingX = node1.x - sibling.x
+                const siblingY = node1.y - sibling.y
+                const siblingDistanceSquared = siblingX * siblingX + siblingY * siblingY
+                if (siblingDistanceSquared > farthestDistanceSquared) {
+                  farthestDistanceSquared = siblingDistanceSquared
+                  farthestIndex = i
                 }
-                if (distance < max_distance) {
-                  node1.siblings.splice(s, 1)
-                  node1.siblings.push(node2)
-                }
+              }
+              if (distanceSquared < farthestDistanceSquared) {
+                node1.siblings[farthestIndex] = node2
               }
             }
           }
@@ -165,50 +193,65 @@ const NetworkBackground = () => {
     }
 
     function redrawScene(timestamp) {
+      animationFrameId = null
       if (timestamp - lastFrameTime >= FRAME_INTERVAL) {
         drawScene()
         lastFrameTime = timestamp
       }
-      if (!staticBackground) {
+      if (!staticBackground && document.visibilityState === 'visible') {
+        animationFrameId = requestAnimationFrame(redrawScene)
+      }
+    }
+
+    function startAnimation() {
+      if (!staticBackground && document.visibilityState === 'visible' && animationFrameId == null) {
         animationFrameId = requestAnimationFrame(redrawScene)
       }
     }
 
     const handleResize = () => {
       const wasStatic = staticBackground
-      staticBackground = mobileQuery.matches || reducedMotionQuery.matches
+      staticBackground = mobileQuery.matches || reducedMotionQuery.matches || lowPowerDevice
       resizeWindow()
       initNodes()
       drawScene()
-      if (wasStatic && !staticBackground) {
-        animationFrameId = requestAnimationFrame(redrawScene)
-      } else if (!wasStatic && staticBackground) {
+      if (!wasStatic && staticBackground && animationFrameId != null) {
         cancelAnimationFrame(animationFrameId)
+        animationFrameId = null
       }
+      startAnimation()
     }
     const handleMouseMove = (e) => {
       if (staticBackground) return
       mouse.x = e.clientX
       mouse.y = e.clientY
     }
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden' && animationFrameId != null) {
+        cancelAnimationFrame(animationFrameId)
+        animationFrameId = null
+      } else {
+        startAnimation()
+      }
+    }
 
     window.addEventListener('resize', handleResize)
     window.addEventListener('mousemove', handleMouseMove)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
     mobileQuery.addEventListener('change', handleResize)
     reducedMotionQuery.addEventListener('change', handleResize)
 
     initNodes()
     drawScene()
-    if (!staticBackground) {
-      animationFrameId = requestAnimationFrame(redrawScene)
-    }
+    startAnimation()
 
     return () => {
       window.removeEventListener('resize', handleResize)
       window.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
       mobileQuery.removeEventListener('change', handleResize)
       reducedMotionQuery.removeEventListener('change', handleResize)
-      cancelAnimationFrame(animationFrameId)
+      if (animationFrameId != null) cancelAnimationFrame(animationFrameId)
     }
   }, [])
 

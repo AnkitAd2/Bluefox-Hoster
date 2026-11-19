@@ -11,7 +11,7 @@
  * - Props (onBack, onNavigate): To pass navigation functions to child components
  */
 
-import React, { useState } from 'react'
+import React, { lazy, Suspense, useState } from 'react'
 
 // ── LAYOUT COMPONENTS (always present on homepage) ──────────────────
 import NetworkBackground from './Components/NetworkBackground'   // Animated background
@@ -32,48 +32,47 @@ import {
   ServerHostingHero,       // Server & Hosting overview section
 } from './Components/ServiceLandingSections'
 
-// ── TOOL PAGES ───────────────────────────────────────────────────────
-import NpLetterGenerator from './Components/NpLetterGenerator'  // .NP domain letter tool
-import ServicePage from './Components/ServicePage'              // Generic service page
-import LoginSignupPage from './Components/LoginSignupPage'      // Account access page
-import AdminDashboard from './Components/AdminDashboard'
 import { usePriceStore } from './utils/priceCatalog'
 
-// ── SERVER & HOSTING PAGES ───────────────────────────────────────────
-// These are the individual pages for each hosting service
-import WebHostingHero from './Components/WebHostingHero'         // Shared web hosting
-import CloudHostingHero from './Components/CloudHostingHero'     // Cloud hosting
-import WordPressHostHero from './Components/WordPressHostHero'   // WordPress hosting
-import EcomHostHero from './Components/EcomHostHero'             // eCommerce hosting
-import DjangoHostHero from './Components/DjangoHostHero'         // Django (Python) hosting
-import PythonHostHero from './Components/PythonHostHero'         // Python hosting
-import NodeJsHostHero from './Components/NodeJsHostHero'         // Node.js hosting
-import UsaVpsHero from './Components/UsaVpsHero'                 // USA VPS servers
-import EuropeVpsHero from './Components/EuropeVpsHero'           // Europe VPS servers
-import NepalVpsHero from './Components/NepalVpsHero'             // Nepal VPS servers
-import HostingOptionsHero from './Components/HostingOptionsHero' // All hosting options overview
-import { CodeBasedHero } from './Components/CodeBasedHero'       // Code-based hosting overview
-import { BusinessHostingHero } from './Components/BusinessHostingHero' // Reseller & business
+const lazyNamedComponent = (loadModule, exportName) => lazy(() =>
+  loadModule().then((module) => ({ default: module[exportName] }))
+)
 
-// ── EMAIL & CLOUD PAGES ──────────────────────────────────────────────
-// These are the individual pages for each cloud/email service
-import {
-  GoogleWorkspaceHero,     // Google Workspace (Gmail, Drive, Meet)
-  GoogleCloudHero,         // Google Cloud Console
-  NordVpnHero,             // NordVPN security
-  Office365Hero,           // Microsoft Office 365
-  OfficeLtscHero,          // Office LTSC 2024 (perpetual license)
-  CopilotHero,             // Microsoft Copilot AI
-  PowerBiHero,             // Microsoft Power BI
-  AzureHero,               // Microsoft Azure Cloud
-  ZohoCrmHero,             // Zoho CRM
-  BiginZohoHero,           // Bigin by Zoho CRM
-  ZohoMailHero,            // Zoho Mail
-  ZohoWorkplaceHero,       // Zoho Workplace
-  AwsHero,                 // Amazon Web Services
-  ZoomHero,                // Zoom video meetings
-  MicrosoftDefenderHero,   // Microsoft Defender security
-} from './Components/EmailCloudPages'
+const NpLetterGenerator = lazy(() => import('./Components/NpLetterGenerator'))
+const ServicePage = lazy(() => import('./Components/ServicePage'))
+const LoginSignupPage = lazy(() => import('./Components/LoginSignupPage'))
+const AdminDashboard = lazy(() => import('./Components/AdminDashboard'))
+
+const WebHostingHero = lazy(() => import('./Components/WebHostingHero'))
+const CloudHostingHero = lazy(() => import('./Components/CloudHostingHero'))
+const WordPressHostHero = lazy(() => import('./Components/WordPressHostHero'))
+const EcomHostHero = lazy(() => import('./Components/EcomHostHero'))
+const DjangoHostHero = lazy(() => import('./Components/DjangoHostHero'))
+const PythonHostHero = lazy(() => import('./Components/PythonHostHero'))
+const NodeJsHostHero = lazy(() => import('./Components/NodeJsHostHero'))
+const UsaVpsHero = lazy(() => import('./Components/UsaVpsHero'))
+const EuropeVpsHero = lazy(() => import('./Components/EuropeVpsHero'))
+const NepalVpsHero = lazy(() => import('./Components/NepalVpsHero'))
+const HostingOptionsHero = lazy(() => import('./Components/HostingOptionsHero'))
+const CodeBasedHero = lazyNamedComponent(() => import('./Components/CodeBasedHero'), 'CodeBasedHero')
+const BusinessHostingHero = lazyNamedComponent(() => import('./Components/BusinessHostingHero'), 'BusinessHostingHero')
+
+const loadEmailCloudPage = () => import('./Components/EmailCloudPages')
+const GoogleWorkspaceHero = lazyNamedComponent(loadEmailCloudPage, 'GoogleWorkspaceHero')
+const GoogleCloudHero = lazyNamedComponent(loadEmailCloudPage, 'GoogleCloudHero')
+const NordVpnHero = lazyNamedComponent(loadEmailCloudPage, 'NordVpnHero')
+const Office365Hero = lazyNamedComponent(loadEmailCloudPage, 'Office365Hero')
+const OfficeLtscHero = lazyNamedComponent(loadEmailCloudPage, 'OfficeLtscHero')
+const CopilotHero = lazyNamedComponent(loadEmailCloudPage, 'CopilotHero')
+const PowerBiHero = lazyNamedComponent(loadEmailCloudPage, 'PowerBiHero')
+const AzureHero = lazyNamedComponent(loadEmailCloudPage, 'AzureHero')
+const ZohoCrmHero = lazyNamedComponent(loadEmailCloudPage, 'ZohoCrmHero')
+const BiginZohoHero = lazyNamedComponent(loadEmailCloudPage, 'BiginZohoHero')
+const ZohoMailHero = lazyNamedComponent(loadEmailCloudPage, 'ZohoMailHero')
+const ZohoWorkplaceHero = lazyNamedComponent(loadEmailCloudPage, 'ZohoWorkplaceHero')
+const AwsHero = lazyNamedComponent(loadEmailCloudPage, 'AwsHero')
+const ZoomHero = lazyNamedComponent(loadEmailCloudPage, 'ZoomHero')
+const MicrosoftDefenderHero = lazyNamedComponent(loadEmailCloudPage, 'MicrosoftDefenderHero')
 
 /**
  * App Component — The Root of the Application
@@ -120,7 +119,11 @@ const App = () => {
   }, [])
 
   if (currentView === 'admin') {
-    return <AdminDashboard onExit={backHome} />
+    return (
+      <Suspense fallback={<div className="site-container py-20 text-center text-slate-600" role="status">Loading page...</div>}>
+        <AdminDashboard onExit={backHome} />
+      </Suspense>
+    )
   }
 
   return (
@@ -134,6 +137,7 @@ const App = () => {
 
       {/* Main content area — changes based on currentView */}
       <main key={currentView} className="page-enter relative z-10">
+        <Suspense fallback={<div className="site-container py-20 text-center text-slate-600" role="status">Loading page...</div>}>
 
         {/* ══ HOME PAGE ══════════════════════════════════════════════
             Show all homepage sections when currentView is 'home'.
@@ -199,6 +203,7 @@ const App = () => {
           <ServicePage service={selectedService} onBack={backHome} />
         )}
 
+        </Suspense>
       </main>
       <Footer onNavigate={handleNavigate} currentView={currentView} />
     </div>

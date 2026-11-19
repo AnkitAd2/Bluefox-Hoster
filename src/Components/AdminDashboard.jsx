@@ -44,9 +44,24 @@ const WebsitePrices = ({ priceStore }) => {
   ])))
   const [message, setMessage] = useState('')
   const [query, setQuery] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('Domains')
 
-  const visiblePrices = priceStore.catalog.filter(({ category, item, adminVisible = true }) => (
-    adminVisible && `${category} ${item}`.toLowerCase().includes(query.toLowerCase())
+  const catalogPrices = priceStore.catalog.filter(({ adminVisible = true }) => adminVisible)
+  const categoryPriority = ['Domains', 'Cloud hosting', 'Email & cloud', 'VPS']
+  const categoryCounts = catalogPrices.reduce((counts, { category }) => {
+    counts[category] = (counts[category] || 0) + 1
+    return counts
+  }, {})
+  const categories = Object.keys(categoryCounts).sort((first, second) => {
+    const firstPriority = categoryPriority.indexOf(first)
+    const secondPriority = categoryPriority.indexOf(second)
+    if (firstPriority === -1 && secondPriority === -1) return first.localeCompare(second)
+    return (firstPriority === -1 ? categoryPriority.length : firstPriority) -
+      (secondPriority === -1 ? categoryPriority.length : secondPriority)
+  })
+  const visiblePrices = catalogPrices.filter(({ category, item }) => (
+    category === selectedCategory &&
+    `${category} ${item}`.toLowerCase().includes(query.toLowerCase())
   ))
 
   const updateDraft = (id, value) => setDrafts((current) => ({ ...current, [id]: value }))
@@ -114,7 +129,34 @@ const WebsitePrices = ({ priceStore }) => {
               className="w-full rounded-lg border border-slate-200 py-2 pl-9 pr-3 text-sm outline-none focus:border-blue-400"
             />
           </label>
-          <span className="text-xs text-slate-400">{visiblePrices.length} prices</span>
+          <span className="text-xs text-slate-400">{visiblePrices.length} prices in {selectedCategory}</span>
+        </div>
+        <div className="border-b border-slate-100 px-4 py-3 sm:px-5">
+          <div className="flex gap-2 overflow-x-auto pb-1" role="group" aria-label="Filter prices by category">
+            {categories.map((category) => {
+              const isSelected = category === selectedCategory
+              return (
+                <button
+                  key={category}
+                  type="button"
+                  aria-pressed={isSelected}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`inline-flex shrink-0 items-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold transition-colors ${
+                    isSelected
+                      ? 'border-blue-600 bg-blue-600 text-white'
+                      : 'border-slate-200 bg-white text-slate-600 hover:border-blue-300 hover:text-blue-700'
+                  }`}
+                >
+                  {category}
+                  <span className={`rounded-full px-1.5 py-0.5 text-[10px] ${
+                    isSelected ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500'
+                  }`}>
+                    {categoryCounts[category]}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full min-w-[640px] text-left">
@@ -145,7 +187,9 @@ const WebsitePrices = ({ priceStore }) => {
               ))}
               {visiblePrices.length === 0 && (
                 <tr>
-                  <td colSpan="3" className="px-5 py-10 text-center text-sm text-slate-500">No prices match “{query}”.</td>
+                  <td colSpan="3" className="px-5 py-10 text-center text-sm text-slate-500">
+                    No prices match “{query}” in {selectedCategory}.
+                  </td>
                 </tr>
               )}
             </tbody>
